@@ -1,1 +1,1 @@
-module.exports = {extends: "universe/native",}
+module.exports = { extends: "universe/native" };

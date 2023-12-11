@@ -13,7 +13,7 @@ export default function App() {
       }
     } catch (error) {
       // You can also add an alert() to see the error message in case of an error when fetching updates.
-      alert(`Error fetching latest Expo update: ${error}`);
+      //alert(`Error fetching latest Expo update: ${error}`);
     }
   }
   useEffect(() => {
@@ -21,7 +21,8 @@ export default function App() {
   });
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+      <Text>Build Projeto Gerencidador de eventos</Text>
+      <Text>Teste 1</Text>
       <StatusBar style="auto" />
     </View>
   );
