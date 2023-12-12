@@ -22,7 +22,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Build Projeto Gerencidador de eventos</Text>
-      <Text>Teste 1</Text>
+      <Text>Teste 2</Text>
       <StatusBar style="auto" />
     </View>
   );
