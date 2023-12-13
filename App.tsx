@@ -1,7 +1,11 @@
-import { StatusBar } from "expo-status-bar";
 import * as Updates from "expo-updates";
-import { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect } from "react";
+import { AppRegistry, StatusBar } from "react-native";
+import { ThemeProvider } from "styled-components/native";
+
+import { Routes } from "./src/routes/index";
+import theme from "./src/theme";
+
 export default function App() {
   async function onFetchUpdateAsync() {
     try {
@@ -13,26 +17,22 @@ export default function App() {
       }
     } catch (error) {
       // You can also add an alert() to see the error message in case of an error when fetching updates.
-      //alert(`Error fetching latest Expo update: ${error}`);
+      alert(`Error fetching latest Expo update: ${error}`);
     }
   }
   useEffect(() => {
     onFetchUpdateAsync();
-  });
+  }, []);
+
+  AppRegistry.registerComponent("main", () => App);
   return (
-    <View style={styles.container}>
-      <Text>Build Projeto Gerencidador de eventos</Text>
-      <Text>Teste 2</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ThemeProvider theme={theme}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
+      <Routes />
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
