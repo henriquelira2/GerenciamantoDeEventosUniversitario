@@ -3,6 +3,7 @@ export default {
   COLORS: {
     DARK: "#0E0E0E",
     GRAY: "#C4C4CC",
+    GRAY100: "#D2CED0",
     WHITE: "#FFFFFF",
     
     RED: "#690013",
