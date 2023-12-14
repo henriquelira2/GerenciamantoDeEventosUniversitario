@@ -10,21 +10,29 @@ export const Container = styled.View`
 `;
 export const Logo = styled.Image`
   width: 60%;
-  height: 25%;
+  height: 20%;
+  margin-bottom: 10px;
 `;
 export const Box = styled.View`
+  flex: 0.93;
   bottom: 5%;
   width: 90%;
-  height: 80%;
+  height: 40%;
   align-items: center;
   justify-content: center;
   border-top-left-radius: 80px;
   border-bottom-right-radius: 80px;
   background-color: ${theme.COLORS.WHITE};
 `;
+export const ScrollView = styled.ScrollView`
+  width: 100%;
+  border-top-left-radius: 80px;
+  border-bottom-right-radius: 80px;
+`;
 export const Title = styled.Text`
   font-size: 30px;
   font-weight: 500;
+  margin-top: 30px;
   margin-bottom: 30px;
   color: ${theme.COLORS.DARK};
 `;
@@ -42,27 +50,20 @@ export const TextInput = styled.TextInput`
 `;
 
 export const RegisterButtom = styled.TouchableOpacity`
-  border-radius: 50px;
   width: 60%;
   height: 40px;
   margin-bottom: 5%;
+  border-radius: 50px;
   align-self: center;
   align-items: center;
   justify-content: center;
-  background-color: ${theme.COLORS.GOLD};
+  background-color: ${theme.COLORS.RED};
 `;
 export const TextButtomRegister = styled.Text`
   font-size: 18px;
   color: ${theme.COLORS.WHITE};
 `;
-export const LoginButtom = styled.TouchableOpacity`
-  border-radius: 50px;
-  width: 60%;
-  height: 40px;
-  align-self: center;
-  align-items: center;
-  justify-content: center;
-`;
+export const LoginButtom = styled.TouchableOpacity``;
 export const TextButtomLogin = styled.Text`
   font-size: 18px;
   color: ${theme.COLORS.GRAY};

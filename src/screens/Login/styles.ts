@@ -13,14 +13,19 @@ export const Logo = styled.Image`
   height: 25%;
 `;
 export const Box = styled.View`
-  bottom: 3%;
+  bottom: 5%;
   width: 90%;
-  height: 75%;
+  height: 70%;
   align-items: center;
   justify-content: center;
   border-top-left-radius: 80px;
   border-bottom-right-radius: 80px;
   background-color: ${theme.COLORS.WHITE};
+`;
+export const ScrollView = styled.ScrollView`
+  width: 100%;
+  border-top-left-radius: 80px;
+  border-bottom-right-radius: 80px;
 `;
 export const Title = styled.Text`
   font-size: 30px;
@@ -49,7 +54,7 @@ export const LoginButtom = styled.TouchableOpacity`
   align-self: center;
   align-items: center;
   justify-content: center;
-  background-color: ${theme.COLORS.GOLD};
+  background-color: ${theme.COLORS.RED};
 `;
 export const TextButtomLogin = styled.Text`
   font-size: 18px;

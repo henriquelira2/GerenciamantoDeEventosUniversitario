@@ -44,6 +44,7 @@ export function AppRouteStack() {
         options={{
           headerTransparent: true,
           headerTitle: "",
+          headerTintColor: "white",
         }}
       />
     </Navigator>
