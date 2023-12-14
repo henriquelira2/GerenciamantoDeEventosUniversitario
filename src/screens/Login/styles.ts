@@ -13,12 +13,13 @@ export const Logo = styled.Image`
   height: 25%;
 `;
 export const Box = styled.View`
+  bottom: 3%;
   width: 90%;
-  height: 60%;
+  height: 75%;
   align-items: center;
   justify-content: center;
-  border-top-left-radius: 50px;
-  border-bottom-right-radius: 50px;
+  border-top-left-radius: 80px;
+  border-bottom-right-radius: 80px;
   background-color: ${theme.COLORS.WHITE};
 `;
 export const Title = styled.Text`
@@ -30,7 +31,6 @@ export const Title = styled.Text`
 export const Input = styled.View`
   flex-direction: row;
   margin-bottom: 30px;
- 
 `;
 export const TextInput = styled.TextInput`
   width: 80%;

@@ -25,6 +25,7 @@ export function AppRouteStack() {
         component={Teste}
         options={{
           headerTransparent: true,
+          headerTitle: "",
         }}
       />
 
@@ -42,6 +43,7 @@ export function AppRouteStack() {
         component={Register}
         options={{
           headerTransparent: true,
+          headerTitle: "",
         }}
       />
     </Navigator>
