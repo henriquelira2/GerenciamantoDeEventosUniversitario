@@ -20,8 +20,10 @@ export const Box = styled.View`
   height: 50%;
   align-items: center;
   justify-content: center;
-  border-top-left-radius: 80px;
-  border-bottom-right-radius: 80px;
+  border-top-left-radius: 70px;
+  border-bottom-right-radius: 70px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   background-color: ${theme.COLORS.WHITE};
 `;
 export const ScrollView = styled.ScrollView`
@@ -36,10 +38,16 @@ export const Title = styled.Text`
   margin-bottom: 30px;
   color: ${theme.COLORS.DARK};
 `;
+
+export const TextErro = styled.Text`
+  width: 70%;
+  color: ${theme.COLORS.YELLOW};
+`;
 export const Input = styled.View`
   flex-direction: row;
   margin-bottom: 20px;
 `;
+
 export const TextInput = styled.TextInput`
   width: 80%;
   height: 50px;

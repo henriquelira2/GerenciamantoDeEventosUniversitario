@@ -19,7 +19,7 @@ const { Navigator, Screen } = createNativeStackNavigator<AuthRoutes>();
 
 export function AppRouteStack() {
   return (
-    <Navigator initialRouteName="Teste">
+    <Navigator initialRouteName="Login">
       <Screen
         name="Teste"
         component={Teste}

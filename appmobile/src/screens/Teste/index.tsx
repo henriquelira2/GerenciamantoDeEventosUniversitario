@@ -1,6 +1,4 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { Axios } from "axios";
 import { useEffect, useState } from "react";
 
 import * as S from "./styles";
