@@ -33,9 +33,14 @@ export const Title = styled.Text`
   margin-bottom: 30px;
   color: ${theme.COLORS.DARK};
 `;
+
 export const Input = styled.View`
   flex-direction: row;
   margin-bottom: 30px;
+`;
+export const TextErro = styled.Text`
+  width: 70%;
+  color: ${theme.COLORS.YELLOW};
 `;
 export const TextInput = styled.TextInput`
   width: 80%;

@@ -15,6 +15,7 @@ export default function App() {
         await Updates.fetchUpdateAsync();
         await Updates.reloadAsync();
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       // You can also add an alert() to see the error message in case of an error when fetching updates.
       // alert(`Error fetching latest Expo update: ${error}`);

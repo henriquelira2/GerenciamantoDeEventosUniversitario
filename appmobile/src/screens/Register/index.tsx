@@ -5,27 +5,25 @@ import {
 } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Text } from "react-native";
 import MaskInput from "react-native-mask-input";
-import { Schema } from "yup";
 
 import * as S from "./styles";
 import { useCreateUser } from "../../configs/hooks";
 import { RegisterUser } from "../../configs/types";
 import { AuthNavigatorRoutesProps } from "../../routes/app.route.stack";
 import { RegisterSchema } from "../../schemas";
-import { api } from "../../services/api";
 import theme from "../../theme";
 
 export function Register() {
-  const navigation = useNavigation<AuthNavigatorRoutesProps>();
-
   // eslint-disable-next-line prettier/prettier
   const CPF_MASK = [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]
   // eslint-disable-next-line prettier/prettier
   const PHONE_MASK = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+  const navigation = useNavigation<AuthNavigatorRoutesProps>();
+
+  const [hidePass, setHidePass] = useState(true);
   const {
     control,
     formState: { errors },
@@ -50,8 +48,6 @@ export function Register() {
       password: data.password,
     });
   };
-
-
 
   return (
     <S.Container>
@@ -212,6 +208,7 @@ export function Register() {
                   keyboardType="numeric"
                   value={value}
                   onChangeText={onChange}
+                  secureTextEntry={hidePass}
                 />
               )}
             />
@@ -221,6 +218,14 @@ export function Register() {
               color="black"
               style={{ position: "absolute", left: 10, top: 10 }}
             />
+            <S.ButtomEyes onPress={() => setHidePass(!hidePass)}>
+              <Ionicons
+                name="eye"
+                size={24}
+                color="black"
+                style={{ position: "absolute", right: 10, top: 13 }}
+              />
+            </S.ButtomEyes>
           </S.Input>
 
           <S.RegisterButtom onPress={handleSubmit(submitRegisterForm)}>

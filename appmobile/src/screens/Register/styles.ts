@@ -34,7 +34,7 @@ export const ScrollView = styled.ScrollView`
 export const Title = styled.Text`
   font-size: 30px;
   font-weight: 500;
-  margin-top: 30px;
+  margin-top: 10px;
   margin-bottom: 30px;
   color: ${theme.COLORS.DARK};
 `;
@@ -56,7 +56,7 @@ export const TextInput = styled.TextInput`
   padding-left: 50px;
   background-color: ${theme.COLORS.GRAY100};
 `;
-
+export const ButtomEyes = styled.TouchableOpacity``;
 export const RegisterButtom = styled.TouchableOpacity`
   width: 60%;
   height: 40px;

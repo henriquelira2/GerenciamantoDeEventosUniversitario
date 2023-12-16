@@ -23,17 +23,17 @@ export const RegisterSchema = yup.object().shape({
       "Formato de sobrenome inválido",
     )
     .required("Preencha o campo!"),
-  phoneNumber: yup
+  cpf: yup
     .string()
-    .min(11, "Formato de Telefone inválido")
-    .required("Telefone incorreto"),
+    .min(11, "Formato de CPF inválido")
+    .required("Preencha o campo!"),
   email: yup
     .string()
     .email("Preencha o e-mail da forma correta!")
     .required("Preencha o campo!"),
-  cpf: yup
+  phoneNumber: yup
     .string()
-    .min(11, "Formato de CPF inválido")
-    .required("CPF incorreto"),
+    .min(11, "Formato de Telefone inválido")
+    .required("Telefone incorreto"),
   password: yup.string().required("Preencha o campo!"),
 });
