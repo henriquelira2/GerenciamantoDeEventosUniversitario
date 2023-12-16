@@ -22,7 +22,9 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.post("/login", async (req, res) => {
-  const user = await User.findOne({ where: { cpf: req.body.cpf } });
+  var cpf = req.body.cpf;
+  const user = await User.findOne({ where: { cpf: cpf } });
+
   if (user) {
     const password_valid = await bcrypt.compare(
       req.body.password,
@@ -31,14 +33,12 @@ app.post("/login", async (req, res) => {
     if (password_valid) {
       token = jwt.sign(
         {
-          cpf: user.cpf,
-          first_name: user.first_name,
-          email: user.email,
-          phoneNumber: user.phoneNumber,
+          password_valid
         },
-        process.env.SECRET
+        process.env.SECRET,
+        { expiresIn: 300 }
       );
-      res.status(200).json({ token: token });
+      return res.json({ auth: true, cpf: cpf, token: token });
     } else {
       res.status(400).json({ error: "Password Incorrect" });
     }
@@ -67,7 +67,7 @@ app.post("/users/save", async (req, res) => {
       password: password,
       email: email,
       phoneNumber: phoneNumber,
-      type: "Admin",
+      type: "User",
     }).then(() => {
       res.status(201).send();
     });
