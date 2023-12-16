@@ -31,7 +31,7 @@ export function Login() {
     handleSubmit,
   } = useForm<User>({ mode: "onSubmit", resolver: yupResolver(LoginSchema) });
 
-  const { loginMutation, loginLoading } = useLogin();
+  const { loginMutation } = useLogin();
 
   const submitLoginForm = ({ cpf, password }: User, data: any) => {
     loginMutation({ cpf, password });
@@ -42,7 +42,8 @@ export function Login() {
     await AsyncStorage.setItem("userCPF", data);
     const value = await AsyncStorage.getItem("userCPF");
 
-    await console.log("value" + ":" + value);
+    // eslint-disable-next-line no-useless-concat
+    console.log("value" + ":" + value);
   };
 
   return (

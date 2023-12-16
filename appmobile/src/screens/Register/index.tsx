@@ -28,7 +28,7 @@ export function Register() {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<RegisterUser>({
+  } = useForm<RegisterUser | any>({
     mode: "onSubmit",
     resolver: yupResolver(RegisterSchema),
   });
