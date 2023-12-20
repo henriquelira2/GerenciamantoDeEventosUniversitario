@@ -15,6 +15,7 @@ export const GetUser = async ({ cpf }: { cpf: string }): Promise<void> => {
 
 export const LoginUser = async (data: User): Promise<void> => {
   const response = await api.post("/login", data);
+
   if (response.status !== 401) {
     await AsyncStorage.setItem("accessToken", response.data.token);
     await AsyncStorage.setItem("userCPF", data.cpf);

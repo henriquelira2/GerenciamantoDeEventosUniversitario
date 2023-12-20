@@ -1,6 +1,8 @@
+import { useContext } from "react";
 import { Alert } from "react-native";
 import { useMutation, UseMutateAsyncFunction } from "react-query";
 
+import { AuthContext } from "../../contexts/auth";
 import { LoginUser } from "../requests";
 import { User } from "../types";
 
@@ -10,6 +12,7 @@ type UseLoginProps = {
 };
 
 export const useLogin = (): UseLoginProps => {
+  const { setUser } = useContext(AuthContext);
   const { mutateAsync: loginMutation, isLoading: loginLoading } = useMutation({
     mutationFn: LoginUser,
     onError: () => {
@@ -17,6 +20,7 @@ export const useLogin = (): UseLoginProps => {
     },
     onSuccess: () => {
       Alert.alert("sucess");
+      setUser(true);
     },
   });
 

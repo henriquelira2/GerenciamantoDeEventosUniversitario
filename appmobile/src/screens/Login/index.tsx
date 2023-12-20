@@ -2,36 +2,62 @@ import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import MaskInput from "react-native-mask-input";
 
 import * as S from "./styles";
 import { useLogin } from "../../configs/hooks";
 import { User } from "../../configs/types";
+import { AuthContext } from "../../contexts/auth";
 import { AuthNavigatorRoutesProps } from "../../routes/app.route.stack";
 import { LoginSchema } from "../../schemas";
 import theme from "../../theme";
 
 export function Login() {
-  // eslint-disable-next-line prettier/prettier
-  const CPF_MASK = [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]
+  const CPF_MASK = [
+    /\d/,
+    /\d/,
+    /\d/,
+    ".",
+    /\d/,
+    /\d/,
+    /\d/,
+    ".",
+    /\d/,
+    /\d/,
+    /\d/,
+    "-",
+    /\d/,
+    /\d/,
+  ];
+
+  const { setUser } = useContext(AuthContext);
 
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
   const [hidePass, setHidePass] = useState(true);
 
+  const { loginMutation } = useLogin();
+
   function handleLogin() {
     navigation.navigate("Register");
   }
+
+  const isAuth = async () => {
+    const value = await AsyncStorage.getItem("accessToken");
+    if (value !== null) {
+      setUser(true);
+    } else {
+      console.log("err");
+    }
+  };
 
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useForm<User>({ mode: "onSubmit", resolver: yupResolver(LoginSchema) });
-
-  const { loginMutation } = useLogin();
 
   const submitLoginForm = ({ cpf, password }: User, data: any) => {
     loginMutation({ cpf, password });
@@ -42,9 +68,12 @@ export function Login() {
     await AsyncStorage.setItem("userCPF", data);
     const value = await AsyncStorage.getItem("userCPF");
 
-    // eslint-disable-next-line no-useless-concat
-    console.log("value" + ":" + value);
+    console.log("value:" + value);
   };
+
+  useEffect(() => {
+    isAuth();
+  }, []);
 
   return (
     <S.Container>
@@ -95,7 +124,9 @@ export function Login() {
               style={{ position: "absolute", left: 10, top: 12 }}
             />
           </S.Input>
-
+          {errors.password && (
+            <S.TextErro>{errors.password.message}</S.TextErro>
+          )}
           <S.Input>
             <Controller
               control={control}
