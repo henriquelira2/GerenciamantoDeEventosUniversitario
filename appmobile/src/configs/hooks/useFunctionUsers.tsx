@@ -1,4 +1,5 @@
 import { Alert } from "react-native";
+import { showMessage } from "react-native-flash-message";
 import {
   useMutation,
   UseMutateAsyncFunction,
@@ -39,10 +40,20 @@ export const useCreateUser = (): UseCreateUserProps => {
     useMutation({
       mutationFn: CreateUser,
       onError: () => {
-        Alert.alert("erro");
+        showMessage({
+          message: "Erro",
+          description: "Houve um erro ao cadastrar o usuário !",
+          type: "danger",
+          duration: 3000,
+        });
       },
       onSuccess: () => {
-        Alert.alert("sucess");
+        showMessage({
+          message: "Sucess",
+          description: "Usuário criado com sucesso!",
+          type: "success",
+          duration: 3000,
+        });
       },
     });
 

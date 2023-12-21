@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Alert } from "react-native";
+import { showMessage } from "react-native-flash-message";
 import { useMutation, UseMutateAsyncFunction } from "react-query";
 
 import { AuthContext } from "../../contexts/auth";
@@ -16,11 +16,21 @@ export const useLogin = (): UseLoginProps => {
   const { mutateAsync: loginMutation, isLoading: loginLoading } = useMutation({
     mutationFn: LoginUser,
     onError: () => {
-      Alert.alert("erro");
+      showMessage({
+        message: "Erro",
+        description: "Usuário ou senha incorretos!",
+        type: "danger",
+        duration: 3000,
+      });
     },
     onSuccess: () => {
-      Alert.alert("sucess");
-      setUser(true);
+      showMessage({
+        message: "Sucess",
+        description: "Login bem sucedido!",
+        type: "success",
+        duration: 3000,
+      });
+      setTimeout(() => setUser(true), 5000);
     },
   });
 

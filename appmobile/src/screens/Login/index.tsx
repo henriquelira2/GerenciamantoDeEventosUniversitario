@@ -4,6 +4,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { useContext, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { ActivityIndicator } from "react-native";
+import FlashMessage from "react-native-flash-message";
 import MaskInput from "react-native-mask-input";
 
 import * as S from "./styles";
@@ -38,7 +40,9 @@ export function Login() {
 
   const [hidePass, setHidePass] = useState(true);
 
-  const { loginMutation } = useLogin();
+  const [loadingButton, setLoadingButton] = useState(false);
+
+  const { loginMutation, loginLoading } = useLogin();
 
   function handleLogin() {
     navigation.navigate("Register");
@@ -60,15 +64,16 @@ export function Login() {
   } = useForm<User>({ mode: "onSubmit", resolver: yupResolver(LoginSchema) });
 
   const submitLoginForm = ({ cpf, password }: User, data: any) => {
+    setLoadingButton(true);
     loginMutation({ cpf, password });
     saveUser(cpf);
+    setTimeout(() => setLoadingButton(false), 3000);
   };
 
   const saveUser = async (data: any) => {
     await AsyncStorage.setItem("userCPF", data);
     const value = await AsyncStorage.getItem("userCPF");
-
-    console.log("value:" + value);
+    console.log("value: " + value);
   };
 
   useEffect(() => {
@@ -88,9 +93,10 @@ export function Login() {
           contentContainerStyle={{
             justifyContent: "center",
             alignItems: "center",
-            paddingTop: "30%",
+            paddingTop: "25%",
           }}
         >
+          <FlashMessage position="top" />
           <S.Title>Login</S.Title>
           {errors.cpf && <S.TextErro>{errors.cpf.message}</S.TextErro>}
           <S.Input>
@@ -157,8 +163,19 @@ export function Login() {
             </S.ButtomEyes>
           </S.Input>
 
-          <S.LoginButtom onPress={handleSubmit(submitLoginForm)}>
-            <S.TextButtomLogin>Login</S.TextButtomLogin>
+          <S.LoginButtom
+            onPress={handleSubmit(submitLoginForm)}
+            isLoading={loginLoading}
+          >
+            <S.TextButtomLogin>
+              {loadingButton ? (
+                <>
+                  <ActivityIndicator />
+                </>
+              ) : (
+                <>Login</>
+              )}
+            </S.TextButtomLogin>
           </S.LoginButtom>
 
           <S.RegisterButtom onPress={handleLogin}>

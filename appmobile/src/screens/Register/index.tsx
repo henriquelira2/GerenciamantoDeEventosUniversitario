@@ -7,6 +7,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { ActivityIndicator } from "react-native";
+import FlashMessage from "react-native-flash-message";
 import MaskInput from "react-native-mask-input";
 
 import * as S from "./styles";
@@ -21,9 +23,12 @@ export function Register() {
   const CPF_MASK = [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]
   // eslint-disable-next-line prettier/prettier
   const PHONE_MASK = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
+  const [loadingButton, setLoadingButton] = useState(false);
   const [hidePass, setHidePass] = useState(true);
+
   const {
     control,
     formState: { errors },
@@ -36,9 +41,11 @@ export function Register() {
   function handleLogin() {
     navigation.navigate("Login");
   }
-  const { createUserMutation } = useCreateUser();
+
+  const { createUserMutation, createUserLoading } = useCreateUser();
 
   const submitRegisterForm = async (data: RegisterUser) => {
+    setLoadingButton(true);
     await createUserMutation({
       firstName: data.firstName,
       lastName: data.lastName,
@@ -47,6 +54,8 @@ export function Register() {
       phoneNumber: data.phoneNumber,
       password: data.password,
     });
+    setTimeout(() => setLoadingButton(false), 2000);
+    navigation.navigate("Login");
   };
 
   return (
@@ -58,6 +67,7 @@ export function Register() {
         }}
       />
       <S.Box>
+        <FlashMessage position="top" />
         <S.ScrollView
           contentContainerStyle={{
             justifyContent: "center",
@@ -228,8 +238,19 @@ export function Register() {
             </S.ButtomEyes>
           </S.Input>
 
-          <S.RegisterButtom onPress={handleSubmit(submitRegisterForm)}>
-            <S.TextButtomRegister>Register</S.TextButtomRegister>
+          <S.RegisterButtom
+            onPress={handleSubmit(submitRegisterForm)}
+            isLoading={createUserLoading}
+          >
+            <S.TextButtomRegister>
+              {loadingButton ? (
+                <>
+                  <ActivityIndicator />
+                </>
+              ) : (
+                <>Register</>
+              )}
+            </S.TextButtomRegister>
           </S.RegisterButtom>
 
           <S.LoginButtom onPress={handleLogin}>

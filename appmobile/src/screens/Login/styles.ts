@@ -30,7 +30,7 @@ export const ScrollView = styled.ScrollView`
 export const Title = styled.Text`
   font-size: 30px;
   font-weight: 500;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   color: ${theme.COLORS.DARK};
 `;
 
