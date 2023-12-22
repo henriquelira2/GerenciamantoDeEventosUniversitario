@@ -30,7 +30,7 @@ export const useLogin = (): UseLoginProps => {
         type: "success",
         duration: 3000,
       });
-      setTimeout(() => setUser(true), 5000);
+      setTimeout(() => setUser(true), 3000);
     },
   });
 
