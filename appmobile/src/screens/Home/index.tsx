@@ -3,6 +3,9 @@ import { useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 
 import * as S from "./styles";
+import HomeAdmin from "../../components/HomeAdmin";
+import HomeManager from "../../components/HomeManager";
+import HomeUser from "../../components/HomeUser";
 import { useGetUser } from "../../configs/hooks";
 
 export function Home() {
@@ -35,29 +38,13 @@ export function Home() {
     let content;
 
     if (user?.type === "Admin") {
-      content = (
-        <S.TextButtom style={{ fontSize: 24, color: "red" }}>
-          {user?.type}
-        </S.TextButtom>
-      );
+      content = <HomeAdmin />;
     } else if (user?.type === "Manager") {
-      content = (
-        <S.TextButtom style={{ fontSize: 24, color: "white" }}>
-          {user?.type}
-        </S.TextButtom>
-      );
+      content = <HomeManager />;
     } else if (user?.type === "User") {
-      content = (
-        <S.TextButtom style={{ fontSize: 24, color: "yellow" }}>
-          {user?.type}
-        </S.TextButtom>
-      );
+      content = <HomeUser />;
     }
-    return <S.Container style={{ padding: 24 }}>{content}</S.Container>;
+    return <S.Container>{content}</S.Container>;
   };
-  return (
-    <S.Container>
-      <Card />
-    </S.Container>
-  );
+  return <Card />;
 }
