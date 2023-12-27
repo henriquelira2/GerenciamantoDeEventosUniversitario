@@ -1,8 +1,4 @@
-import {
-  Ionicons,
-  MaterialIcons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import {
   BottomTabNavigationProp,
   createBottomTabNavigator,
@@ -11,11 +7,13 @@ import {
 import { Events } from "../screens/Events";
 import { Home } from "../screens/Home";
 import { Profile } from "../screens/Profile";
+import { UserList } from "../screens/UsersList";
 
 type AppRoutes = {
   Home: undefined;
   Events: undefined;
   Profile: undefined;
+  UserList: undefined;
 };
 
 export type AppBotoomTabsRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -90,6 +88,11 @@ export function BottomTabs() {
             );
           },
         }}
+      />
+      <Screen
+        name="UserList"
+        component={UserList}
+        options={{ headerShown: false, tabBarButton: () => null }}
       />
     </Navigator>
   );

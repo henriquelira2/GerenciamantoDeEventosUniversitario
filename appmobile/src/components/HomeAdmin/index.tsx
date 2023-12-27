@@ -1,9 +1,20 @@
-import { Ionicons, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
+import {
+  Ionicons,
+  MaterialIcons,
+  FontAwesome5,
+  FontAwesome,
+} from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 import * as S from "./styles";
+import { AppBotoomTabsRoutesProps } from "../../routes/app.route.bottomTabs";
 import theme from "../../theme";
 
 export default function HomeAdmin({ lastName, firstName }) {
+  const navigation = useNavigation<AppBotoomTabsRoutesProps>();
+  function handleNavigation({ route }) {
+    navigation.navigate(route);
+  }
   return (
     <S.Container>
       <S.Top>
@@ -59,12 +70,20 @@ export default function HomeAdmin({ lastName, firstName }) {
           </S.Box_1>
           <S.Box_1>
             <S.Touch_1>
+              <S.Icon
+                style={{ backgroundColor: theme.COLORS.ORANGE200 }}
+                onPress={() => handleNavigation({ route: "UserList" })}
+              >
+                <FontAwesome name="group" size={40} color="#fff" />
+              </S.Icon>
+              <S.Text>USUARIOS CADASTRADOS</S.Text>
+            </S.Touch_1>
+            <S.Touch_1>
               <S.Icon style={{ backgroundColor: theme.COLORS.GREEN }}>
                 <Ionicons name="power" size={60} color="#fff" />
               </S.Icon>
               <S.Text>LOGOUT</S.Text>
             </S.Touch_1>
-            <S.Touch_1 />
           </S.Box_1>
         </S.ScrollView>
       </S.Bot>

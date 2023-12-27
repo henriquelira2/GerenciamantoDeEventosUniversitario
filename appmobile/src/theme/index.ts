@@ -10,6 +10,7 @@ export default {
     GOLD: "#856321",
     GREEN: "#6F8E5C",
     ORANGE: "#F3900B",
+    ORANGE200: "#F7771D",
     YELLOW: "#F9CB25",
     PURPLE: "#8779B3",
     BLUE: '#0A1673'
