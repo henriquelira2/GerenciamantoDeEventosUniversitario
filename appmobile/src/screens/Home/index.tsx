@@ -38,13 +38,19 @@ export function Home() {
     let content;
 
     if (user?.type === "Admin") {
-      content = <HomeAdmin />;
+      content = (
+        <HomeAdmin lastName={user?.lastName} firstName={user.firstName} />
+      );
     } else if (user?.type === "Manager") {
-      content = <HomeManager />;
+      content = (
+        <HomeManager lastName={user?.lastName} firstName={user.firstName} />
+      );
     } else if (user?.type === "User") {
-      content = <HomeUser />;
+      content = (
+        <HomeUser lastName={user?.lastName} firstName={user.firstName} />
+      );
     }
-    return <S.Container>{content}</S.Container>;
+    return content;
   };
   return <Card />;
 }

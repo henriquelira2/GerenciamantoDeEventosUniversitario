@@ -78,16 +78,12 @@ export function BottomTabs() {
           tabBarIcon: ({ color, size, focused }) => {
             if (focused) {
               return (
-                <MaterialCommunityIcons
-                  name="face-man"
-                  size={size}
-                  color={color}
-                />
+                <Ionicons name="person-circle" size={size} color={color} />
               );
             }
             return (
-              <MaterialCommunityIcons
-                name="face-man-outline"
+              <Ionicons
+                name="person-circle-outline"
                 size={size}
                 color={color}
               />

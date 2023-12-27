@@ -6,7 +6,7 @@ export const Container = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  background-color: ${theme.COLORS.YELLOW};
+  background-color: ${theme.COLORS.RED};
 `;
 
 export const TouchableOpacity = styled.TouchableOpacity`
