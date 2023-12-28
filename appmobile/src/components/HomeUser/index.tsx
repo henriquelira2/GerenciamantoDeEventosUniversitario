@@ -1,9 +1,25 @@
-import { Ionicons, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useContext } from "react";
 
 import * as S from "./styles";
+import { AuthContext } from "../../contexts/auth";
 import theme from "../../theme";
 
-export default function HomeUser({ lastName, firstName }) {
+export default function HomeUser({
+  lastName,
+  firstName,
+}: {
+  lastName?: string;
+  firstName?: string;
+}) {
+  const { setUser } = useContext(AuthContext);
+
+  const Logout = async () => {
+    await AsyncStorage.clear();
+    setUser(false);
+  };
+
   return (
     <S.Container>
       <S.Top>
@@ -45,7 +61,12 @@ export default function HomeUser({ lastName, firstName }) {
 
           <S.Box_1>
             <S.Touch_1>
-              <S.Icon style={{ backgroundColor: theme.COLORS.GREEN }}>
+              <S.Icon
+                style={{ backgroundColor: theme.COLORS.GREEN }}
+                onPress={() => {
+                  Logout();
+                }}
+              >
                 <Ionicons name="power" size={60} color="#fff" />
               </S.Icon>
               <S.Text>LOGOUT</S.Text>

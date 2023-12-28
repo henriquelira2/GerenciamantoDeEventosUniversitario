@@ -8,6 +8,7 @@ import { Events } from "../screens/Events";
 import { Home } from "../screens/Home";
 import { Profile } from "../screens/Profile";
 import { UserList } from "../screens/UsersList";
+import theme from "../theme";
 
 type AppRoutes = {
   Home: undefined;
@@ -19,7 +20,6 @@ type AppRoutes = {
 export type AppBotoomTabsRoutesProps = BottomTabNavigationProp<AppRoutes>;
 
 const { Navigator, Screen } = createBottomTabNavigator<AppRoutes>();
-
 export function BottomTabs() {
   return (
     <Navigator
@@ -92,7 +92,16 @@ export function BottomTabs() {
       <Screen
         name="UserList"
         component={UserList}
-        options={{ headerShown: false, tabBarButton: () => null }}
+        options={{
+          tabBarButton: () => null,
+          headerStyle: {
+            backgroundColor: `${theme.COLORS.RED}`,
+            height: 150,
+            borderBottomEndRadius: 50,
+          },
+          headerTitle: "Usuarios Cadastrados",
+          headerTintColor: `${theme.COLORS.WHITE}`,
+        }}
       />
     </Navigator>
   );

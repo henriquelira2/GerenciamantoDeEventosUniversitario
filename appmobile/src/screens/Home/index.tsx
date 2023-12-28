@@ -2,7 +2,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 
-import * as S from "./styles";
 import HomeAdmin from "../../components/HomeAdmin";
 import HomeManager from "../../components/HomeManager";
 import HomeUser from "../../components/HomeUser";
@@ -26,7 +25,9 @@ export function Home() {
     onRefresh();
   }, []);
 
-  const { data: user, refetch: userRefetch } = useGetUser({ cpf: userCpf });
+  const { data: user, refetch: userRefetch } = useGetUser({
+    cpf: userCpf || "",
+  });
   useFocusEffect(
     React.useCallback(() => {
       onRefresh();

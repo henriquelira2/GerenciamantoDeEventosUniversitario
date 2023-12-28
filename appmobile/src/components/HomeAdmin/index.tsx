@@ -4,17 +4,39 @@ import {
   FontAwesome5,
   FontAwesome,
 } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import React, { useContext } from "react";
 
 import * as S from "./styles";
+import { AuthContext } from "../../contexts/auth";
 import { AppBotoomTabsRoutesProps } from "../../routes/app.route.bottomTabs";
 import theme from "../../theme";
 
-export default function HomeAdmin({ lastName, firstName }) {
+type RouteParams = {
+  name: string;
+};
+
+export default function HomeAdmin({
+  lastName,
+  firstName,
+}: {
+  lastName?: string;
+  firstName?: string;
+}) {
+  const { setUser } = useContext(AuthContext);
+
+  const Logout = async () => {
+    await AsyncStorage.clear();
+    setUser(false);
+  };
+
   const navigation = useNavigation<AppBotoomTabsRoutesProps>();
-  function handleNavigation({ route }) {
-    navigation.navigate(route);
+
+  function handleNavigation(route: RouteParams) {
+    navigation.navigate(route.name);
   }
+
   return (
     <S.Container>
       <S.Top>
@@ -72,14 +94,19 @@ export default function HomeAdmin({ lastName, firstName }) {
             <S.Touch_1>
               <S.Icon
                 style={{ backgroundColor: theme.COLORS.ORANGE200 }}
-                onPress={() => handleNavigation({ route: "UserList" })}
+                onPress={() => handleNavigation({ name: "UserList" })}
               >
                 <FontAwesome name="group" size={40} color="#fff" />
               </S.Icon>
               <S.Text>USUARIOS CADASTRADOS</S.Text>
             </S.Touch_1>
             <S.Touch_1>
-              <S.Icon style={{ backgroundColor: theme.COLORS.GREEN }}>
+              <S.Icon
+                style={{ backgroundColor: theme.COLORS.GREEN }}
+                onPress={() => {
+                  Logout();
+                }}
+              >
                 <Ionicons name="power" size={60} color="#fff" />
               </S.Icon>
               <S.Text>LOGOUT</S.Text>
