@@ -46,14 +46,18 @@ export default function HomeUser({
           <S.Box_1>
             <S.Touch_1>
               <S.Icon style={{ backgroundColor: theme.COLORS.BLUE }}>
-                <MaterialIcons name="event-note" size={60} color="#fff" />
+                <MaterialIcons
+                  name="event-note"
+                  size={60}
+                  color={theme.COLORS.WHITE}
+                />
               </S.Icon>
               <S.Text>EVENTOS</S.Text>
             </S.Touch_1>
 
             <S.Touch_1>
               <S.Icon style={{ backgroundColor: theme.COLORS.RED }}>
-                <Ionicons name="person" size={50} color="#fff" />
+                <Ionicons name="person" size={50} color={theme.COLORS.WHITE} />
               </S.Icon>
               <S.Text>PERFIL</S.Text>
             </S.Touch_1>
@@ -67,13 +71,17 @@ export default function HomeUser({
                   Logout();
                 }}
               >
-                <Ionicons name="power" size={60} color="#fff" />
+                <Ionicons name="power" size={60} color={theme.COLORS.WHITE} />
               </S.Icon>
               <S.Text>LOGOUT</S.Text>
             </S.Touch_1>
             <S.Touch_1>
               <S.Icon style={{ backgroundColor: theme.COLORS.PURPLE }}>
-                <Ionicons name="person-add" size={50} color="#fff" />
+                <Ionicons
+                  name="person-add"
+                  size={50}
+                  color={theme.COLORS.WHITE}
+                />
               </S.Icon>
               <S.Text>EDITAR PERFIL</S.Text>
             </S.Touch_1>

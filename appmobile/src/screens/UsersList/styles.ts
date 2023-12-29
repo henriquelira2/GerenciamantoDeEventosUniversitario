@@ -4,32 +4,39 @@ import theme from "../../theme";
 
 export const Container = styled.View`
   flex: 1;
+  bottom: 10%;
   align-items: center;
   justify-content: center;
   background-color: ${theme.COLORS.WHITE};
-  bottom: 10%;
 `;
-export const ScrollView = styled.ScrollView`
-  top: 10%;
+export const Filter = styled.View`
+  top: 15%;
+  width: 100%;
   margin-bottom: 20%;
-`;
-export const TouchableOpacity = styled.TouchableOpacity`
-  border-radius: 50px;
-  width: 60%;
-  height: 40px;
-  align-self: center;
   align-items: center;
-  justify-content: center;
-  background-color: ${theme.COLORS.RED};
-  margin-top: 20%;
-`;
-export const Usuario = styled.View`
+  flex-direction: row;
   border-bottom-width: 2px;
-  margin-bottom: 20px;
-  padding: 20px;
+  justify-content: space-around;
+`;
+export const InputFilter = styled.TextInput`
+  width: 75%;
+  height: 50px;
+  border-width: 2px;
+  border-radius: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 40px 20px 30px 20px;
+  color: ${theme.COLORS.DARK};
+  background-color: ${theme.COLORS.WHITE};
+`;
+
+export const Usuario = styled.View`
   width: 100%;
   flex-direction: row;
   justify-content: space-around;
+  padding: 0px 20px 20px 20px;
+  border-bottom-width: 2px;
+  margin-bottom: 20px;
 `;
 export const box = styled.View``;
 
