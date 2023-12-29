@@ -7,6 +7,7 @@ import {
 import { Events } from "../screens/Events";
 import { Home } from "../screens/Home";
 import { Profile } from "../screens/Profile";
+import { UpdateProfile } from "../screens/UpdateProfile";
 import { UserList } from "../screens/UsersList";
 import theme from "../theme";
 
@@ -15,6 +16,7 @@ type AppRoutes = {
   Events: undefined;
   Profile: undefined;
   UserList: undefined;
+  UpdateProfile: undefined;
 };
 
 export type AppBotoomTabsRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -100,6 +102,19 @@ export function BottomTabs() {
             borderBottomEndRadius: 50,
           },
           headerTitle: "Usuarios Cadastrados",
+          headerTintColor: `${theme.COLORS.WHITE}`,
+        }}
+      />
+      <Screen
+        name="UpdateProfile"
+        component={UpdateProfile}
+        options={{
+          tabBarButton: () => null,
+          headerStyle: {
+            backgroundColor: `${theme.COLORS.RED}`,
+            height: 120,
+          },
+          headerTitle: "                EDITAR PERFIL",
           headerTintColor: `${theme.COLORS.WHITE}`,
         }}
       />

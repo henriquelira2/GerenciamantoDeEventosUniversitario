@@ -1,4 +1,3 @@
-import { Alert } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import {
   useMutation,
@@ -65,10 +64,20 @@ export const useUpdateUser = (): UseUpdateUserProps => {
     useMutation({
       mutationFn: UpdateUser,
       onError: () => {
-        Alert.alert("erro");
+        showMessage({
+          message: "Erro",
+          description: "Houve um erro ao Alterar os dados do usuário !",
+          type: "danger",
+          duration: 3000,
+        });
       },
       onSuccess: () => {
-        Alert.alert("sucess");
+        showMessage({
+          message: "Sucess",
+          description: "Dados alterados com sucesso",
+          type: "success",
+          duration: 3000,
+        });
       },
     });
 

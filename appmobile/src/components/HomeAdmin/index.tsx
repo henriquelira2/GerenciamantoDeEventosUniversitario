@@ -67,7 +67,11 @@ export default function HomeAdmin({
                 style={{ backgroundColor: theme.COLORS.BLUE }}
                 onPress={() => handleNavigation({ name: "Events" })}
               >
-                <MaterialIcons name="event-note" size={60} color="#fff" />
+                <MaterialIcons
+                  name="event-note"
+                  size={60}
+                  color={theme.COLORS.WHITE}
+                />
               </S.Icon>
               <S.Text>EVENTOS</S.Text>
             </S.Touch_1>
@@ -77,7 +81,7 @@ export default function HomeAdmin({
                 style={{ backgroundColor: theme.COLORS.RED }}
                 onPress={() => handleNavigation({ name: "Profile" })}
               >
-                <Ionicons name="person" size={50} color="#fff" />
+                <Ionicons name="person" size={50} color={theme.COLORS.WHITE} />
               </S.Icon>
               <S.Text>PERFIL</S.Text>
             </S.Touch_1>
@@ -86,13 +90,24 @@ export default function HomeAdmin({
           <S.Box_1>
             <S.Touch_1>
               <S.Icon style={{ backgroundColor: theme.COLORS.GOLD }}>
-                <FontAwesome5 name="plus" size={60} color="#fff" />
+                <FontAwesome5
+                  name="plus"
+                  size={60}
+                  color={theme.COLORS.WHITE}
+                />
               </S.Icon>
               <S.Text>CRIAR NOVO EVENTO</S.Text>
             </S.Touch_1>
             <S.Touch_1>
-              <S.Icon style={{ backgroundColor: theme.COLORS.PURPLE }}>
-                <Ionicons name="person-add" size={50} color="#fff" />
+              <S.Icon
+                style={{ backgroundColor: theme.COLORS.PURPLE }}
+                onPress={() => handleNavigation({ name: "UpdateProfile" })}
+              >
+                <Ionicons
+                  name="person-add"
+                  size={50}
+                  color={theme.COLORS.WHITE}
+                />
               </S.Icon>
               <S.Text>EDITAR PERFIL</S.Text>
             </S.Touch_1>
@@ -103,7 +118,11 @@ export default function HomeAdmin({
                 style={{ backgroundColor: theme.COLORS.ORANGE200 }}
                 onPress={() => handleNavigation({ name: "UserList" })}
               >
-                <FontAwesome name="group" size={40} color="#fff" />
+                <FontAwesome
+                  name="group"
+                  size={40}
+                  color={theme.COLORS.WHITE}
+                />
               </S.Icon>
               <S.Text>USUARIOS CADASTRADOS</S.Text>
             </S.Touch_1>
@@ -114,7 +133,7 @@ export default function HomeAdmin({
                   Logout();
                 }}
               >
-                <Ionicons name="power" size={60} color="#fff" />
+                <Ionicons name="power" size={60} color={theme.COLORS.WHITE} />
               </S.Icon>
               <S.Text>LOGOUT</S.Text>
             </S.Touch_1>

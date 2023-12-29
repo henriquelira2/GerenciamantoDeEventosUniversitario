@@ -95,7 +95,10 @@ export default function HomeUser({
               <S.Text>LOGOUT</S.Text>
             </S.Touch_1>
             <S.Touch_1>
-              <S.Icon style={{ backgroundColor: theme.COLORS.PURPLE }}>
+              <S.Icon
+                style={{ backgroundColor: theme.COLORS.PURPLE }}
+                onPress={() => handleNavigation({ name: "UpdateProfile" })}
+              >
                 <Ionicons
                   name="person-add"
                   size={50}

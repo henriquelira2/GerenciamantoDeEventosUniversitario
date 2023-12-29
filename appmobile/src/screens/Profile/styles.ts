@@ -32,7 +32,7 @@ export const EmailText = styled.Text`
   color: ${theme.COLORS.GRAY};
 `;
 export const Avatar = styled.Image`
-  border: 5px;
+  border-width: 5px;
   border-radius: 90px;
   border-color: ${theme.COLORS.GRAY};
   height: 65%;

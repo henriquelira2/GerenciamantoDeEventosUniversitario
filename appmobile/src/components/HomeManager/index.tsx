@@ -58,7 +58,11 @@ export default function HomeManager({
                 style={{ backgroundColor: theme.COLORS.BLUE }}
                 onPress={() => handleNavigation({ name: "Events" })}
               >
-                <MaterialIcons name="event-note" size={60} color="#fff" />
+                <MaterialIcons
+                  name="event-note"
+                  size={60}
+                  color={theme.COLORS.WHITE}
+                />
               </S.Icon>
               <S.Text>EVENTOS</S.Text>
             </S.Touch_1>
@@ -68,7 +72,7 @@ export default function HomeManager({
                 <Ionicons
                   name="person"
                   size={50}
-                  color="#fff"
+                  color={theme.COLORS.WHITE}
                   onPress={() => handleNavigation({ name: "Profile" })}
                 />
               </S.Icon>
@@ -79,13 +83,24 @@ export default function HomeManager({
           <S.Box_1>
             <S.Touch_1>
               <S.Icon style={{ backgroundColor: theme.COLORS.GOLD }}>
-                <FontAwesome5 name="plus" size={60} color="#fff" />
+                <FontAwesome5
+                  name="plus"
+                  size={60}
+                  color={theme.COLORS.WHITE}
+                />
               </S.Icon>
               <S.Text>CRIAR NOVO EVENTO</S.Text>
             </S.Touch_1>
             <S.Touch_1>
-              <S.Icon style={{ backgroundColor: theme.COLORS.PURPLE }}>
-                <Ionicons name="person-add" size={50} color="#fff" />
+              <S.Icon
+                style={{ backgroundColor: theme.COLORS.PURPLE }}
+                onPress={() => handleNavigation({ name: "UpdateProfile" })}
+              >
+                <Ionicons
+                  name="person-add"
+                  size={50}
+                  color={theme.COLORS.WHITE}
+                />
               </S.Icon>
               <S.Text>EDITAR PERFIL</S.Text>
             </S.Touch_1>
@@ -98,7 +113,7 @@ export default function HomeManager({
                   Logout();
                 }}
               >
-                <Ionicons name="power" size={60} color="#fff" />
+                <Ionicons name="power" size={60} color={theme.COLORS.WHITE} />
               </S.Icon>
               <S.Text>LOGOUT</S.Text>
             </S.Touch_1>
