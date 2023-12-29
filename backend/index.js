@@ -33,7 +33,7 @@ app.post("/login", async (req, res) => {
     if (password_valid) {
       token = jwt.sign(
         {
-          password_valid
+          password_valid,
         },
         process.env.SECRET,
         { expiresIn: 300 }
@@ -113,32 +113,6 @@ app.put("/users/update-tag/:cpf", (req, res) => {
   });
 });
 
-app.put("/users/update/:cpf", async (req, res) => {
-  var cpf = req.params.cpf;
-  var firstName = req.body.firstName;
-  var lastName = req.body.lastName;
-  var phoneNumber = req.body.phoneNumber;
-  const salt = await bcrypt.genSalt();
-  var password = await bcrypt.hash(req.body.password, salt);
-  var email = req.body.email;
-  User.update(
-    {
-      firstName: firstName,
-      lastName: lastName,
-      phoneNumber: phoneNumber,
-      password: password,
-      email: email,
-    },
-    {
-      where: {
-        cpf: cpf,
-      },
-    }
-  ).then(() => {
-    res.status(200).send();
-  });
-});
-
 app.delete("/users/delete/:cpf", (req, res) => {
   var cpf = req.params.cpf;
   User.destroy({
@@ -148,6 +122,36 @@ app.delete("/users/delete/:cpf", (req, res) => {
   }).then(() => {
     res.status(200).send();
   });
+});
+
+app.put("/users/update2/:cpf", async (req, res) => {
+  try {
+    const cpf = req.params.cpf;
+    const updatedFields = req.body;
+
+    if (Object.keys(updatedFields).length === 0) {
+      return res.status(400).json({ error: "No fields to update" });
+    }
+
+    const existingUser = await User.findOne({ where: { cpf: cpf } });
+    if (!existingUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    if (updatedFields.password) {
+      const salt = await bcrypt.genSalt();
+      updatedFields.password = await bcrypt.hash(updatedFields.password, salt);
+    }
+
+    await User.update(updatedFields, {
+      where: { cpf: cpf },
+    });
+
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 app.listen(process.env.PORT || 8080, function () {
