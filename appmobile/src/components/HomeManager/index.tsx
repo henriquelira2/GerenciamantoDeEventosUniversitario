@@ -1,10 +1,15 @@
 import { Ionicons, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 import { useContext } from "react";
 
 import * as S from "./styles";
 import { AuthContext } from "../../contexts/auth";
+import { AppBotoomTabsRoutesProps } from "../../routes/app.route.bottomTabs";
 import theme from "../../theme";
+type RouteParams = {
+  name: string;
+};
 export default function HomeManager({
   lastName,
   firstName,
@@ -13,6 +18,12 @@ export default function HomeManager({
   firstName?: string;
 }) {
   const { setUser } = useContext(AuthContext);
+  const navigation = useNavigation<AppBotoomTabsRoutesProps>();
+
+  function handleNavigation(route: RouteParams) {
+    // @ts-ignore
+    navigation.navigate(route.name);
+  }
 
   const Logout = async () => {
     await AsyncStorage.clear();
@@ -43,7 +54,10 @@ export default function HomeManager({
           </S.User>
           <S.Box_1>
             <S.Touch_1>
-              <S.Icon style={{ backgroundColor: theme.COLORS.BLUE }}>
+              <S.Icon
+                style={{ backgroundColor: theme.COLORS.BLUE }}
+                onPress={() => handleNavigation({ name: "Events" })}
+              >
                 <MaterialIcons name="event-note" size={60} color="#fff" />
               </S.Icon>
               <S.Text>EVENTOS</S.Text>
@@ -51,7 +65,12 @@ export default function HomeManager({
 
             <S.Touch_1>
               <S.Icon style={{ backgroundColor: theme.COLORS.RED }}>
-                <Ionicons name="person" size={50} color="#fff" />
+                <Ionicons
+                  name="person"
+                  size={50}
+                  color="#fff"
+                  onPress={() => handleNavigation({ name: "Profile" })}
+                />
               </S.Icon>
               <S.Text>PERFIL</S.Text>
             </S.Touch_1>

@@ -34,6 +34,7 @@ export default function HomeAdmin({
   const navigation = useNavigation<AppBotoomTabsRoutesProps>();
 
   function handleNavigation(route: RouteParams) {
+    // @ts-ignore
     navigation.navigate(route.name);
   }
 
@@ -62,14 +63,20 @@ export default function HomeAdmin({
           </S.User>
           <S.Box_1>
             <S.Touch_1>
-              <S.Icon style={{ backgroundColor: theme.COLORS.BLUE }}>
+              <S.Icon
+                style={{ backgroundColor: theme.COLORS.BLUE }}
+                onPress={() => handleNavigation({ name: "Events" })}
+              >
                 <MaterialIcons name="event-note" size={60} color="#fff" />
               </S.Icon>
               <S.Text>EVENTOS</S.Text>
             </S.Touch_1>
 
             <S.Touch_1>
-              <S.Icon style={{ backgroundColor: theme.COLORS.RED }}>
+              <S.Icon
+                style={{ backgroundColor: theme.COLORS.RED }}
+                onPress={() => handleNavigation({ name: "Profile" })}
+              >
                 <Ionicons name="person" size={50} color="#fff" />
               </S.Icon>
               <S.Text>PERFIL</S.Text>
