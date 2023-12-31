@@ -10,7 +10,7 @@ export const Modal = styled.View`
 
 export const Topo = styled.View`
   flex-direction: row;
-  background-color: ${theme.COLORS.BLUE100};
+  background-color: ${theme.COLORS.GREEN};
   width: 90%;
   justify-content: space-between;
   padding: 5px;
@@ -20,6 +20,7 @@ export const Topo = styled.View`
 `;
 export const Title = styled.Text`
   font-size: 20px;
+  color: ${theme.COLORS.WHITE};
 `;
 export const Closer = styled.TouchableOpacity`
   background-color: ${theme.COLORS.RED};

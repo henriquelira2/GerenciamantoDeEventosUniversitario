@@ -74,7 +74,7 @@ export function UpdateProfile() {
     <S.Container>
       <FlashMessage position="top" />
       <S.Avatar style={{ elevation: 15 }}>
-        <UserAvatar size={100} name={`${user?.firstName} ${user?.lastName}`} />
+        <UserAvatar size={80} name={`${user?.firstName} ${user?.lastName}`} />
       </S.Avatar>
       <S.ScrollView
         contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}

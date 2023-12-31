@@ -49,8 +49,9 @@ export default function HomeManager({
         >
           <S.User>
             <Ionicons name="person" size={20} />
-            <S.TextUser>{firstName}</S.TextUser>
-            <S.TextUser>{lastName}</S.TextUser>
+            <S.TextUser>
+              {firstName} {lastName}
+            </S.TextUser>
           </S.User>
           <S.Box_1>
             <S.Touch_1>

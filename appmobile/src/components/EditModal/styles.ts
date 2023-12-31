@@ -11,7 +11,7 @@ export const Modal = styled.View`
 
 export const Topo = styled.View`
   flex-direction: row;
-  background-color: ${theme.COLORS.BLUE100};
+  background-color: ${theme.COLORS.GOLD};
   width: 90%;
   justify-content: space-between;
   padding: 5px;
@@ -21,6 +21,7 @@ export const Topo = styled.View`
 `;
 export const Title = styled.Text`
   font-size: 20px;
+  color: ${theme.COLORS.WHITE};
 `;
 export const Closer = styled.TouchableOpacity`
   background-color: ${theme.COLORS.RED};
@@ -40,7 +41,7 @@ export const ScrollView = styled.ScrollView`
 export const TextUser = styled.Text`
   font-size: 12px;
   margin-left: 5%;
-  color: ${theme.COLORS.BLUE100};
+  color: ${theme.COLORS.GOLD};
 `;
 export const Input = styled.TextInput`
   border-bottom-width: 2px;
@@ -54,7 +55,7 @@ export const Input = styled.TextInput`
 export const TextErro = styled.Text`
   width: 70%;
   margin-left: 5%;
-  color: ${theme.COLORS.YELLOW};
+  color: ${theme.COLORS.ORANGE};
 `;
 
 export const TouchableOpacity = styled.TouchableOpacity`
