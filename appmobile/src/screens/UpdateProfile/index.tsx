@@ -74,7 +74,7 @@ export function UpdateProfile() {
     <S.Container>
       <FlashMessage position="top" />
       <S.Avatar style={{ elevation: 15 }}>
-        <UserAvatar size={150} name={`${user?.firstName} ${user?.lastName}`} />
+        <UserAvatar size={100} name={`${user?.firstName} ${user?.lastName}`} />
       </S.Avatar>
       <S.ScrollView
         contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
@@ -134,7 +134,7 @@ export function UpdateProfile() {
                   keyboardType="numeric"
                   value={value}
                   onChangeText={(masked, unmasked) => {
-                    onChange(unmasked); // you can use the unmasked value as well
+                    onChange(unmasked);
                   }}
                 />
               </>
@@ -162,7 +162,7 @@ export function UpdateProfile() {
                   mask={PHONE_MASK}
                   value={value}
                   onChangeText={(masked, unmasked) => {
-                    onChange(unmasked); // you can use the unmasked value as well
+                    onChange(unmasked);
                   }}
                 />
               </>

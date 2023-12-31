@@ -4,13 +4,16 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import React, { useState, useEffect } from "react";
-import { FlatList } from "react-native";
+import { FlatList, RefreshControl } from "react-native";
 
 import * as S from "./styles";
+import DeleteModal from "../../components/DeleteModal";
+import EditModal from "../../components/EditModal";
 import { useGetAll } from "../../components/UseGetAll";
+import { api } from "../../services/api";
 import theme from "../../theme";
 
-interface UserData {
+export interface UserData {
   cpf: string;
   firstName: string;
   lastName: string;
@@ -24,16 +27,31 @@ export function UserList() {
   const { data: users, loading, error } = useGetAll();
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredUsers, setFilteredUsers] = useState<UserData[]>([]);
+  const [isEditModalVisible, setEditModalVisible] = useState(false);
+  const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setIsRefreshing(true);
+
+    try {
+      const response = await api.get(`/users/all`);
+      setFilteredUsers(response.data);
+    } catch (error) {
+      console.error("Error refreshing data:", error);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
 
   useEffect(() => {
-    // @ts-ignore
     if (users) {
       filterUsers();
     }
   }, [searchQuery, users]);
 
   const filterUsers = () => {
-    // @ts-ignore
     const filteredList = users.filter((user) => {
       const fullName = `${user.firstName} ${user.lastName}`;
       return (
@@ -43,7 +61,6 @@ export function UserList() {
     });
     setFilteredUsers(filteredList);
   };
-
   const renderUserItem = ({ item: user }: { item: UserData }) => (
     <S.Usuario key={user.cpf}>
       <MaterialIcons
@@ -59,14 +76,24 @@ export function UserList() {
         <S.TextCpf>{user.cpf}</S.TextCpf>
         <S.TextCpf>{user.type}</S.TextCpf>
       </S.box>
-      <S.IconBtn>
+      <S.IconBtn
+        onPress={() => {
+          setSelectedUser(user);
+          setEditModalVisible(true);
+        }}
+      >
         <MaterialCommunityIcons
           name="pencil"
           size={26}
           color={theme.COLORS.GREEN}
         />
       </S.IconBtn>
-      <S.IconBtn>
+      <S.IconBtn
+        onPress={() => {
+          setSelectedUser(user);
+          setDeleteModalVisible(true);
+        }}
+      >
         <MaterialIcons
           name="delete-forever"
           size={26}
@@ -119,6 +146,22 @@ export function UserList() {
         ListEmptyComponent={() => (
           <S.TextButtom>Nenhum usuário encontrado</S.TextButtom>
         )}
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+        }
+      />
+      <EditModal
+        isVisible={isEditModalVisible}
+        user={selectedUser}
+        onClose={() => {
+          setEditModalVisible(false);
+          onRefresh(); // Chame a função de atualização ao fechar o modal
+        }}
+      />
+      <DeleteModal
+        isVisible={isDeleteModalVisible}
+        user={selectedUser}
+        onClose={() => setDeleteModalVisible(false)}
       />
     </S.Container>
   );

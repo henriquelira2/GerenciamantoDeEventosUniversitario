@@ -10,7 +10,7 @@ export const Container = styled.View`
 export const Avatar = styled.View`
   border-radius: 100px;
   border-color: rgba(0, 0, 0, 0.7);
-  margin-top: 10px;
+  margin-top: 40px;
   padding: 2px;
   border: 2px;
 `;

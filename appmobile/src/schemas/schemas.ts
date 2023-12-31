@@ -65,3 +65,28 @@ export const UpdateUserSchema = yup.object().shape({
     .email("Preencha o e-mail da forma correta!")
     .required("Preencha o campo!"),
 });
+export const AdmimUpdateUserSchema = yup.object().shape({
+  cpf: yup
+    .string()
+    .min(11, "Formato de CPF inválido")
+    .required("Preencha o campo!"),
+  firstName: yup
+    .string()
+    .matches(
+      /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]+$/,
+      "Formato de nome inválido",
+    ),
+  lastName: yup
+    .string()
+    .matches(
+      /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]+$/,
+      "Formato de sobrenome inválido",
+    ),
+
+  phoneNumber: yup.string().min(11, "Formato de Telefone inválido"),
+
+  email: yup.string().email("Preencha o e-mail da forma correta!"),
+
+  password: yup.string().min(8, "A senha deve conter 8 caracteres"),
+  type: yup.string(),
+});
