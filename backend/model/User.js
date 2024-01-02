@@ -28,6 +28,14 @@ const User = conn.define("users", {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  resetToken: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
+  resetTokenExpires: {
+    type: Sequelize.DATE,
+    allowNull: true,
+  },
   type: {
     type: Sequelize.STRING,
     allowNull: false,
