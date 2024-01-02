@@ -82,11 +82,14 @@ export const AdmimUpdateUserSchema = yup.object().shape({
       /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]+$/,
       "Formato de sobrenome inválido",
     ),
-
   phoneNumber: yup.string().min(11, "Formato de Telefone inválido"),
-
   email: yup.string().email("Preencha o e-mail da forma correta!"),
-
   password: yup.string().min(8, "A senha deve conter 8 caracteres"),
   type: yup.string(),
+});
+export const ForgotPassWordSchema = yup.object().shape({
+  password: yup
+    .string()
+    .min(8, "A senha deve conter 8 caracteres")
+    .required("Preenchao campo"),
 });

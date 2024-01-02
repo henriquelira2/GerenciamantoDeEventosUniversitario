@@ -11,11 +11,12 @@ export const Container = styled.View`
 export const Logo = styled.Image`
   width: 60%;
   height: 25%;
+  margin-bottom: 10px;
 `;
 export const Box = styled.View`
-  bottom: 5%;
   width: 90%;
   height: 70%;
+  bottom: 5%;
   align-items: center;
   justify-content: center;
   border-top-left-radius: 80px;
@@ -30,38 +31,28 @@ export const ScrollView = styled.ScrollView`
 export const Title = styled.Text`
   font-size: 30px;
   font-weight: 500;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   color: ${theme.COLORS.DARK};
 `;
-
+export const TextInfo = styled.Text`
+  text-align: center;
+  padding: 5px;
+  margin-bottom: 50px;
+`;
 export const Input = styled.View`
   flex-direction: row;
   margin-bottom: 30px;
-`;
-export const TextErro = styled.Text`
-  width: 70%;
-  color: ${theme.COLORS.YELLOW};
 `;
 export const TextInput = styled.TextInput`
   width: 80%;
   height: 50px;
   border-width: 1px;
   border-radius: 5px;
-  padding-left: 50px;
+  padding-left: 20px;
   background-color: ${theme.COLORS.GRAY100};
 `;
-export const ForgotView = styled.View`
-  width: 70%;
-  align-items: flex-end;
-  bottom: 15px;
-`;
-export const ForgotTouch = styled.TouchableOpacity``;
-export const ForgotText = styled.Text`
-  border-bottom-width: 2px;
-  border-color: ${theme.COLORS.BLUE};
-`;
-export const ButtomEyes = styled.TouchableOpacity``;
-export const LoginButtom = styled.TouchableOpacity`
+
+export const SendButtom = styled.TouchableOpacity`
   border-radius: 50px;
   width: 60%;
   height: 40px;
@@ -70,21 +61,12 @@ export const LoginButtom = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   background-color: ${theme.COLORS.RED};
+  margin-bottom: 30px;
 `;
-export const TextButtomLogin = styled.Text`
+export const TextButtom = styled.Text`
   font-size: 18px;
   color: ${theme.COLORS.WHITE};
 `;
-export const RegisterButtom = styled.TouchableOpacity`
-  border-radius: 50px;
-  width: 60%;
-  height: 40px;
-  margin-top: 10%;
-  align-self: center;
-  align-items: center;
-  justify-content: center;
-`;
-export const TextButtomRegister = styled.Text`
-  font-size: 18px;
-  color: ${theme.COLORS.GRAY};
+export const iconRun = styled.View`
+  flex-direction: row;
 `;

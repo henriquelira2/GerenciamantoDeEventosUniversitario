@@ -13,5 +13,7 @@ export type RegisterUser = {
   phoneNumber: string;
   email: string;
   password: string;
+  resetToken: string;
   type?: UserType;
 };
+export type NewPassword = { password: string };

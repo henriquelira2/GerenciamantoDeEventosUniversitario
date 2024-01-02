@@ -47,6 +47,9 @@ export function Login() {
   function handleLogin() {
     navigation.navigate("Register");
   }
+  function handleForgotPassword() {
+    navigation.navigate("SendPassoword");
+  }
 
   const isAuth = async () => {
     const value = await AsyncStorage.getItem("accessToken");
@@ -118,7 +121,7 @@ export function Login() {
                   keyboardType="numeric"
                   value={value}
                   onChangeText={(masked, unmasked) => {
-                    onChange(unmasked); // you can use the unmasked value as well
+                    onChange(unmasked);
                   }}
                 />
               )}
@@ -140,7 +143,6 @@ export function Login() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <S.TextInput
                   placeholder="Senha"
-                  keyboardType="numeric"
                   value={value}
                   onChangeText={onChange}
                   secureTextEntry={hidePass}
@@ -162,7 +164,11 @@ export function Login() {
               />
             </S.ButtomEyes>
           </S.Input>
-
+          <S.ForgotView>
+            <S.ForgotTouch onPress={handleForgotPassword}>
+              <S.ForgotText>Esqueceu a Senha</S.ForgotText>
+            </S.ForgotTouch>
+          </S.ForgotView>
           <S.LoginButtom
             onPress={handleSubmit(submitLoginForm)}
             isLoading={loginLoading}
