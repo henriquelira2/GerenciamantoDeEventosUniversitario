@@ -1,4 +1,9 @@
-import { Ionicons, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
+import {
+  Ionicons,
+  MaterialIcons,
+  FontAwesome5,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { useContext } from "react";
@@ -97,8 +102,8 @@ export default function HomeManager({
                 style={{ backgroundColor: theme.COLORS.PURPLE }}
                 onPress={() => handleNavigation({ name: "UpdateProfile" })}
               >
-                <Ionicons
-                  name="person-add"
+                <MaterialCommunityIcons
+                  name="account-edit"
                   size={50}
                   color={theme.COLORS.WHITE}
                 />

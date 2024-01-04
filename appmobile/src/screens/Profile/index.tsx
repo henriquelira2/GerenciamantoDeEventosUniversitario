@@ -38,11 +38,11 @@ export function Profile() {
     <S.Container>
       <S.Top>
         <S.BoxTextTop>
-          <S.NameText>
+          <S.NameText numberOfLines={1}>
             {user?.firstName} &nbsp;
             {user?.lastName}
           </S.NameText>
-          <S.EmailText>{user?.email}</S.EmailText>
+          <S.EmailText numberOfLines={1}>{user?.email}</S.EmailText>
         </S.BoxTextTop>
         <S.Avatar
           style={{

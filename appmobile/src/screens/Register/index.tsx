@@ -46,6 +46,8 @@ export function Register() {
 
   const submitRegisterForm = async (data: RegisterUser) => {
     setLoadingButton(true);
+    await new Promise((resolve) => setTimeout(resolve, 4000));
+    setLoadingButton(false);
     await createUserMutation({
       firstName: data.firstName,
       lastName: data.lastName,
@@ -53,6 +55,7 @@ export function Register() {
       email: data.email,
       phoneNumber: data.phoneNumber,
       password: data.password,
+      resetToken: "",
     });
     setTimeout(() => setLoadingButton(false), 2000);
     navigation.navigate("Login");

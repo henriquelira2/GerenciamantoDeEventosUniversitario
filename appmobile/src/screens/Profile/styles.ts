@@ -19,7 +19,7 @@ export const Top = styled.View`
 `;
 export const BoxTextTop = styled.View`
   align-items: center;
-  left: 10%;
+  width: 60%;
 `;
 export const NameText = styled.Text`
   font-size: 25px;
@@ -37,7 +37,7 @@ export const Avatar = styled.Image`
   border-color: ${theme.COLORS.GRAY};
   height: 65%;
   width: 40%;
-  right: 10%;
+  right: 3%;
   top: 10%;
 `;
 
@@ -53,6 +53,7 @@ export const BoxBot = styled.View`
   align-items: center;
   margin-bottom: 40px;
   width: 60%;
+  bottom: 10%;
 `;
 export const Icon = styled.View`
   border-radius: 50px;

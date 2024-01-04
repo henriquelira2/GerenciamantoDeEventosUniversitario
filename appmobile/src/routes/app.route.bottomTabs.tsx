@@ -4,6 +4,7 @@ import {
   createBottomTabNavigator,
 } from "@react-navigation/bottom-tabs";
 
+import { CreateUser } from "../screens/CreateUser";
 import { Events } from "../screens/Events";
 import { Home } from "../screens/Home";
 import { Profile } from "../screens/Profile";
@@ -17,6 +18,7 @@ type AppRoutes = {
   Profile: undefined;
   UserList: undefined;
   UpdateProfile: undefined;
+  CreateUser: undefined;
 };
 
 export type AppBotoomTabsRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -115,6 +117,19 @@ export function BottomTabs() {
             height: 120,
           },
           headerTitle: "                EDITAR PERFIL",
+          headerTintColor: `${theme.COLORS.WHITE}`,
+        }}
+      />
+      <Screen
+        name="CreateUser"
+        component={CreateUser}
+        options={{
+          tabBarButton: () => null,
+          headerStyle: {
+            backgroundColor: `${theme.COLORS.RED}`,
+            height: 120,
+          },
+          headerTitle: "Criar Novo Usuario",
           headerTintColor: `${theme.COLORS.WHITE}`,
         }}
       />

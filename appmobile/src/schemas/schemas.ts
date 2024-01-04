@@ -35,7 +35,10 @@ export const RegisterSchema = yup.object().shape({
     .string()
     .email("Preencha o e-mail da forma correta!")
     .required("Preencha o campo!"),
-  password: yup.string().required("Preencha o campo!"),
+  password: yup
+    .string()
+    .min(8, "A senha deve conter 8 caracteres")
+    .required("Preenchao campo"),
 });
 export const UpdateUserSchema = yup.object().shape({
   cpf: yup
@@ -92,4 +95,43 @@ export const ForgotPassWordSchema = yup.object().shape({
     .string()
     .min(8, "A senha deve conter 8 caracteres")
     .required("Preenchao campo"),
+});
+export const CreateUserAdmin = yup.object().shape({
+  cpf: yup
+    .string()
+    .min(11, "Formato de CPF inválido")
+    .required("Preencha o campo!"),
+  firstName: yup
+    .string()
+    .matches(
+      /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]+$/,
+      "Formato de nome inválido",
+    )
+    .required("Preencha o campo!"),
+  lastName: yup
+    .string()
+    .matches(
+      /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]+$/,
+      "Formato de sobrenome inválido",
+    )
+    .required("Preencha o campo!"),
+  phoneNumber: yup
+    .string()
+    .min(11, "Formato de Telefone inválido")
+    .required("Telefone incorreto"),
+  email: yup
+    .string()
+    .email("Preencha o e-mail da forma correta!")
+    .required("Preencha o campo!"),
+  password: yup
+    .string()
+    .min(8, "A senha deve conter 8 caracteres")
+    .required("Preenchao campo"),
+  type: yup
+    .string()
+    .oneOf(
+      ["User", "Manager", "Admin"],
+      "O tipo  deve ser um dos seguintes valores: User, Manager, Admin",
+    )
+    .required("Preencha o campo!"),
 });

@@ -3,6 +3,8 @@ import {
   MaterialIcons,
   FontAwesome5,
   FontAwesome,
+  MaterialCommunityIcons,
+  AntDesign,
 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
@@ -104,8 +106,8 @@ export default function HomeAdmin({
                 style={{ backgroundColor: theme.COLORS.PURPLE }}
                 onPress={() => handleNavigation({ name: "UpdateProfile" })}
               >
-                <Ionicons
-                  name="person-add"
+                <MaterialCommunityIcons
+                  name="account-edit"
                   size={50}
                   color={theme.COLORS.WHITE}
                 />
@@ -129,6 +131,21 @@ export default function HomeAdmin({
             </S.Touch_1>
             <S.Touch_1>
               <S.Icon
+                style={{ backgroundColor: theme.COLORS.YELLOW }}
+                onPress={() => handleNavigation({ name: "CreateUser" })}
+              >
+                <AntDesign
+                  name="adduser"
+                  size={60}
+                  color={theme.COLORS.WHITE}
+                />
+              </S.Icon>
+              <S.Text>Criar Novo Usuario</S.Text>
+            </S.Touch_1>
+          </S.Box_1>
+          <S.Box_1>
+            <S.Touch_1>
+              <S.Icon
                 style={{ backgroundColor: theme.COLORS.GREEN }}
                 onPress={() => {
                   Logout();
@@ -138,6 +155,7 @@ export default function HomeAdmin({
               </S.Icon>
               <S.Text>LOGOUT</S.Text>
             </S.Touch_1>
+            <S.Touch_1 />
           </S.Box_1>
         </S.ScrollView>
       </S.Bot>

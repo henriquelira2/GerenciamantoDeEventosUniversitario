@@ -17,3 +17,13 @@ export type RegisterUser = {
   type?: UserType;
 };
 export type NewPassword = { password: string };
+export type RegisterUserAdmin = {
+  cpf?: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
+  password: string;
+  resetToken: string;
+  type: UserType;
+};
