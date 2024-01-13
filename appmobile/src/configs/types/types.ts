@@ -16,6 +16,7 @@ export type RegisterUser = {
   resetToken: string;
   type?: UserType;
 };
+
 export type NewPassword = { password: string };
 export type RegisterUserAdmin = {
   cpf?: string;

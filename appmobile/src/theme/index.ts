@@ -14,6 +14,7 @@ export default {
 
 
     RED: "#690013",
+    RED100: "#F62803",
     GOLD: "#856321",
     GREEN: "#6F8E5C",
     ORANGE: "#F3900B",

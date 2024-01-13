@@ -60,7 +60,7 @@ export function ResetPassoword() {
     resolver: yupResolver(ForgotPassWordSchema),
   });
 
-  const NewPassword = async () => {
+  const NewPasswordSubmit = async () => {
     try {
       setLoadingButton(true);
       const response = await api.post(`/reset-password/${token}`, {
@@ -116,7 +116,10 @@ export function ResetPassoword() {
                     <S.TextInput
                       placeholder="Nova Senha"
                       value={value}
-                      onChangeText={onChange}
+                      onChangeText={(text: any) => {
+                        setNewPassword(text); // Aqui você deve chamar setNewPasswordr com o valor
+                        onChange(text);
+                      }}
                       secureTextEntry={hidePass}
                     />
                   )}
@@ -136,7 +139,7 @@ export function ResetPassoword() {
                   />
                 </S.ButtomEyes>
               </S.Input>
-              <S.RestButtom onPress={handleSubmit(NewPassword)}>
+              <S.RestButtom onPress={handleSubmit(NewPasswordSubmit)}>
                 <S.TextButtomRest>
                   {loadingButton ? (
                     <>

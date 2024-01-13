@@ -55,7 +55,7 @@ export const Input = styled.TextInput`
 export const TextErro = styled.Text`
   width: 70%;
   margin-left: 5%;
-  color: ${theme.COLORS.ORANGE};
+  color: ${theme.COLORS.RED100};
 `;
 
 export const TouchableOpacity = styled.TouchableOpacity`
