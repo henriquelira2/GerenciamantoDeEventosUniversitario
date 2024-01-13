@@ -35,28 +35,35 @@ function generateRandomToken(length) {
 }
 
 app.post("/login", async (req, res) => {
-  const user = await User.findOne({ where: { cpf: req.body.cpf } });
-  if (user) {
-    const password_valid = await bcrypt.compare(
-      req.body.password,
-      user.password
-    );
-    if (password_valid) {
-      token = jwt.sign(
-        {
-          cpf: user.cpf,
-          first_name: user.first_name,
-          email: user.email,
-          phoneNumber: user.phoneNumber,
-        },
-        process.env.SECRET
+  try {
+    const user = await User.findOne({ where: { cpf: req.body.cpf } });
+
+    if (user) {
+      const password_valid = await bcrypt.compare(
+        req.body.password,
+        user.password
       );
-      res.status(200).json({ token: token });
+
+      if (password_valid) {
+        token = jwt.sign(
+          {
+            cpf: user.cpf,
+            first_name: user.first_name,
+            email: user.email,
+            phoneNumber: user.phoneNumber,
+          },
+          process.env.SECRET
+        );
+        res.status(200).json({ token: token });
+      } else {
+        res.status(400).json({ error: "Password Incorrect" });
+      }
     } else {
-      res.status(400).json({ error: "Password Incorrect" });
+      res.status(404).json({ error: "User does not exist" });
     }
-  } else {
-    res.status(404).json({ error: "User does not exist" });
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
@@ -237,6 +244,10 @@ app.put("/users/update2/:cpf", async (req, res) => {
       updatedFields.password = await bcrypt.hash(updatedFields.password, salt);
     }
 
+    // Remova resetTokenExpires do objeto updatedFields antes do update
+    delete updatedFields.resetTokenExpires;
+
+    // Adicione a lógica de update
     await User.update(updatedFields, {
       where: { cpf: cpf },
     });
