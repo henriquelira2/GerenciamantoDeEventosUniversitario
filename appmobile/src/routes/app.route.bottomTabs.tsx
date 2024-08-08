@@ -14,86 +14,81 @@ import theme from "../theme";
 
 type AppRoutes = {
   Home: undefined;
-  Events: undefined;
-  Profile: undefined;
+  Eventos: undefined;
+  Perfil: undefined;
   UserList: undefined;
   UpdateProfile: undefined;
   CreateUser: undefined;
 };
 
-export type AppBotoomTabsRoutesProps = BottomTabNavigationProp<AppRoutes>;
+export type AppBottomTabsRoutesProps = BottomTabNavigationProp<AppRoutes>;
 
-const { Navigator, Screen } = createBottomTabNavigator<AppRoutes>();
+const { Navigator: TabNavigator, Screen: TabScreen } =
+  createBottomTabNavigator<AppRoutes>();
+
 export function BottomTabs() {
   return (
-    <Navigator
+    <TabNavigator
       initialRouteName="Home"
       screenOptions={{
-        tabBarShowLabel: false,
         tabBarStyle: {
           position: "absolute",
           backgroundColor: "#171626",
           borderTopWidth: 0,
-
+          paddingBottom: 5,
           bottom: 14,
           left: 14,
           right: 14,
           elevation: 0,
           borderRadius: 5,
           height: 60,
+          zIndex: 1,
         },
       }}
     >
-      <Screen
+      <TabScreen
         name="Home"
         component={Home}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, size, focused }) => {
-            if (focused) {
-              return <Ionicons name="home" size={size} color={color} />;
-            }
-            return <Ionicons name="home-outline" size={size} color={color} />;
-          },
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? "home" : "home-outline"}
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
-      <Screen
-        name="Events"
+      <TabScreen
+        name="Eventos"
         component={Events}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, size, focused }) => {
-            if (focused) {
-              return <MaterialIcons name="event" size={size} color={color} />;
-            }
-            return (
-              <MaterialIcons name="event-note" size={size} color={color} />
-            );
-          },
+          tabBarIcon: ({ color, size, focused }) => (
+            <MaterialIcons
+              name={focused ? "event" : "event-note"}
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
-      <Screen
-        name="Profile"
+      <TabScreen
+        name="Perfil"
         component={Profile}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, size, focused }) => {
-            if (focused) {
-              return (
-                <Ionicons name="person-circle" size={size} color={color} />
-              );
-            }
-            return (
-              <Ionicons
-                name="person-circle-outline"
-                size={size}
-                color={color}
-              />
-            );
-          },
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? "person-circle" : "person-circle-outline"}
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
-      <Screen
+      <TabScreen
         name="UserList"
         component={UserList}
         options={{
@@ -107,7 +102,7 @@ export function BottomTabs() {
           headerTintColor: `${theme.COLORS.WHITE}`,
         }}
       />
-      <Screen
+      <TabScreen
         name="UpdateProfile"
         component={UpdateProfile}
         options={{
@@ -120,7 +115,7 @@ export function BottomTabs() {
           headerTintColor: `${theme.COLORS.WHITE}`,
         }}
       />
-      <Screen
+      <TabScreen
         name="CreateUser"
         component={CreateUser}
         options={{
@@ -133,6 +128,6 @@ export function BottomTabs() {
           headerTintColor: `${theme.COLORS.WHITE}`,
         }}
       />
-    </Navigator>
+    </TabNavigator>
   );
 }

@@ -8,6 +8,7 @@ import { Routes } from "./src/routes/index";
 import theme from "./src/theme";
 
 export default function App() {
+  /*  
   async function onFetchUpdateAsync() {
     try {
       const update = await Updates.checkForUpdateAsync();
@@ -24,7 +25,7 @@ export default function App() {
   useEffect(() => {
     onFetchUpdateAsync();
   }, []);
-
+*/
   const queryClient = new QueryClient();
   AppRegistry.registerComponent("main", () => App);
   return (

@@ -68,7 +68,7 @@ export default function HomeAdmin({
             <S.Touch_1>
               <S.Icon
                 style={{ backgroundColor: theme.COLORS.BLUE }}
-                onPress={() => handleNavigation({ name: "Events" })}
+                onPress={() => handleNavigation({ name: "Eventos" })}
               >
                 <MaterialIcons
                   name="event-note"
@@ -82,7 +82,7 @@ export default function HomeAdmin({
             <S.Touch_1>
               <S.Icon
                 style={{ backgroundColor: theme.COLORS.RED }}
-                onPress={() => handleNavigation({ name: "Profile" })}
+                onPress={() => handleNavigation({ name: "Perfil" })}
               >
                 <Ionicons name="person" size={50} color={theme.COLORS.WHITE} />
               </S.Icon>

@@ -60,7 +60,13 @@ export const ForgotText = styled.Text`
   border-bottom-width: 2px;
   border-color: ${theme.COLORS.BLUE};
 `;
-export const ButtomEyes = styled.TouchableOpacity``;
+export const ButtomEyes = styled.TouchableOpacity`
+  position: absolute;
+  height: 100%;
+  width: 12%;
+  right: 0%;
+  z-index: 999;
+`;
 export const LoginButtom = styled.TouchableOpacity`
   border-radius: 50px;
   width: 60%;
