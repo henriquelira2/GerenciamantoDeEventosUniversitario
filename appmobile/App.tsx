@@ -1,3 +1,4 @@
+import * as NavigationBar from "expo-navigation-bar";
 import * as Updates from "expo-updates";
 import React, { useEffect } from "react";
 import { StatusBar, AppRegistry } from "react-native";
@@ -8,7 +9,6 @@ import { Routes } from "./src/routes/index";
 import theme from "./src/theme";
 
 export default function App() {
-  /*  
   async function onFetchUpdateAsync() {
     try {
       const update = await Updates.checkForUpdateAsync();
@@ -24,8 +24,9 @@ export default function App() {
 
   useEffect(() => {
     onFetchUpdateAsync();
+    NavigationBar.setVisibilityAsync("hidden");
   }, []);
-*/
+
   const queryClient = new QueryClient();
   AppRegistry.registerComponent("main", () => App);
   return (

@@ -23,6 +23,38 @@ export function DrawerRoutes(props: any) {
     backgroundColor: selectedItem === routeName ? "#171626" : "transparent",
   });
 
+  const getIconSource = (routeName: string) => {
+    switch (routeName) {
+      case "Home":
+        return selectedItem === "Home"
+          ? require("../../assets/drawerIcons/home-icon-w.png")
+          : require("../../assets/drawerIcons/home-icon.png");
+      case "Eventos":
+        return selectedItem === "Eventos"
+          ? require("../../assets/drawerIcons/event-icon-w.png")
+          : require("../../assets/drawerIcons/event-icon.png");
+      case "Perfil":
+        return selectedItem === "Perfil"
+          ? require("../../assets/drawerIcons/user-icon-w.png")
+          : require("../../assets/drawerIcons/user-icon.png")
+      case "UserList":
+        return selectedItem === "UserList"
+          ? require("../../assets/drawerIcons/listuser-icon-w.png")
+          : require("../../assets/drawerIcons/listuser-icon.png");
+      case "UpdateProfile":
+        return selectedItem === "UpdateProfile"
+          ? require("../../assets/drawerIcons/edituser-icon-w.png")
+          : require("../../assets/drawerIcons/edituser-icon.png");
+      case "CreateUser":
+        return selectedItem === "CreateUser"
+          ? require("../../assets/drawerIcons/newuser-icon-w.png")
+          : require("../../assets/drawerIcons/newuser-icon.png");
+
+      default:
+        return require("../../assets/drawerIcons/listuser-icon.png");
+    }
+  };
+
   return (
     <S.Container style={{ flex: 1 }}>
       <DrawerContentScrollView
@@ -40,11 +72,10 @@ export function DrawerRoutes(props: any) {
           <DrawerItem
             label="Home"
             onPress={() => handleItemPress("Home")}
-            icon={({ color, size }) => (
-              <Ionicons
-                name="home"
-                size={20}
-                color={selectedItem === "Home" ? "white" : "black"}
+            icon={() => (
+              <S.Icon
+                style={{ resizeMode: "stretch" }}
+                source={getIconSource("Home")}
               />
             )}
             style={getItemStyle("Home")}
@@ -55,11 +86,10 @@ export function DrawerRoutes(props: any) {
           <DrawerItem
             label="Eventos"
             onPress={() => handleItemPress("Eventos")}
-            icon={({ color, size }) => (
-              <Ionicons
-                name="paper-plane"
-                size={20}
-                color={selectedItem === "Eventos" ? "white" : "black"}
+            icon={() => (
+              <S.Icon
+                style={{ resizeMode: "stretch" }}
+                source={getIconSource("Eventos")}
               />
             )}
             style={getItemStyle("Eventos")}
@@ -68,12 +98,72 @@ export function DrawerRoutes(props: any) {
             }}
           />
 
+          <DrawerItem
+            label="Perfil"
+            onPress={() => handleItemPress("Perfil")}
+            icon={() => (
+              <S.Icon
+                style={{ resizeMode: "stretch" }}
+                source={getIconSource("Perfil")}
+              />
+            )}
+            style={getItemStyle("Perfil")}
+            labelStyle={{
+              color: selectedItem === "Perfil" ? "white" : "black",
+            }}
+          />
+
+          <DrawerItem
+            label="Lista de Usuarios"
+            onPress={() => handleItemPress("UserList")}
+            icon={() => (
+              <S.Icon
+                style={{ resizeMode: "stretch" }}
+                source={getIconSource("UserList")}
+              />
+            )}
+            style={getItemStyle("UserList")}
+            labelStyle={{
+              color: selectedItem === "UserList" ? "white" : "black",
+            }}
+          />
+
+          <DrawerItem
+            label="Editar Perfil"
+            onPress={() => handleItemPress("UpdateProfile")}
+            icon={() => (
+              <S.Icon
+                style={{ resizeMode: "stretch" }}
+                source={getIconSource("UpdateProfile")}
+              />
+            )}
+            style={getItemStyle("UpdateProfile")}
+            labelStyle={{
+              color: selectedItem === "UpdateProfile" ? "white" : "black",
+            }}
+          />
+
+          <DrawerItem
+            label="Criar Novo Usuario"
+            onPress={() => handleItemPress("CreateUser")}
+            icon={() => (
+              <S.Icon
+                style={{ resizeMode: "stretch" }}
+                source={getIconSource("CreateUser")}
+              />
+            )}
+            style={getItemStyle("CreateUser")}
+            labelStyle={{
+              color: selectedItem === "CreateUser" ? "white" : "black",
+            }}
+          />
+
           <DrawerItemList {...props} />
         </S.Middle>
       </DrawerContentScrollView>
 
       <S.Bottom>
-        <S.ButtomBottom onPress={() => {}}>
+        <S.ButtomBottom onPress={() => { }}>
           <S.BottomBox>
             <Ionicons name="information-circle-outline" size={22} />
             <S.BottomText>Sobre o App</S.BottomText>

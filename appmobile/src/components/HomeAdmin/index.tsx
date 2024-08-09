@@ -1,43 +1,28 @@
-import {
-  Ionicons,
-  MaterialIcons,
-  FontAwesome5,
-  FontAwesome,
-  MaterialCommunityIcons,
-  AntDesign,
-} from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
-import React, { useContext } from "react";
+import React from "react";
+import { FlatList, ListRenderItemInfo } from "react-native";
 
 import * as S from "./styles";
-import { AuthContext } from "../../contexts/auth";
-import { AppBotoomTabsRoutesProps } from "../../routes/app.route.bottomTabs";
-import theme from "../../theme";
+import { HomeIconList } from "../../components/HomeAdmItens";
+import { homeAdm, homeAdmList } from "../../data/homeAdm";
 
-type RouteParams = {
-  name: string;
-};
+export default function HomeAdmin() {
+  const numColumns = 3;
 
-export default function HomeAdmin({
-  lastName,
-  firstName,
-}: {
-  lastName?: string;
-  firstName?: string;
-}) {
-  const { setUser } = useContext(AuthContext);
-
-  const Logout = async () => {
-    await AsyncStorage.clear();
-    setUser(false);
+  const formatData = (data: any, numColumns: any) => {
+    const numberOfFullRows = Math.floor(data.length / numColumns);
+    let numberOfElementsLastRow = data.length - numberOfFullRows * numColumns;
+    while (
+      numberOfElementsLastRow !== numColumns &&
+      numberOfElementsLastRow !== 0
+    ) {
+      data.push({ key: `blank-${numberOfElementsLastRow}`, empty: false });
+      numberOfElementsLastRow++;
+    }
+    return data;
   };
 
-  const navigation = useNavigation<AppBotoomTabsRoutesProps>();
-
-  function handleNavigation(route: RouteParams) {
-    // @ts-ignore
-    navigation.navigate(route.name);
+  function renderItem({ item }: ListRenderItemInfo<homeAdm>) {
+    return <HomeIconList {...item} />;
   }
 
   return (
@@ -51,113 +36,13 @@ export default function HomeAdmin({
         />
       </S.Top>
       <S.Bot>
-        <S.ScrollView
-          contentContainerStyle={{
-            justifyContent: "center",
-            alignItems: "center",
-            paddingBottom: 100,
-          }}
-        >
-          <S.User>
-            <Ionicons name="person" size={20} />
-            <S.TextUser>
-              {firstName} {lastName}
-            </S.TextUser>
-          </S.User>
-          <S.Box_1>
-            <S.Touch_1>
-              <S.Icon
-                style={{ backgroundColor: theme.COLORS.BLUE }}
-                onPress={() => handleNavigation({ name: "Eventos" })}
-              >
-                <MaterialIcons
-                  name="event-note"
-                  size={60}
-                  color={theme.COLORS.WHITE}
-                />
-              </S.Icon>
-              <S.Text>EVENTOS</S.Text>
-            </S.Touch_1>
-
-            <S.Touch_1>
-              <S.Icon
-                style={{ backgroundColor: theme.COLORS.RED }}
-                onPress={() => handleNavigation({ name: "Perfil" })}
-              >
-                <Ionicons name="person" size={50} color={theme.COLORS.WHITE} />
-              </S.Icon>
-              <S.Text>PERFIL</S.Text>
-            </S.Touch_1>
-          </S.Box_1>
-
-          <S.Box_1>
-            <S.Touch_1>
-              <S.Icon style={{ backgroundColor: theme.COLORS.GOLD }}>
-                <FontAwesome5
-                  name="plus"
-                  size={60}
-                  color={theme.COLORS.WHITE}
-                />
-              </S.Icon>
-              <S.Text>CRIAR NOVO EVENTO</S.Text>
-            </S.Touch_1>
-            <S.Touch_1>
-              <S.Icon
-                style={{ backgroundColor: theme.COLORS.PURPLE }}
-                onPress={() => handleNavigation({ name: "UpdateProfile" })}
-              >
-                <MaterialCommunityIcons
-                  name="account-edit"
-                  size={50}
-                  color={theme.COLORS.WHITE}
-                />
-              </S.Icon>
-              <S.Text>EDITAR PERFIL</S.Text>
-            </S.Touch_1>
-          </S.Box_1>
-          <S.Box_1>
-            <S.Touch_1>
-              <S.Icon
-                style={{ backgroundColor: theme.COLORS.ORANGE200 }}
-                onPress={() => handleNavigation({ name: "UserList" })}
-              >
-                <FontAwesome
-                  name="group"
-                  size={40}
-                  color={theme.COLORS.WHITE}
-                />
-              </S.Icon>
-              <S.Text>USUARIOS CADASTRADOS</S.Text>
-            </S.Touch_1>
-            <S.Touch_1>
-              <S.Icon
-                style={{ backgroundColor: theme.COLORS.YELLOW }}
-                onPress={() => handleNavigation({ name: "CreateUser" })}
-              >
-                <AntDesign
-                  name="adduser"
-                  size={60}
-                  color={theme.COLORS.WHITE}
-                />
-              </S.Icon>
-              <S.Text>Criar Novo Usuario</S.Text>
-            </S.Touch_1>
-          </S.Box_1>
-          <S.Box_1>
-            <S.Touch_1>
-              <S.Icon
-                style={{ backgroundColor: theme.COLORS.GREEN }}
-                onPress={() => {
-                  Logout();
-                }}
-              >
-                <Ionicons name="power" size={60} color={theme.COLORS.WHITE} />
-              </S.Icon>
-              <S.Text>LOGOUT</S.Text>
-            </S.Touch_1>
-            <S.Touch_1 />
-          </S.Box_1>
-        </S.ScrollView>
+        <FlatList
+          data={formatData(homeAdmList, numColumns)}
+          stickyHeaderIndices={[0]}
+          keyExtractor={(item) => item.name}
+          renderItem={renderItem}
+          numColumns={numColumns}
+        />
       </S.Bot>
     </S.Container>
   );

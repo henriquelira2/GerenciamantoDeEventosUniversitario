@@ -98,7 +98,7 @@ export function BottomTabs() {
             height: 150,
             borderBottomEndRadius: 50,
           },
-          headerTitle: "Usuarios Cadastrados",
+          headerTitle: "                 Usuarios Cadastrados",
           headerTintColor: `${theme.COLORS.WHITE}`,
         }}
       />
@@ -124,7 +124,7 @@ export function BottomTabs() {
             backgroundColor: `${theme.COLORS.RED}`,
             height: 120,
           },
-          headerTitle: "Criar Novo Usuario",
+          headerTitle: "                Criar Novo Usuario",
           headerTintColor: `${theme.COLORS.WHITE}`,
         }}
       />

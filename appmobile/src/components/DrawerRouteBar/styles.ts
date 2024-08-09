@@ -54,3 +54,5 @@ export const BottomText = styled.Text`
   font-size: 15px;
   margin-left: 10px;
 `;
+
+export const Icon = styled.Image``;

@@ -19,7 +19,6 @@ export const ImageTop = styled.Image`
 
 export const Bot = styled.View`
   flex: 2;
-
   justify-content: center;
   background-color: ${theme.COLORS.WHITE};
 `;
