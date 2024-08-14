@@ -8,11 +8,12 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 
 import * as S from "./styles";
+import { useIcon } from "../../contexts/IconContext";
 import { AppBottomTabsRoutesProps } from "../../routes/app.route.bottomTabs";
 
 export function DrawerRoutes(props: any) {
   const navigation = useNavigation<AppBottomTabsRoutesProps>();
-  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const { selectedItem, setSelectedItem } = useIcon();
 
   const handleItemPress = (routeName: string) => {
     setSelectedItem(routeName);
@@ -36,7 +37,7 @@ export function DrawerRoutes(props: any) {
       case "Perfil":
         return selectedItem === "Perfil"
           ? require("../../assets/drawerIcons/user-icon-w.png")
-          : require("../../assets/drawerIcons/user-icon.png")
+          : require("../../assets/drawerIcons/user-icon.png");
       case "UserList":
         return selectedItem === "UserList"
           ? require("../../assets/drawerIcons/listuser-icon-w.png")
@@ -163,7 +164,7 @@ export function DrawerRoutes(props: any) {
       </DrawerContentScrollView>
 
       <S.Bottom>
-        <S.ButtomBottom onPress={() => { }}>
+        <S.ButtomBottom onPress={() => {}}>
           <S.BottomBox>
             <Ionicons name="information-circle-outline" size={22} />
             <S.BottomText>Sobre o App</S.BottomText>

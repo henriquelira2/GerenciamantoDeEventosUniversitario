@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { RouteDrawer } from "./app.route.drawer";
 import { AppRouteStack } from "./app.route.stack";
+import { IconProvider } from "../contexts/IconContext"; // Importe o Provider
 import { AuthContext } from "../contexts/auth";
 
 export function Routes() {
@@ -16,9 +17,11 @@ export function Routes() {
         },
       }}
     >
-      <NavigationContainer onStateChange={(state) => setTabState(state)}>
-        {loggedIn ? <RouteDrawer tabState={tabState} /> : <AppRouteStack />}
-      </NavigationContainer>
+      <IconProvider>
+        <NavigationContainer onStateChange={(state) => setTabState(state)}>
+          {loggedIn ? <RouteDrawer tabState={tabState} /> : <AppRouteStack />}
+        </NavigationContainer>
+      </IconProvider>
     </AuthContext.Provider>
   );
 }
