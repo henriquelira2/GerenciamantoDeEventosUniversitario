@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
 import { ImageProps } from "react-native";
 
-const newevent = require("../assets/dasboardAdm/criar novo evento.png");
-const newuser = require("../assets/dasboardAdm/criar novo usuario.png");
-const updateuser = require("../assets/dasboardAdm/editar perfil.png");
-const event = require("../assets/dasboardAdm/eventos.png");
-const listuser = require("../assets/dasboardAdm/lista de usuarios.png");
-const perfil = require("../assets/dasboardAdm/perfil.png");
-const vazio = require("../assets/dasboardAdm/vazio.png");
+const newevent = require("../assets/dasboardAdm/criar novo evento2.png");
+const newuser = require("../assets/dasboardAdm/criar novo usuario2.png");
+const updateuser = require("../assets/dasboardAdm/editar perfil2.png");
+const event = require("../assets/dasboardAdm/eventos2.png");
+const listuser = require("../assets/dasboardAdm/lista de usuarios2.png");
+const perfil = require("../assets/dasboardAdm/perfil2.png");
+//const vazio = require("../assets/dasboardAdm/vazio.png");
 
 
 export interface homeAdm {

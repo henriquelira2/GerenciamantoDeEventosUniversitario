@@ -1,11 +1,18 @@
 import React from "react";
-import { FlatList, ListRenderItemInfo } from "react-native";
+import { FlatList, ListRenderItemInfo, ImageBackground } from "react-native";
 
 import * as S from "./styles";
+import bacground from "../../assets/bg-tela2.png";
 import { HomeIconList } from "../../components/HomeAdmItens";
 import { homeAdm, homeAdmList } from "../../data/homeAdm";
 
-export default function HomeAdmin() {
+export default function HomeAdmin({
+  lastName,
+  firstName,
+}: {
+  lastName?: string;
+  firstName?: string;
+}) {
   const numColumns = 3;
 
   const formatData = (data: any, numColumns: any) => {
@@ -27,23 +34,24 @@ export default function HomeAdmin() {
 
   return (
     <S.Container>
-      <S.Top>
-        <S.ImageTop
-          source={require("../../assets/extensao-marca-gomos-cor.png")}
-          style={{
-            resizeMode: "contain",
-          }}
-        />
-      </S.Top>
-      <S.Bot>
+      <ImageBackground source={bacground} style={{ flex: 1 }}>
+        <S.Top>
+          <S.ImageTop
+            source={require("../../assets/extensao-marca-gomos-cor.png")}
+            style={{
+              resizeMode: "contain",
+            }}
+          />
+        </S.Top>
+
         <FlatList
           data={formatData(homeAdmList, numColumns)}
-          stickyHeaderIndices={[0]}
           keyExtractor={(item) => item.name}
           renderItem={renderItem}
           numColumns={numColumns}
+          contentContainerStyle={{ paddingBottom: 100 }}
         />
-      </S.Bot>
+      </ImageBackground>
     </S.Container>
   );
 }

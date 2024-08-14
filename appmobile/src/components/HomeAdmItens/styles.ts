@@ -11,8 +11,9 @@ export const Box = styled.TouchableOpacity`
   align-items: center;
   justify-content: space-between;
   flex: 1;
-  margin: 1px;
+  margin: 2px;
   height: 120px;
+  border-radius: 5px;
 `;
 export const Icon = styled.Image`
   margin-top: 10px;
@@ -29,10 +30,11 @@ export const BoxTitle = styled.View`
 `;
 
 export const Info = styled.Text`
-  font-size: 10px;
+  font-size: 12px;
   color: black;
   text-align: center;
   color: ${theme.COLORS.WHITE};
   width: 80%;
+  height: 24%;
   margin-bottom: 5px;
 `;

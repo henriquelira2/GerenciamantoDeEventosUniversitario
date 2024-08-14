@@ -10,7 +10,7 @@ import { useContext } from "react";
 
 import * as S from "./styles";
 import { AuthContext } from "../../contexts/auth";
-import { AppBotoomTabsRoutesProps } from "../../routes/app.route.bottomTabs";
+import { AppBottomTabsRoutesProps } from "../../routes/app.route.bottomTabs";
 import theme from "../../theme";
 type RouteParams = {
   name: string;
@@ -23,7 +23,7 @@ export default function HomeManager({
   firstName?: string;
 }) {
   const { setUser } = useContext(AuthContext);
-  const navigation = useNavigation<AppBotoomTabsRoutesProps>();
+  const navigation = useNavigation<AppBottomTabsRoutesProps>();
 
   function handleNavigation(route: RouteParams) {
     // @ts-ignore

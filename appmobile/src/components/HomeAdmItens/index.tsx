@@ -12,7 +12,11 @@ export function HomeIconList({ name, background, route }: homeAdm) {
     const navigation = useNavigation<AppBottomTabsRoutesProps>();
 
     const Routes = () => {
-        navigation.navigate(route);
+        if (["Home", "Eventos", "Perfil", "UserList", "UpdateProfile", "CreateUser"].includes(route)) {
+            navigation.navigate(route as any);
+        } else {
+            console.error("Invalid route:", route);
+        }
     };
 
 
@@ -24,11 +28,13 @@ export function HomeIconList({ name, background, route }: homeAdm) {
                 shadowColor: "#000000",
                 shadowOpacity: 0.8,
                 shadowRadius: 1,
+                borderRadius: 5
             }}
         >
             <S.Box key={name} onPress={() => Routes()}>
                 <ImageBackground
                     source={background}
+                    imageStyle={{ borderRadius: 5 }}
                     style={{
                         flex: 1,
                         width: "100%",
