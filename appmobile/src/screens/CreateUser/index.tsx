@@ -61,7 +61,6 @@ export function CreateUser() {
       <S.ScrollView
         contentContainerStyle={{
           flexGrow: 1,
-
           alignItems: "center",
         }}
       >
@@ -85,7 +84,7 @@ export function CreateUser() {
                 keyboardType="numeric"
                 value={value}
                 onChangeText={(masked, unmasked) => {
-                  onChange(unmasked); // you can use the unmasked value as well
+                  onChange(unmasked);
                 }}
               />
             )}
@@ -161,7 +160,7 @@ export function CreateUser() {
                 mask={PHONE_MASK}
                 value={value}
                 onChangeText={(masked, unmasked) => {
-                  onChange(unmasked); // you can use the unmasked value as well
+                  onChange(unmasked);
                 }}
               />
             )}

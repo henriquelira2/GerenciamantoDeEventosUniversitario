@@ -5,6 +5,7 @@ import {
 import { Image } from "react-native";
 
 import { useIcon } from "../contexts/IconContext"; // Importe o contexto
+import { CreateEvent } from "../screens/CreateEvent";
 import { CreateUser } from "../screens/CreateUser";
 import { Events } from "../screens/Events";
 import { Home } from "../screens/Home";
@@ -20,6 +21,7 @@ type AppRoutes = {
   UserList: undefined;
   UpdateProfile: undefined;
   CreateUser: undefined;
+  CreateEvent: undefined;
 };
 
 export type AppBottomTabsRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -136,6 +138,19 @@ export function BottomTabs() {
             height: 120,
           },
           headerTitle: "                Criar Novo Usuario",
+          headerTintColor: `${theme.COLORS.WHITE}`,
+        }}
+      />
+      <TabScreen
+        name="CreateEvent"
+        component={CreateEvent}
+        options={{
+          tabBarButton: () => null,
+          headerStyle: {
+            backgroundColor: `${theme.COLORS.RED}`,
+            height: 120,
+          },
+          headerTitle: "                Criar  Evento",
           headerTintColor: `${theme.COLORS.WHITE}`,
         }}
       />

@@ -45,6 +45,6 @@ export const homeAdmList: homeAdm[] = [
   {
     name: "Criar Novo Evento",
     background: newevent,
-    route: "Home",
+    route: "CreateEvent",
   },
 ];

@@ -28,3 +28,16 @@ export type RegisterUserAdmin = {
   resetToken: string;
   type: UserType;
 };
+
+export type CreateEventT = {
+  nameEvent?: string;
+  descriptionEvent: string;
+  dateEvent: string;
+  hourEvent: string;
+  priceEvent: string;
+  organizerEvent: string;
+  qtdVacanciesEvent: string;
+  imageEvent: string;
+  typeEvent: string;
+  locationEvent: string;
+};

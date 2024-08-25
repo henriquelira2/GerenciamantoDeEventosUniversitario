@@ -40,6 +40,7 @@ export const RegisterSchema = yup.object().shape({
     .min(8, "A senha deve conter 8 caracteres")
     .required("Preenchao campo"),
 });
+
 export const UpdateUserSchema = yup.object().shape({
   cpf: yup
     .string()
@@ -68,6 +69,7 @@ export const UpdateUserSchema = yup.object().shape({
     .email("Preencha o e-mail da forma correta!")
     .required("Preencha o campo!"),
 });
+
 export const AdmimUpdateUserSchema = yup.object().shape({
   cpf: yup
     .string()
@@ -90,12 +92,14 @@ export const AdmimUpdateUserSchema = yup.object().shape({
   password: yup.string().min(8, "A senha deve conter 8 caracteres"),
   type: yup.string(),
 });
+
 export const ForgotPassWordSchema = yup.object().shape({
   password: yup
     .string()
     .min(8, "A senha deve conter 8 caracteres")
     .required("Preenchao campo"),
 });
+
 export const CreateUserAdmin = yup.object().shape({
   cpf: yup
     .string()
@@ -134,4 +138,17 @@ export const CreateUserAdmin = yup.object().shape({
       "O tipo  deve ser um dos seguintes valores: User, Manager, Admin",
     )
     .required("Preencha o campo!"),
+});
+
+export const CreateEventSchema = yup.object().shape({
+  nameEvent: yup.string().required("Preencha o campo!"),
+  imageEvent: yup.string().required("Preencha o campo!"),
+  descriptionEvent: yup.string().required("Preencha o campo!"),
+  dateEvent: yup.string().required("Preencha o campo!"),
+  hourEvent: yup.string().required("Preencha o campo!"),
+  priceEvent: yup.string().required("Preenchao campo"),
+  organizerEvent: yup.string().required("Preencha o campo!"),
+  qtdVacanciesEvent: yup.string().required("Preencha o campo!"),
+  locationEvent: yup.string().required("Preencha o campo!"),
+  typeEvent: yup.string().required("Preencha o campo!"),
 });

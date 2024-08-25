@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { api } from "../../services/api";
-import { RegisterUser, User } from "../types";
+import { RegisterUser, User, CreateEventT } from "../types";
 
 export const CreateUser = async (data: RegisterUser): Promise<void> => {
   const response = await api.post("/users/save", data);
@@ -26,5 +26,11 @@ export const LoginUser = async (data: User): Promise<void> => {
 export const UpdateUser = async (data: RegisterUser): Promise<void> => {
   const cpf = await AsyncStorage.getItem("userCPF");
   const response = await api.put(`/users/update2/${cpf}`, data);
+  return response.data;
+};
+
+export const CreateEvent = async (data: CreateEventT): Promise<void> => {
+  console.log("Sending Data to API:", data);
+  const response = await api.post("/events/save", data);
   return response.data;
 };

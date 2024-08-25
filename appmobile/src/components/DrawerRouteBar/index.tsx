@@ -50,6 +50,10 @@ export function DrawerRoutes(props: any) {
         return selectedItem === "CreateUser"
           ? require("../../assets/drawerIcons/newuser-icon-w.png")
           : require("../../assets/drawerIcons/newuser-icon.png");
+      case "CreateEvent":
+        return selectedItem === "CreateEvent"
+          ? require("../../assets/drawerIcons/event-icon-w.png")
+          : require("../../assets/drawerIcons/event-icon.png");
 
       default:
         return require("../../assets/drawerIcons/listuser-icon.png");
@@ -156,6 +160,20 @@ export function DrawerRoutes(props: any) {
             style={getItemStyle("CreateUser")}
             labelStyle={{
               color: selectedItem === "CreateUser" ? "white" : "black",
+            }}
+          />
+          <DrawerItem
+            label="Criar Evento"
+            onPress={() => handleItemPress("CreateEvent")}
+            icon={() => (
+              <S.Icon
+                style={{ resizeMode: "stretch" }}
+                source={getIconSource("CreateEvent")}
+              />
+            )}
+            style={getItemStyle("CreateEvent")}
+            labelStyle={{
+              color: selectedItem === "CreateEvent" ? "white" : "black",
             }}
           />
 

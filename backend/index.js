@@ -3,6 +3,7 @@ const app = express();
 const bcrypt = require("bcrypt");
 const conn = require("./database/database");
 const User = require("./model/User");
+const Event = require("./model/event");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
@@ -80,13 +81,10 @@ app.post("/send-password/:cpf", async (req, res) => {
       return res.status(404).json({ error: "Usuário não encontrado" });
     }
 
-    // Gera um token aleatório
     const randomToken = generateRandomToken(32);
 
-    // Associa o token ao usuário no banco de dados
     await User.update({ resetToken: randomToken }, { where: { cpf: cpf } });
 
-    // Configuração do serviço de e-mail
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -97,7 +95,6 @@ app.post("/send-password/:cpf", async (req, res) => {
       socketTimeout: 30000,
     });
 
-    // Opções do e-mail
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: user.email,
@@ -107,7 +104,6 @@ app.post("/send-password/:cpf", async (req, res) => {
      `,
     };
 
-    // Envia o e-mail
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.log(error);
@@ -128,21 +124,18 @@ app.post("/reset-password/:resetToken", async (req, res) => {
     const resetToken = req.params.resetToken;
     const newPassword = req.body.newPassword;
 
-    // Encontre o usuário com base no token de redefinição de senha
     const user = await User.findOne({ where: { resetToken: resetToken } });
 
     if (!user) {
       return res.status(404).json({ error: "Token inválido" });
     }
 
-    // Atualize a senha do usuário com a nova senha
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-    // Limpa o token no banco de dados
     await User.update(
       { password: hashedPassword, resetToken: null },
-      { where: { cpf: user.cpf } } // Use 'cpf' ou a chave primária correta para a condição WHERE
+      { where: { cpf: user.cpf } }
     );
 
     res
@@ -178,12 +171,63 @@ app.post("/users/save", async (req, res) => {
   }
 });
 
+app.post("/events/save", async (req, res) => {
+  try {
+    const {
+      nameEvent,
+      descriptionEvent,
+      dateEvent,
+      hourEvent,
+      priceEvent,
+      organizerEvent,
+      qtdVacanciesEvent,
+      imageEvent,
+      locationEvent,
+      typeEvent,
+    } = req.body;
+
+    await Event.create({
+      nameEvent: nameEvent,
+      descriptionEvent: descriptionEvent,
+      dateEvent: dateEvent,
+      hourEvent: hourEvent,
+      priceEvent: priceEvent,
+      organizerEvent: organizerEvent,
+      qtdVacanciesEvent:qtdVacanciesEvent,
+      imageEvent:imageEvent,
+      locationEvent:locationEvent,
+      typeEvent:typeEvent,
+    });
+
+    res.status(201).send();
+  } catch (error) {
+    console.log(error);
+    res.status(500).send();
+  }
+});
+
+
 app.get("/users/all", (req, res) => {
   User.findAll({
     raw: true,
   }).then((user) => {
     res.send(user);
   });
+});
+
+app.get("/users/admin-managers", async (req, res) => {
+  try {
+    const users = await User.findAll({
+      where: {
+        type: ["Admin", "Manager"],
+      },
+      raw: true,
+    });
+    res.send(users);
+  } catch (error) {
+    console.error("Erro ao buscar usuários Admin e Manager:", error);
+    res.status(500).json({ error: "Erro interno do servidor" });
+  }
 });
 
 app.get("/users/:cpf", (req, res) => {
@@ -244,10 +288,8 @@ app.put("/users/update2/:cpf", async (req, res) => {
       updatedFields.password = await bcrypt.hash(updatedFields.password, salt);
     }
 
-    // Remova resetTokenExpires do objeto updatedFields antes do update
     delete updatedFields.resetTokenExpires;
 
-    // Adicione a lógica de update
     await User.update(updatedFields, {
       where: { cpf: cpf },
     });
@@ -258,6 +300,7 @@ app.put("/users/update2/:cpf", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 
 app.listen(process.env.PORT || 8080, function () {
   console.log(

@@ -12,7 +12,7 @@ export function HomeIconList({ name, background, route }: homeAdm) {
     const navigation = useNavigation<AppBottomTabsRoutesProps>();
 
     const Routes = () => {
-        if (["Home", "Eventos", "Perfil", "UserList", "UpdateProfile", "CreateUser"].includes(route)) {
+        if (["Home", "Eventos", "Perfil", "UserList", "UpdateProfile", "CreateUser","CreateEvent"].includes(route)) {
             navigation.navigate(route as any);
         } else {
             console.error("Invalid route:", route);
