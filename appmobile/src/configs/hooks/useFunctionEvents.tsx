@@ -2,15 +2,10 @@ import { showMessage } from "react-native-flash-message";
 import { useMutation, UseMutateAsyncFunction } from "react-query";
 
 import { CreateEvent } from "../requests";
-import { CreateEventT } from "../types";
+import { Event } from "../types";
 
 type UseCreateEventProps = {
-  CreateEventMutation: UseMutateAsyncFunction<
-    void,
-    unknown,
-    CreateEventT,
-    unknown
-  >;
+  CreateEventMutation: UseMutateAsyncFunction<void, unknown, Event, unknown>;
   CreateEventLoading: boolean;
 };
 
@@ -19,7 +14,7 @@ export const useCreateEvent = (): UseCreateEventProps => {
     useMutation({
       mutationFn: CreateEvent,
       onError: () => {
-        console.log("Error: Failed to create event");
+        console.log("Erro: Falha ao criar evento");
         showMessage({
           message: "Erro",
           description: "Houve um erro ao Criar o evento!",
@@ -28,7 +23,7 @@ export const useCreateEvent = (): UseCreateEventProps => {
         });
       },
       onSuccess: () => {
-        console.log("Success: Event created!");
+        console.log("Sucesso: Evento criado!");
         showMessage({
           message: "Sucesso",
           description: "Evento criado com sucesso!",

@@ -18,7 +18,7 @@ import FlashMessage from "react-native-flash-message";
 
 import * as S from "./styles";
 import { useCreateEvent } from "../../configs/hooks/useFunctionEvents";
-import { CreateEventT } from "../../configs/types";
+import { Event } from "../../configs/types";
 import { CreateEventSchema } from "../../schemas";
 import { api } from "../../services/api";
 import theme from "../../theme";
@@ -64,32 +64,64 @@ export function CreateEvent() {
     if (!result.canceled) {
       const selectedImage = result.assets[0].uri;
       setImage(selectedImage);
-      onChange(selectedImage); 
+
+      const formData = new FormData();
+      formData.append("name", "eventImage");
+      formData.append("file", {
+        uri: selectedImage,
+        type: "image/jpeg",
+        name: selectedImage.split("/").pop(),
+      });
+
+      try {
+        const response = await api.post("/pictures/imagem", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        if (response.data && response.data.picture) {
+          onChange(response.data.picture.src);
+        } else {
+          console.error("Falha ao carregar a imagem:", response.data.message);
+        }
+      } catch (error) {
+        console.error("Erro ao carregar a imagem:", error);
+      }
     }
   };
 
- 
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<CreateEventT | any>({
+  } = useForm<Event | any>({
     mode: "onSubmit",
     resolver: yupResolver(CreateEventSchema),
   });
 
   const { CreateEventMutation, CreateEventLoading } = useCreateEvent();
 
-  const submitCreatEventForm = async (data: CreateEventT) => {
-    console.log("Form Data:", data); 
+  const submitCreatEventForm = async (data: Event) => {
+
+    const hourEvent = new Date(data.hourEvent)
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+
+    console.log("Form Data:", data);
+
     setLoadingButton(true);
-    await new Promise((resolve) => setTimeout(resolve, 4000)); 
+
+    await new Promise((resolve) => setTimeout(resolve, 4000));
+
     setLoadingButton(false);
+
     await CreateEventMutation({
       nameEvent: data.nameEvent,
       descriptionEvent: data.descriptionEvent,
       dateEvent: data.dateEvent,
-      hourEvent: data.hourEvent,
+      hourEvent,
       priceEvent: data.priceEvent,
       organizerEvent: data.organizerEvent,
       qtdVacanciesEvent: data.qtdVacanciesEvent,
@@ -127,6 +159,7 @@ export function CreateEvent() {
                   <S.TextButtom>Select Image</S.TextButtom>
                 </S.btnImage>
                 <S.TextInputImage
+                  placeholder="Selecione uma Imagem"
                   editable={false}
                   selectTextOnFocus={false}
                   value={value}
@@ -240,6 +273,7 @@ export function CreateEvent() {
                     onChange={(event, selectedDate) => {
                       setShowPicker(false);
                       if (selectedDate) {
+                        console.log(selectedDate);
                         onChange(selectedDate);
                       }
                     }}
@@ -309,6 +343,7 @@ export function CreateEvent() {
                 placeholder="Quantidade de vagas pro evento"
                 value={value}
                 onChangeText={onChange}
+                keyboardType="numeric"
               />
             )}
           />

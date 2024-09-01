@@ -16,9 +16,40 @@ import { UpdateUserSchema } from "../../schemas";
 export function UpdateProfile() {
   const [userCpf, setUserCpf] = useState<string | null>(null);
   // eslint-disable-next-line prettier/prettier
-  const CPF_MASK = [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]
+  const CPF_MASK = [
+    /\d/,
+    /\d/,
+    /\d/,
+    ".",
+    /\d/,
+    /\d/,
+    /\d/,
+    ".",
+    /\d/,
+    /\d/,
+    /\d/,
+    "-",
+    /\d/,
+    /\d/,
+  ];
   // eslint-disable-next-line prettier/prettier
-  const PHONE_MASK = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+  const PHONE_MASK = [
+    "(",
+    /\d/,
+    /\d/,
+    ")",
+    " ",
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+    "-",
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+  ];
 
   const [loadingButton, setLoadingButton] = useState(false);
 
@@ -53,11 +84,13 @@ export function UpdateProfile() {
   const submitUpdateUser = async (data: RegisterUser) => {
     setLoadingButton(true);
     await updateUserMutation({
+      cpf: data.cpf,
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
       password: data.password,
       phoneNumber: data.phoneNumber,
+      resetToken: "",
     });
     setTimeout(() => setLoadingButton(false), 2000);
     onRefresh();
@@ -74,7 +107,10 @@ export function UpdateProfile() {
     <S.Container>
       <FlashMessage position="top" />
       <S.Avatar style={{ elevation: 15 }}>
-        <UserAvatar size={80} name={`${user?.firstName} ${user?.lastName}`} />
+        <UserAvatar
+          size={80}
+          name={`${user?.firstName ?? "Default"} ${user?.lastName ?? "User"}`}
+        />
       </S.Avatar>
       <S.ScrollView
         contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
@@ -90,7 +126,7 @@ export function UpdateProfile() {
               <>
                 <S.TextUser>NOME</S.TextUser>
                 <S.Input
-                  placeholder={user?.firstName}
+                  placeholder={String(user?.firstName ?? "")}
                   value={value}
                   onChangeText={onChange}
                 />
@@ -107,7 +143,7 @@ export function UpdateProfile() {
               <>
                 <S.TextUser>SOBRENOME</S.TextUser>
                 <S.Input
-                  placeholder={user?.lastName}
+                  placeholder={String(user?.lastName ?? "")}
                   value={value}
                   onChangeText={onChange}
                 />
@@ -129,7 +165,7 @@ export function UpdateProfile() {
                     marginBottom: 20,
                     borderBottomWidth: 2,
                   }}
-                  placeholder={user?.cpf}
+                  placeholder={String(user?.cpf ?? "")}
                   mask={CPF_MASK}
                   keyboardType="numeric"
                   value={value}
@@ -157,7 +193,7 @@ export function UpdateProfile() {
                     marginBottom: 20,
                     borderBottomWidth: 2,
                   }}
-                  placeholder={user?.phoneNumber}
+                  placeholder={String(user?.phoneNumber ?? "")}
                   keyboardType="numeric"
                   mask={PHONE_MASK}
                   value={value}
@@ -176,7 +212,7 @@ export function UpdateProfile() {
               <>
                 <S.TextUser>EMAIL</S.TextUser>
                 <S.Input
-                  placeholder={user?.email}
+                  placeholder={String(user?.email ?? "")}
                   value={value}
                   onChangeText={onChange}
                 />

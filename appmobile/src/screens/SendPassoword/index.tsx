@@ -35,7 +35,7 @@ export function SendPassoword() {
     await setLoadingButton(true);
     try {
       console.log(cpf);
-      const response = await api.post(`/send-password/${cpf}`);
+      const response = await api.post(`users/send-password/${cpf}`);
 
       if (response.data.success) {
         await Alert.alert(

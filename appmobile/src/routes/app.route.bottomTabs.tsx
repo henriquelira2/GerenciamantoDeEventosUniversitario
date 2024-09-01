@@ -148,7 +148,7 @@ export function BottomTabs() {
           tabBarButton: () => null,
           headerStyle: {
             backgroundColor: `${theme.COLORS.RED}`,
-            height: 120,
+            height: 100,
           },
           headerTitle: "                Criar  Evento",
           headerTintColor: `${theme.COLORS.WHITE}`,

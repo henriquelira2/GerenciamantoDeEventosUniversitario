@@ -29,7 +29,7 @@ export type RegisterUserAdmin = {
   type: UserType;
 };
 
-export type CreateEventT = {
+export type Event = {
   nameEvent?: string;
   descriptionEvent: string;
   dateEvent: string;

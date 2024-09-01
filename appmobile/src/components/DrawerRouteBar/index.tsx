@@ -1,14 +1,16 @@
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import * as S from "./styles";
 import { useIcon } from "../../contexts/IconContext";
+import { AuthContext } from "../../contexts/auth";
 import { AppBottomTabsRoutesProps } from "../../routes/app.route.bottomTabs";
 
 export function DrawerRoutes(props: any) {
@@ -23,6 +25,7 @@ export function DrawerRoutes(props: any) {
   const getItemStyle = (routeName: string) => ({
     backgroundColor: selectedItem === routeName ? "#171626" : "transparent",
   });
+  const { setUser } = useContext(AuthContext);
 
   const getIconSource = (routeName: string) => {
     switch (routeName) {
@@ -54,6 +57,10 @@ export function DrawerRoutes(props: any) {
         return selectedItem === "CreateEvent"
           ? require("../../assets/drawerIcons/event-icon-w.png")
           : require("../../assets/drawerIcons/event-icon.png");
+      case "Logout":
+        return selectedItem === "Logout"
+          ? require("../../assets/drawerIcons/sairuser-icon.png")
+          : require("../../assets/drawerIcons/sairuser-icon.png");
 
       default:
         return require("../../assets/drawerIcons/listuser-icon.png");
@@ -172,6 +179,24 @@ export function DrawerRoutes(props: any) {
               />
             )}
             style={getItemStyle("CreateEvent")}
+            labelStyle={{
+              color: selectedItem === "CreateEvent" ? "white" : "black",
+            }}
+          />
+          <DrawerItem
+            label="Logout"
+            onPress={async () => {
+              await AsyncStorage.clear();
+              setUser(false);
+              console.log("AsyncStorage limpo com sucesso!");
+            }}
+            icon={() => (
+              <S.Icon
+                style={{ resizeMode: "stretch" }}
+                source={getIconSource("Logout")}
+              />
+            )}
+            style={getItemStyle("Logout")}
             labelStyle={{
               color: selectedItem === "CreateEvent" ? "white" : "black",
             }}

@@ -16,6 +16,44 @@ export const ScrollView = styled.ScrollView`
   margin-bottom: 80px;
 `;
 
+export const ContainerLinkImg = styled.View`
+  width: 100%;
+  align-items: center;
+  margin-bottom: 10%;
+`;
+export const Text = styled.Text`
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  top: 25%;
+`;
+export const UploadImg = styled.TouchableOpacity`
+  align-items: center;
+  border-radius: 5px;
+  border-bottom-width: 1px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-left-width: 1px;
+  right: 100%;
+  top: -4%;
+  height: 200%;
+  width: 40%;
+`;
+export const CopiarImg = styled.TouchableOpacity`
+  border-radius: 5px;
+  border-bottom-width: 1px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-left-width: 1px;
+  left: 100%;
+  top: -4%;
+  height: 200%;
+  width: 40%;
+`;
+export const ImgButoon = styled.View`
+  flex-direction: row;
+`;
+
 export const Input = styled.View`
   flex-direction: row;
   margin-bottom: 20px;

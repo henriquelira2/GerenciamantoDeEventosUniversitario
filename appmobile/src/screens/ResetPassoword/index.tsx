@@ -41,11 +41,11 @@ export function ResetPassoword() {
     await setLoadingButton(true);
 
     if (token === user?.resetToken) {
-      await new Promise((resolve) => setTimeout(resolve, 3000)); // Aguarda 3000 milissegundos (3 segundos)
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       await setTokenValid(true);
       setLoadingButton(false);
     } else {
-      await new Promise((resolve) => setTimeout(resolve, 3000)); // Aguarda 3000 milissegundos (3 segundos)
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       setLoadingButton(false);
       Alert.alert("Erro", "Token Inválido");
     }
@@ -63,12 +63,12 @@ export function ResetPassoword() {
   const NewPasswordSubmit = async () => {
     try {
       setLoadingButton(true);
-      const response = await api.post(`/reset-password/${token}`, {
+      const response = await api.post(`users/reset-password/${token}`, {
         newPassword,
       });
 
       if (response.data.success) {
-        await new Promise((resolve) => setTimeout(resolve, 3000)); // Aguarda 3000 milissegundos (3 segundos)
+        await new Promise((resolve) => setTimeout(resolve, 3000));
         await setLoadingButton(false);
         await Alert.alert("Sucesso", "Senha alterada com sucesso");
         navigation.navigate("Login");
@@ -117,7 +117,7 @@ export function ResetPassoword() {
                       placeholder="Nova Senha"
                       value={value}
                       onChangeText={(text: any) => {
-                        setNewPassword(text); // Aqui você deve chamar setNewPasswordr com o valor
+                        setNewPassword(text);
                         onChange(text);
                       }}
                       secureTextEntry={hidePass}

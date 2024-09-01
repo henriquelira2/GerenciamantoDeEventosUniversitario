@@ -53,14 +53,13 @@ export function UserList() {
 
   const filterUsers = () => {
     const filteredList = users.filter((user) => {
-      const fullName = `${user.firstName} ${user.lastName}`;
-      return (
-        user.cpf.includes(searchQuery) ||
-        fullName.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      const fullName = `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim();
+
+      return fullName.toLowerCase().includes(searchQuery.toLowerCase());
     });
     setFilteredUsers(filteredList);
   };
+
   const renderUserItem = ({ item: user }: { item: UserData }) => (
     <S.Usuario key={user.cpf}>
       <MaterialIcons
@@ -125,7 +124,7 @@ export function UserList() {
     <S.Container>
       <S.Filter>
         <S.InputFilter
-          placeholder="Digite um CPF ou Nome Completo"
+          placeholder="Nome Completo"
           onChangeText={(text: React.SetStateAction<string>) =>
             setSearchQuery(text)
           }
@@ -155,7 +154,7 @@ export function UserList() {
         user={selectedUser}
         onClose={() => {
           setEditModalVisible(false);
-          onRefresh(); // Chame a função de atualização ao fechar o modal
+          onRefresh();
         }}
       />
       <DeleteModal

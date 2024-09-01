@@ -220,7 +220,6 @@ export function CreateUser() {
             render={({ field: { onChange, onBlur, value } }) => (
               <S.TextInput
                 placeholder="Senha"
-                keyboardType="numeric"
                 value={value}
                 onChangeText={onChange}
                 secureTextEntry={hidePass}
