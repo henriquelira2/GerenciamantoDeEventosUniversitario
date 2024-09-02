@@ -75,7 +75,7 @@ export function CreateUser() {
                   width: "80%",
                   height: 50,
                   borderWidth: 1,
-                  borderRadius: 50,
+                  borderRadius: 10,
                   paddingLeft: 50,
                   backgroundColor: theme.COLORS.GRAY100,
                 }}
@@ -151,7 +151,7 @@ export function CreateUser() {
                   width: "80%",
                   height: 50,
                   borderWidth: 1,
-                  borderRadius: 50,
+                  borderRadius: 10,
                   paddingLeft: 50,
                   backgroundColor: theme.COLORS.GRAY100,
                 }}

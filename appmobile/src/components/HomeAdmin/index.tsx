@@ -1,5 +1,10 @@
 import React from "react";
-import { FlatList, ListRenderItemInfo, ImageBackground } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  ImageBackground,
+  View,
+} from "react-native";
 
 import * as S from "./styles";
 import bacground from "../../assets/bg-tela2.png";
@@ -18,17 +23,23 @@ export default function HomeAdmin({
   const formatData = (data: any, numColumns: any) => {
     const numberOfFullRows = Math.floor(data.length / numColumns);
     let numberOfElementsLastRow = data.length - numberOfFullRows * numColumns;
+
     while (
       numberOfElementsLastRow !== numColumns &&
       numberOfElementsLastRow !== 0
     ) {
-      data.push({ key: `blank-${numberOfElementsLastRow}`, empty: false });
+      data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true });
       numberOfElementsLastRow++;
     }
     return data;
   };
 
   function renderItem({ item }: ListRenderItemInfo<homeAdm>) {
+    if (item.empty) {
+      return (
+        <View style={{ flex: 1, margin: 5, backgroundColor: "transparent" }} />
+      );
+    }
     return <HomeIconList {...item} />;
   }
 
@@ -46,7 +57,7 @@ export default function HomeAdmin({
 
         <FlatList
           data={formatData(homeAdmList, numColumns)}
-          keyExtractor={(item) => item.name}
+          keyExtractor={(item) => item.name || item.key}
           renderItem={renderItem}
           numColumns={numColumns}
           contentContainerStyle={{ paddingBottom: 100 }}

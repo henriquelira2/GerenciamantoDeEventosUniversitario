@@ -1,27 +1,15 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
-import { Modal, Text, TouchableOpacity, ActivityIndicator } from "react-native";
+import { ActivityIndicator, Text } from "react-native";
 
 import * as S from "./styles";
+import { EventModal } from "../../components/EventModal";
+import { Event } from "../../configs/types";
 import { api } from "../../services/api";
 
-type EventType = {
-  id: number;
-  nameEvent: string;
-  descriptionEvent: string;
-  dateEvent: string;
-  hourEvent: string;
-  priceEvent: string;
-  organizerEvent: string;
-  qtdVacanciesEvent: number;
-  imageEvent: string;
-  locationEvent: string;
-  typeEvent: string;
-};
-
 export function Events() {
-  const [events, setEvents] = useState<EventType[]>([]);
-  const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);
+  const [events, setEvents] = useState<Event[]>([]);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -48,12 +36,12 @@ export function Events() {
     setRefreshing(false);
   };
 
-  const handleEventPress = (event: EventType) => {
+  const handleEventPress = (event: Event) => {
     setSelectedEvent(event);
     setModalVisible(true);
   };
 
-  const renderEvent = ({ item }: { item: EventType }) => {
+  const renderEvent = ({ item }: { item: Event }) => {
     const imageUri = item.imageEvent
       ? `${api.defaults.baseURL}/${item.imageEvent}`
       : null;
@@ -85,6 +73,7 @@ export function Events() {
       </S.BoxEvent>
     );
   };
+
   return (
     <S.Container>
       <S.Search>
@@ -111,33 +100,11 @@ export function Events() {
         />
       )}
 
-      <Modal
-        animationType="slide"
-        transparent
+      <EventModal
         visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <S.ModalContainer>
-          <S.ModalContent>
-            {selectedEvent && (
-              <>
-                <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-                  {selectedEvent.nameEvent}
-                </Text>
-                <Text>{selectedEvent.descriptionEvent}</Text>
-                <Text>Date: {selectedEvent.dateEvent}</Text>
-                <Text>Time: {selectedEvent.hourEvent}</Text>
-                <Text>Price: ${selectedEvent.priceEvent}</Text>
-                <Text>Organizer: {selectedEvent.organizerEvent}</Text>
-                <Text>Location: {selectedEvent.locationEvent}</Text>
-                <TouchableOpacity onPress={() => setModalVisible(false)}>
-                  <Text style={{ color: "blue", marginTop: 20 }}>Close</Text>
-                </TouchableOpacity>
-              </>
-            )}
-          </S.ModalContent>
-        </S.ModalContainer>
-      </Modal>
+        event={selectedEvent}
+        onClose={() => setModalVisible(false)}
+      />
     </S.Container>
   );
 }

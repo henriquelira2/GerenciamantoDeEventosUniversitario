@@ -30,7 +30,7 @@ export const TextInput = styled.TextInput`
   width: 80%;
   height: 50px;
   border-width: 1px;
-  border-radius: 50px;
+  border-radius: 10px;
   padding-left: 50px;
   background-color: ${theme.COLORS.GRAY100};
 `;

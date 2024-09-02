@@ -91,18 +91,3 @@ export const Price = styled.Text`
   border-radius: 20px;
   padding: 8px;
 `;
-
-export const ModalContainer = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
-`;
-
-export const ModalContent = styled.View`
-  width: 80%;
-  padding: 20px;
-  background-color: ${theme.COLORS.WHITE};
-  border-radius: 10px;
-  align-items: center;
-`;
