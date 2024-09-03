@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { AntDesign } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
@@ -58,16 +59,16 @@ const EditModal: React.FC<EditModalProps> = ({ isVisible, user, onClose }) => {
     /\d/,
     /\d/,
   ];
+
   const {
     control,
     formState: { errors },
     handleSubmit,
-    // eslint-disable-next-line react-hooks/rules-of-hooks
   } = useForm<RegisterUser | any>({
     mode: "onSubmit",
     resolver: yupResolver(AdmimUpdateUserSchema),
   });
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+
   const [isLoading, setIsLoading] = useState(false);
   const onUpdateUser = async (data: RegisterUser) => {
     try {

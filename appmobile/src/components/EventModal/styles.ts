@@ -19,13 +19,20 @@ export const Container = styled.View`
   background-color: #ffffff;
 `;
 
+
+export const LoadingContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  background-color: #ffffff;
+`;
+
 export const EventImage = styled.Image`
   width: 100%;
   height: 300px;
 `;
 
 export const EventInfoContainer = styled.View`
-  padding: 20px;
+  padding: 0px 20px 0px 20px;
 `;
 
 export const CloseModal = styled.TouchableOpacity`
@@ -84,7 +91,7 @@ export const DescriptionText = styled.Text`
   line-height: 24px;
 `;
 
-export const GetTicketButton = styled.TouchableOpacity`
+export const EditModalButton = styled.TouchableOpacity`
   background-color: ${theme.COLORS.RED100};
   padding: 15px;
   border-radius: 10px;
@@ -92,7 +99,35 @@ export const GetTicketButton = styled.TouchableOpacity`
   margin-top: 20px;
 `;
 
-export const GetTicketButtonText = styled.Text`
+export const EditModalButtonText = styled.Text`
+  font-size: 18px;
+  color: ${theme.COLORS.WHITE};
+  font-weight: bold;
+`;
+
+export const DeletModalButton = styled.TouchableOpacity`
+  background-color: ${theme.COLORS.RED100};
+  padding: 15px;
+  border-radius: 10px;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+export const DeletModalButtonText = styled.Text`
+  font-size: 18px;
+  color: ${theme.COLORS.WHITE};
+  font-weight: bold;
+`;
+
+export const SignupEvent = styled.TouchableOpacity`
+  background-color: ${theme.COLORS.RED100};
+  padding: 15px;
+  border-radius: 10px;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+export const SignupEventText = styled.Text`
   font-size: 18px;
   color: ${theme.COLORS.WHITE};
   font-weight: bold;

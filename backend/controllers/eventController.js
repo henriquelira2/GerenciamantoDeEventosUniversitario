@@ -1,4 +1,5 @@
 const Event = require("../models/Events");
+const moment = require("moment");
 
 // Função para criar um novo evento
 exports.createEvent = async (req, res) => {
@@ -80,6 +81,14 @@ exports.updateEvent = async (req, res) => {
     const existingEvent = await Event.findOne({ where: { id: id } });
     if (!existingEvent) {
       return res.status(404).json({ error: "Evento não encontrado" });
+    }
+
+    if (updatedFields.hourEvent) {
+      const timeRegex = /^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/;
+
+      if (!timeRegex.test(updatedFields.hourEvent)) {
+        return res.status(402).json({ error: "Formato de hora inválido" });
+      }
     }
 
     await Event.update(updatedFields, {

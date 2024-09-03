@@ -26,21 +26,6 @@ import theme from "../../theme";
 export function CreateEvent() {
   const [loadingButton, setLoadingButton] = useState(false);
 
-  // Lista de Usuarios
-  const [organizers, setOrganizers] = useState([]);
-
-  useEffect(() => {
-    async function fetchOrganizers() {
-      try {
-        const response = await api.get("/users/admin-managers");
-        setOrganizers(response.data);
-      } catch (error) {
-        console.error("Error fetching organizers:", error);
-      }
-    }
-    fetchOrganizers();
-  }, []);
-
   // Date Time Picker
   const [showPicker, setShowPicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
@@ -103,7 +88,6 @@ export function CreateEvent() {
   const { CreateEventMutation, CreateEventLoading } = useCreateEvent();
 
   const submitCreatEventForm = async (data: Event) => {
-
     const hourEvent = new Date(data.hourEvent)
       .toISOString()
       .slice(0, 19)
@@ -402,27 +386,11 @@ export function CreateEvent() {
             control={control}
             name="organizerEvent"
             render={({ field: { onChange, value } }) => (
-              <S.TextInputSelect>
-                <Picker
-                  selectedValue={value}
-                  onValueChange={(itemValue) => {
-                    onChange(itemValue);
-                  }}
-                >
-                  <Picker.Item
-                    label="Selecione o organizador"
-                    value=""
-                    style={{ color: "gray" }}
-                  />
-                  {organizers.map((organizer, index) => (
-                    <Picker.Item
-                      key={index}
-                      label={`${organizer.firstName} ${organizer.lastName}`}
-                      value={`${organizer.firstName} ${organizer.lastName}`}
-                    />
-                  ))}
-                </Picker>
-              </S.TextInputSelect>
+              <S.TextInput
+                placeholder="Organizador do evento"
+                value={value}
+                onChangeText={onChange}
+              />
             )}
           />
           <AntDesign
@@ -489,6 +457,7 @@ export function CreateEvent() {
             style={{ position: "absolute", left: 10, top: 14 }}
           />
         </S.Input>
+        
         <S.RegisterButtom
           onPress={handleSubmit((data) => {
             console.log("Formulário validado, dados:", data);

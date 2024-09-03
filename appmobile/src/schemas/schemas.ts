@@ -152,3 +152,5 @@ export const CreateEventSchema = yup.object().shape({
   locationEvent: yup.string().required("Preencha o campo!"),
   typeEvent: yup.string().required("Preencha o campo!"),
 });
+
+export const EventUpdateSchema = yup.object().shape({});

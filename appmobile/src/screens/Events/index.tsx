@@ -42,6 +42,7 @@ export function Events() {
   };
 
   const renderEvent = ({ item }: { item: Event }) => {
+    console.log(`${api.defaults.baseURL}`);
     const imageUri = item.imageEvent
       ? `${api.defaults.baseURL}/${item.imageEvent}`
       : null;
@@ -59,7 +60,7 @@ export function Events() {
               <S.Info1>
                 <S.TitleEvent>{item.nameEvent}</S.TitleEvent>
                 <S.LocationHour>
-                  {item.locationEvent} - {item.hourEvent}
+                  {item.locationEvent} - {item.hourEvent} - {item.id}
                 </S.LocationHour>
               </S.Info1>
               <S.Info2>

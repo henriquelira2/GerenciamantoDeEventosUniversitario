@@ -101,7 +101,6 @@ export const TextInputSelect = styled.View`
   background-color: ${theme.COLORS.GRAY100};
 `;
 
-
 export const placeholderDateTime = styled.TextInput`
   width: 80%;
   height: 50px;
@@ -155,6 +154,7 @@ export const RegisterButtom = styled.TouchableOpacity`
   background-color: ${theme.COLORS.RED};
   z-index:1
 `;
+
 export const TextButtomRegister = styled.Text`
   font-size: 18px;
   color: ${theme.COLORS.WHITE};

@@ -48,6 +48,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
       setIsLoading(false);
     }
   };
+
   return (
     <Modal
       animationType="slide"
