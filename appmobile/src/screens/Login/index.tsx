@@ -68,15 +68,20 @@ export function Login() {
 
   const submitLoginForm = ({ cpf, password }: User, data: any) => {
     setLoadingButton(true);
-    loginMutation({ cpf, password });
+    loginMutation({
+      cpf,
+      password,
+    });
     saveUser(cpf);
     setTimeout(() => setLoadingButton(false), 3000);
   };
 
-  const saveUser = async (data: any) => {
-    await AsyncStorage.setItem("userCPF", data);
+  const saveUser = async (cpf: string) => {
+    await AsyncStorage.setItem("userCPF", cpf);
+
     const value = await AsyncStorage.getItem("userCPF");
-    console.log("value: " + value);
+
+    console.log("CPF: " + value);
   };
 
   useEffect(() => {

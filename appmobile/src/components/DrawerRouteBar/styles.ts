@@ -8,6 +8,7 @@ export const Container = styled.View`
 `;
 export const Top = styled.View`
   padding: 20px;
+  bottom: 5%;
   align-items: center;
 `;
 
@@ -42,6 +43,7 @@ export const Bottom = styled.View`
   padding: 20px;
   border-top-width: 1px;
   border-top-color: ${theme.COLORS.GRAY200};
+  top: 5%;
 `;
 export const ButtomBottom = styled.TouchableOpacity`
   padding: 5px 15px 15px 0px;

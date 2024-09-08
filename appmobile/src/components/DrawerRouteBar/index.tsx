@@ -1,10 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from "@react-navigation/drawer";
+import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext } from "react";
 
@@ -71,9 +67,13 @@ export function DrawerRoutes(props: any) {
     <S.Container style={{ flex: 1 }}>
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{ backgroundColor: "#ffffff44" }}
+        contentContainerStyle={{
+          backgroundColor: "#ffffff44",
+          marginBottom: "20%",
+          bottom: "5%",
+        }}
       >
-        <S.Top style={{ padding: 20, resizeMode: "cover" }}>
+        <S.Top>
           <S.LogoTop
             style={{ resizeMode: "stretch" }}
             source={require("../../assets/layout_set_logo.png")}
@@ -183,29 +183,26 @@ export function DrawerRoutes(props: any) {
               color: selectedItem === "CreateEvent" ? "white" : "black",
             }}
           />
-          <DrawerItem
-            label="Logout"
-            onPress={async () => {
-              await AsyncStorage.clear();
-              setUser(false);
-              console.log("AsyncStorage limpo com sucesso!");
-            }}
-            icon={() => (
-              <S.Icon
-                style={{ resizeMode: "stretch" }}
-                source={getIconSource("Logout")}
-              />
-            )}
-            style={getItemStyle("Logout")}
-            labelStyle={{
-              color: selectedItem === "CreateEvent" ? "white" : "black",
-            }}
-          />
-
-          <DrawerItemList {...props} />
         </S.Middle>
       </DrawerContentScrollView>
-
+      <DrawerItem
+        label="Logout"
+        onPress={async () => {
+          await AsyncStorage.clear();
+          setUser(false);
+          console.log("AsyncStorage limpo com sucesso!");
+        }}
+        icon={() => (
+          <S.Icon
+            style={{ resizeMode: "stretch" }}
+            source={getIconSource("Logout")}
+          />
+        )}
+        style={getItemStyle("Logout")}
+        labelStyle={{
+          color: selectedItem === "CreateEvent" ? "white" : "black",
+        }}
+      />
       <S.Bottom>
         <S.ButtomBottom onPress={() => {}}>
           <S.BottomBox>

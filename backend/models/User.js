@@ -2,10 +2,14 @@ const Sequelize = require("sequelize");
 const conn = require("../config/database");
 
 const User = conn.define("users", {
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+  },
   cpf: {
     type: Sequelize.STRING,
     allowNull: false,
-    primaryKey: true,
   },
   firstName: {
     type: Sequelize.STRING,

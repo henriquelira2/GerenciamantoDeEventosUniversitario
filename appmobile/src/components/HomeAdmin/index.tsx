@@ -1,10 +1,13 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
   FlatList,
   ListRenderItemInfo,
   ImageBackground,
   View,
+  TouchableOpacity,
 } from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 import * as S from "./styles";
 import bacground from "../../assets/bg-tela2.png";
@@ -18,6 +21,7 @@ export default function HomeAdmin({
   lastName?: string;
   firstName?: string;
 }) {
+  const navigation = useNavigation();
   const numColumns = 3;
 
   const formatData = (data: any, numColumns: any) => {
@@ -53,6 +57,14 @@ export default function HomeAdmin({
               resizeMode: "contain",
             }}
           />
+
+          <TouchableOpacity
+            // @ts-ignore
+            onPress={() => navigation.openDrawer()}
+            style={{ position: "absolute", left: 20, top: 20 }}
+          >
+            <Icon name="menu" size={30} color="#fff" />
+          </TouchableOpacity>
         </S.Top>
 
         <FlatList

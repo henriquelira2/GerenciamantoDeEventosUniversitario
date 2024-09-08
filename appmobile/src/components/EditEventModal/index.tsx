@@ -26,14 +26,15 @@ type EditEventModalProps = {
   visible: boolean;
   event: Event | null;
   onClose: () => void;
-  onSave: (updatedEvent: Event) => void;
+
+  onRefresh: () => void;
 };
 
 export const EditEventModal: React.FC<EditEventModalProps> = ({
   visible,
   event,
   onClose,
-  onSave,
+  onRefresh,
 }) => {
   const [name, setName] = useState(event?.nameEvent || "");
   const [imageEvent, setImageEvent] = useState(event?.imageEvent || "");
@@ -134,6 +135,7 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
       });
       setTimeout(() => {
         onClose();
+        onRefresh();
         setIsLoading(false);
       }, 1000);
     } catch (error) {
@@ -372,7 +374,6 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
                 }}
               />
             </S.Input>
-
 
             {errors.organizerEvent && (
               <S.TextErro>{errors.organizerEvent.message}</S.TextErro>

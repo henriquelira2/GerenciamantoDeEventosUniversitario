@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { StatusBar, AppRegistry } from "react-native";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ThemeProvider } from "styled-components/native";
+import { StripeProvider } from "@stripe/stripe-react-native";
 
 import { Routes } from "./src/routes/index";
 import theme from "./src/theme";
@@ -30,15 +31,20 @@ export default function App() {
   const queryClient = new QueryClient();
   AppRegistry.registerComponent("main", () => App);
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor="transparent"
-          translucent
-        />
-        <Routes />
-      </ThemeProvider>
-    </QueryClientProvider>
+    <StripeProvider
+      publishableKey="pk_test_51Pw0KaRt8T5dTSSCLStGKjsZb2iKW6DYu1Bz0t0dolZ1GQIavknyFQYKjTWfDg8jpF8AcGPIq9JnNzGqTO7UpLlY00V1rjx6Il"
+      merchantIdentifier="merchant.com.{{eventmanager}}"
+    >
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <StatusBar
+            barStyle="light-content"
+            backgroundColor="transparent"
+            translucent
+          />
+          <Routes />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </StripeProvider>
   );
 }

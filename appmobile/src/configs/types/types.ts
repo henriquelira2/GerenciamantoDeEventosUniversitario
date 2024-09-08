@@ -30,6 +30,7 @@ export type RegisterUserAdmin = {
 };
 
 export type Event = {
+  id: any;
   nameEvent?: string;
   descriptionEvent: string;
   dateEvent: string;

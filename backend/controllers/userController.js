@@ -17,20 +17,26 @@ function generateRandomToken(length) {
   return token;
 }
 
-// Função para criar um novo usuário
+// Função para criar um novo usuário com verificação de CPF
 exports.createUser = async (req, res) => {
   try {
     const { cpf, firstName, lastName, phoneNumber, email, password } = req.body;
 
+    const existingUser = await User.findOne({ where: { cpf } });
+
+    if (existingUser) {
+      return res.status(400).json({ error: "CPF já está registrado." });
+    }
+
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     await User.create({
-      cpf: cpf,
-      firstName: firstName,
-      lastName: lastName,
+      cpf,
+      firstName,
+      lastName,
       password: hashedPassword,
-      email: email,
-      phoneNumber: phoneNumber,
+      email,
+      phoneNumber,
       type: "User",
     });
 
@@ -190,6 +196,25 @@ exports.getUserByCpf = (req, res) => {
     })
     .catch((error) => {
       console.error("Erro ao buscar usuário por CPF:", error);
+      res.status(500).json({ error: "Erro do Servidor Interno" });
+    });
+};
+
+// Função para obter um usuário específico por ID
+exports.getUserById = (req, res) => {
+  const id = req.params.id;
+  User.findOne({
+    where: { id: id },
+  })
+    .then((user) => {
+      if (user) {
+        res.send(user);
+      } else {
+        res.status(404).json({ error: "Usuário não encontrado" });
+      }
+    })
+    .catch((error) => {
+      console.error("Erro ao buscar usuário por id:", error);
       res.status(500).json({ error: "Erro do Servidor Interno" });
     });
 };

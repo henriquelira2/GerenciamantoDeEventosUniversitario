@@ -32,7 +32,6 @@ export function AppRouteStack() {
           headerTitle: "",
         }}
       />
-
       <Screen
         name="Login"
         component={Login}
@@ -41,7 +40,6 @@ export function AppRouteStack() {
           headerTitle: "",
         }}
       />
-
       <Screen
         name="Register"
         component={Register}
@@ -51,7 +49,6 @@ export function AppRouteStack() {
           headerTintColor: "white",
         }}
       />
-
       <Screen
         name="SendPassoword"
         component={SendPassoword}

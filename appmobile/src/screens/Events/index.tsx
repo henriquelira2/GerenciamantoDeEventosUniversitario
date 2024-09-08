@@ -1,18 +1,33 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native"; // Importe o useNavigation
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Text } from "react-native";
 
 import * as S from "./styles";
-import { EventModal } from "../../components/EventModal";
 import { Event } from "../../configs/types";
+import { AuthNavigatorRoutesProps } from "../../routes/app.route.stack";
 import { api } from "../../services/api";
 
 export function Events() {
   const [events, setEvents] = useState<Event[]>([]);
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
-  const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+
+  const navigation = useNavigation<AuthNavigatorRoutesProps>();
+
+  const fetchUserId = async () => {
+    const userCPF = await AsyncStorage.getItem("userCPF");
+    if (userCPF) {
+      try {
+        const response = await api.get(`/users/${userCPF}`);
+        setUserId(response.data.id);
+      } catch (error) {
+        console.error("Erro ao buscar o ID do usuário:", error);
+      }
+    }
+  };
 
   const fetchEvents = async () => {
     setLoading(true);
@@ -27,6 +42,7 @@ export function Events() {
   };
 
   useEffect(() => {
+    fetchUserId();
     fetchEvents();
   }, []);
 
@@ -37,12 +53,13 @@ export function Events() {
   };
 
   const handleEventPress = (event: Event) => {
-    setSelectedEvent(event);
-    setModalVisible(true);
+    if (userId) {
+      // @ts-ignore
+      navigation.navigate("EventDetails", { event, userId });
+    }
   };
 
   const renderEvent = ({ item }: { item: Event }) => {
-    console.log(`${api.defaults.baseURL}`);
     const imageUri = item.imageEvent
       ? `${api.defaults.baseURL}/${item.imageEvent}`
       : null;
@@ -100,12 +117,6 @@ export function Events() {
           onRefresh={handleRefresh}
         />
       )}
-
-      <EventModal
-        visible={modalVisible}
-        event={selectedEvent}
-        onClose={() => setModalVisible(false)}
-      />
     </S.Container>
   );
 }

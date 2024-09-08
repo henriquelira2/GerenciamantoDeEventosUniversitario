@@ -4,11 +4,13 @@ import {
 } from "@react-navigation/bottom-tabs";
 import { Image } from "react-native";
 
-import { useIcon } from "../contexts/IconContext"; // Importe o contexto
+import { useIcon } from "../contexts/IconContext";
 import { CreateEvent } from "../screens/CreateEvent";
 import { CreateUser } from "../screens/CreateUser";
+import { EventDetails } from "../screens/EventDetails";
 import { Events } from "../screens/Events";
 import { Home } from "../screens/Home";
+import { Payment } from "../screens/Payment";
 import { Profile } from "../screens/Profile";
 import { UpdateProfile } from "../screens/UpdateProfile";
 import { UserList } from "../screens/UsersList";
@@ -22,6 +24,8 @@ type AppRoutes = {
   UpdateProfile: undefined;
   CreateUser: undefined;
   CreateEvent: undefined;
+  EventDetails: undefined;
+  Payment: undefined;
 };
 
 export type AppBottomTabsRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -45,7 +49,6 @@ export function BottomTabs() {
         return selectedItem === "Perfil"
           ? require("../assets/drawerIcons/user-icon-w.png")
           : require("../assets/drawerIcons/user-icon.png");
-
       default:
         return require("../assets/drawerIcons/listuser-icon.png");
     }
@@ -80,8 +83,14 @@ export function BottomTabs() {
       })}
       screenListeners={{
         state: (e) => {
-          const routeName = e.data.state.routeNames[e.data.state.index];
-          setSelectedItem(routeName);
+          if (e.data && "state" in e.data) {
+            const state = e.data.state as {
+              routeNames: string[];
+              index: number;
+            };
+            const routeName = state.routeNames[state.index];
+            setSelectedItem(routeName);
+          }
         },
       }}
     >
@@ -107,12 +116,12 @@ export function BottomTabs() {
         options={{
           tabBarButton: () => null,
           headerStyle: {
-            backgroundColor: `${theme.COLORS.RED}`,
+            backgroundColor: theme.COLORS.RED,
             height: 150,
             borderBottomEndRadius: 50,
           },
-          headerTitle: "                 Usuarios Cadastrados",
-          headerTintColor: `${theme.COLORS.WHITE}`,
+          headerTitle: "Usuarios Cadastrados",
+          headerTintColor: theme.COLORS.WHITE,
         }}
       />
       <TabScreen
@@ -121,11 +130,11 @@ export function BottomTabs() {
         options={{
           tabBarButton: () => null,
           headerStyle: {
-            backgroundColor: `${theme.COLORS.RED}`,
+            backgroundColor: theme.COLORS.RED,
             height: 120,
           },
-          headerTitle: "                EDITAR PERFIL",
-          headerTintColor: `${theme.COLORS.WHITE}`,
+          headerTitle: "EDITAR PERFIL",
+          headerTintColor: theme.COLORS.WHITE,
         }}
       />
       <TabScreen
@@ -134,11 +143,11 @@ export function BottomTabs() {
         options={{
           tabBarButton: () => null,
           headerStyle: {
-            backgroundColor: `${theme.COLORS.RED}`,
+            backgroundColor: theme.COLORS.RED,
             height: 120,
           },
-          headerTitle: "                Criar Novo Usuario",
-          headerTintColor: `${theme.COLORS.WHITE}`,
+          headerTitle: "Criar Novo Usuario",
+          headerTintColor: theme.COLORS.WHITE,
         }}
       />
       <TabScreen
@@ -147,11 +156,36 @@ export function BottomTabs() {
         options={{
           tabBarButton: () => null,
           headerStyle: {
-            backgroundColor: `${theme.COLORS.RED}`,
+            backgroundColor: theme.COLORS.RED,
             height: 100,
           },
-          headerTitle: "                Criar  Evento",
-          headerTintColor: `${theme.COLORS.WHITE}`,
+          headerTitle: "Criar Evento",
+          headerTintColor: theme.COLORS.WHITE,
+        }}
+      />
+      <TabScreen
+        name="EventDetails"
+        component={EventDetails}
+        options={{
+          tabBarButton: () => null,
+          headerTransparent: true,
+          headerTitle: " ",
+          tabBarStyle: { display: "none" },
+          headerLeft: () => null,
+        }}
+      />
+      <TabScreen
+        name="Payment"
+        component={Payment}
+        options={{
+          tabBarButton: () => null,
+          headerStyle: {
+            backgroundColor: theme.COLORS.RED,
+            height: 100,
+          },
+          headerTitle: "Pagamento",
+          headerTintColor: theme.COLORS.WHITE,
+          tabBarStyle: { display: "none" },
         }}
       />
     </TabNavigator>
