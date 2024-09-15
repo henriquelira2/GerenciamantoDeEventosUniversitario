@@ -39,7 +39,6 @@ export const CloseModal = styled.TouchableOpacity`
   justify-content: center;
   border-radius: 40px;
   background-color: ${theme.COLORS.DARK};
-
 `;
 
 export const EventTitle = styled.Text`

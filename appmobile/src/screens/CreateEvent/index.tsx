@@ -35,6 +35,24 @@ export function CreateEvent() {
     "https://via.placeholder.com/150"
   );
 
+  const [users, setUsers] = useState([]); // Armazena os usuários
+  const [loadingUsers, setLoadingUsers] = useState(true); // Controle de loading para usuários
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await api.get("/users/admin-managers");
+        setUsers(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar usuários:", error);
+      } finally {
+        setLoadingUsers(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
   const pickImage = async (onChange: {
     (...event: any[]): void;
     (arg0: string): void;
@@ -112,6 +130,7 @@ export function CreateEvent() {
       imageEvent: data.imageEvent,
       locationEvent: data.locationEvent,
       typeEvent: data.typeEvent,
+      id: undefined,
     });
     setLoadingButton(false);
   };
@@ -386,11 +405,31 @@ export function CreateEvent() {
             control={control}
             name="organizerEvent"
             render={({ field: { onChange, value } }) => (
-              <S.TextInput
-                placeholder="Organizador do evento"
-                value={value}
-                onChangeText={onChange}
-              />
+              <>
+                {loadingUsers ? (
+                  <ActivityIndicator />
+                ) : (
+                  <S.TextInputSelect>
+                    <Picker
+                      selectedValue={value}
+                      onValueChange={(itemValue) => onChange(itemValue)}
+                    >
+                      <Picker.Item
+                        label="Selecione o organizador"
+                        value=""
+                        style={{ color: "gray" }}
+                      />
+                      {users.map((user) => (
+                        <Picker.Item
+                          key={user.id}
+                          label={`${user.firstName} ${user.lastName}`}
+                          value={user.cpf}
+                        />
+                      ))}
+                    </Picker>
+                  </S.TextInputSelect>
+                )}
+              </>
             )}
           />
           <AntDesign
@@ -400,7 +439,6 @@ export function CreateEvent() {
             style={{ position: "absolute", left: 10, top: 12 }}
           />
         </S.Input>
-
         {errors.typeEvent && (
           <S.TextErro>{errors.typeEvent.message}</S.TextErro>
         )}
@@ -457,7 +495,7 @@ export function CreateEvent() {
             style={{ position: "absolute", left: 10, top: 14 }}
           />
         </S.Input>
-        
+
         <S.RegisterButtom
           onPress={handleSubmit((data) => {
             console.log("Formulário validado, dados:", data);

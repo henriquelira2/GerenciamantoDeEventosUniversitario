@@ -27,14 +27,13 @@ const userRoutes = require("./routes/userRoutes");
 const eventRoutes = require("./routes/eventRoutes");
 const pictureRouter = require("./routes/pictureRoutes");
 const inscriptionRoutes = require("./routes/inscriptionRoutes");
-const paymentRoutes = require("./routes/paymentRoutes");
+
 
 app.use("/users", userRoutes);
 app.use("/events", eventRoutes);
 app.use("/pictures", pictureRouter);
 app.use('/uploads', express.static('uploads'));
 app.use("/inscriptions", inscriptionRoutes);
-app.use("/payments", paymentRoutes);
 
 app.get("/", (req, res) => {
   res.send("hello");

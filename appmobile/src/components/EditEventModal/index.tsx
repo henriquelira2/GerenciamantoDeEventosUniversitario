@@ -26,15 +26,12 @@ type EditEventModalProps = {
   visible: boolean;
   event: Event | null;
   onClose: () => void;
-
-  onRefresh: () => void;
 };
 
 export const EditEventModal: React.FC<EditEventModalProps> = ({
   visible,
   event,
   onClose,
-  onRefresh,
 }) => {
   const [name, setName] = useState(event?.nameEvent || "");
   const [imageEvent, setImageEvent] = useState(event?.imageEvent || "");
