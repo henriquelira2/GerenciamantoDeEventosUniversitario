@@ -10,7 +10,7 @@ import { CreateUser } from "../screens/CreateUser";
 import { EventDetails } from "../screens/EventDetails";
 import { Events } from "../screens/Events";
 import { Home } from "../screens/Home";
-import { Payment } from "../screens/Payment";
+import { MyEvents } from "../screens/MyEvents";
 import { Profile } from "../screens/Profile";
 import { UpdateProfile } from "../screens/UpdateProfile";
 import { UserList } from "../screens/UsersList";
@@ -26,6 +26,7 @@ type AppRoutes = {
   CreateEvent: undefined;
   EventDetails: undefined;
   Payment: undefined;
+  MyEvents: undefined;
 };
 
 export type AppBottomTabsRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -47,6 +48,10 @@ export function BottomTabs() {
           : require("../assets/drawerIcons/event-icon.png");
       case "Perfil":
         return selectedItem === "Perfil"
+          ? require("../assets/drawerIcons/user-icon-w.png")
+          : require("../assets/drawerIcons/user-icon.png");
+      case "MyEvents":
+        return selectedItem === "MyEvents"
           ? require("../assets/drawerIcons/user-icon-w.png")
           : require("../assets/drawerIcons/user-icon.png");
       default:
@@ -175,17 +180,17 @@ export function BottomTabs() {
         }}
       />
       <TabScreen
-        name="Payment"
-        component={Payment}
+        name="MyEvents"
+        component={MyEvents}
         options={{
           tabBarButton: () => null,
           headerStyle: {
             backgroundColor: theme.COLORS.RED,
             height: 100,
           },
-          headerTitle: "Pagamento",
+          headerShown: false,
+          headerTitle: "Meus Eventos Cadastrados",
           headerTintColor: theme.COLORS.WHITE,
-          tabBarStyle: { display: "none" },
         }}
       />
     </TabNavigator>

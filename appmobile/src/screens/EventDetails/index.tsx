@@ -29,9 +29,9 @@ type EventDetailsRouteProp = RouteProp<
 export function EventDetails() {
   const route = useRoute<EventDetailsRouteProp>();
   const navigation = useNavigation();
-  const event = route.params?.event;
+  const initialEvent = route.params?.event;
   const userId = route.params?.userId;
-
+  const [event, setEvent] = useState<Event | null>(initialEvent);
   const [loading, setLoading] = useState(false);
   const [paymentLink, setPaymentLink] = useState("");
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -43,7 +43,17 @@ export function EventDetails() {
 
   const handleRefresh = async () => {
     setRefreshing(true);
-    setRefreshing(false);
+    try {
+      // @ts-ignore
+      const response = await api.get(`/events/${event.id}`);
+      if (response.data) {
+        setEvent(response.data);
+      }
+    } catch (error) {
+      console.error("Falha ao recarreagros dados", error);
+    } finally {
+      setRefreshing(false);
+    }
   };
 
   const handleInscription = async () => {
@@ -51,7 +61,9 @@ export function EventDetails() {
     try {
       const response = await api.post("/inscriptions/create", {
         userId,
+        // @ts-ignore
         eventId: event.id,
+        // @ts-ignore
         amount: event.priceEvent * 100,
         paymentMethod: "CREDIT_CARD",
       });
@@ -67,7 +79,6 @@ export function EventDetails() {
     } catch (error) {
       console.error("Erro1 : ", error);
 
-      // Verifica se o erro é uma instância de AxiosError para acessar response
       if (error instanceof Error && (error as any).response) {
         const axiosError = error as any;
 
@@ -75,6 +86,9 @@ export function EventDetails() {
           Alert.alert("Erro", "Você já está inscrito neste evento.");
         } else {
           Alert.alert("Erro", "Houve um problema ao processar o pagamento.");
+        }
+        if (axiosError.response.status === 409) {
+          Alert.alert("Erro", "Evento Esgotado");
         }
       } else {
         Alert.alert("Erro", "Houve um problema ao se conectar ao servidor.");
@@ -120,7 +134,7 @@ export function EventDetails() {
   const eventData = [
     { key: "location", icon: "location-on", text: event.locationEvent },
     { key: "date", icon: "calendar-month", text: formatDate(event.dateEvent) },
-    { key: "time", icon: "access-time", text: formatTime(event.hourEvent) },
+    { key: "time", icon: "access-time", text: formatTime(event.hourEvent) }, 
     { key: "price", icon: null, text: `$${event.priceEvent}` },
     { key: "description", icon: null, text: event.descriptionEvent },
   ];
@@ -201,6 +215,7 @@ export function EventDetails() {
         // @ts-ignore
         event={event}
         onClose={() => setEditModalVisible(false)}
+        onRefresh={handleRefresh}
       />
 
       <DeletEventModal

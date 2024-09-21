@@ -15,6 +15,7 @@ export function DrawerRoutes(props: any) {
 
   const handleItemPress = (routeName: string) => {
     setSelectedItem(routeName);
+    // @ts-ignore
     navigation.navigate(routeName);
   };
 
@@ -51,6 +52,10 @@ export function DrawerRoutes(props: any) {
           : require("../../assets/drawerIcons/newuser-icon.png");
       case "CreateEvent":
         return selectedItem === "CreateEvent"
+          ? require("../../assets/drawerIcons/event-icon-w.png")
+          : require("../../assets/drawerIcons/event-icon.png");
+      case "MyEvents":
+        return selectedItem === "MyEvents"
           ? require("../../assets/drawerIcons/event-icon-w.png")
           : require("../../assets/drawerIcons/event-icon.png");
       case "Logout":
@@ -181,6 +186,20 @@ export function DrawerRoutes(props: any) {
             style={getItemStyle("CreateEvent")}
             labelStyle={{
               color: selectedItem === "CreateEvent" ? "white" : "black",
+            }}
+          />
+          <DrawerItem
+            label="Meus Eventos cadastrados"
+            onPress={() => handleItemPress("MyEvents")}
+            icon={() => (
+              <S.Icon
+                style={{ resizeMode: "stretch" }}
+                source={getIconSource("MyEvents")}
+              />
+            )}
+            style={getItemStyle("MyEvents")}
+            labelStyle={{
+              color: selectedItem === "MyEvents" ? "white" : "black",
             }}
           />
         </S.Middle>

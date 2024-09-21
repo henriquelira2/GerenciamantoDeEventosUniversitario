@@ -61,4 +61,11 @@ export const homeAdmList: homeAdm[] = [
     key: "",
     empty: undefined
   },
+  {
+    name: "Meus Eventos Cadastrados",
+    background: newevent,
+    route: "MyEvents",
+    key: "",
+    empty: undefined
+  },
 ];

@@ -1,9 +1,9 @@
 const Sequelize = require("sequelize");
 const conn = require("../config/database");
 const User = require("./User");
-const Event = require("./Events"); // Certifique-se de que a importação está correta
+const Event = require("./Events");
 
-const inscriptions = conn.define("inscriptions", {
+const checkins = conn.define("checkins", {
   userId: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -20,14 +20,16 @@ const inscriptions = conn.define("inscriptions", {
       key: "id",
     },
   },
+  
+  checkin_time: {
+    type: Sequelize.DATE,
+    allowNull: true, 
+  },
+
   status: {
     type: Sequelize.STRING,
     defaultValue: "pendente",
     allowNull: false,
-  },
-  credential_code: {
-    type: Sequelize.STRING,
-    allowNull: true,
   },
   createdAt: {
     type: Sequelize.DATE,
@@ -41,13 +43,8 @@ const inscriptions = conn.define("inscriptions", {
   },
 });
 
-// Crie as associações depois de definir os modelos
-inscriptions.belongsTo(Event, { foreignKey: "eventId" });
-Event.hasMany(inscriptions, { foreignKey: "eventId" });
-
-// Sincroniza o modelo
-inscriptions.sync({ force: false }).then(() => {
-  console.log("Tabela de inscrições recuperada");
+checkins.sync({ force: false }).then(() => {
+  console.log("Tabela de checkins recuperada");
 });
 
-module.exports = inscriptions;
+module.exports = checkins;

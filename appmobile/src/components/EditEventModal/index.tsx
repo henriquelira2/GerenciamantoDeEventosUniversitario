@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
+
 import {
   Ionicons,
   AntDesign,
@@ -26,29 +26,31 @@ type EditEventModalProps = {
   visible: boolean;
   event: Event | null;
   onClose: () => void;
+  onRefresh: () => void;
 };
 
 export const EditEventModal: React.FC<EditEventModalProps> = ({
   visible,
   event,
   onClose,
+  onRefresh,
 }) => {
-  const [name, setName] = useState(event?.nameEvent || "");
-  const [imageEvent, setImageEvent] = useState(event?.imageEvent || "");
-  const [location, setLocation] = useState(event?.locationEvent || "");
-  const [date, setDate] = useState(event?.dateEvent || "");
-  const [time, setTime] = useState(event?.hourEvent || "");
-  const [organizer, setOrganizer] = useState(event?.organizerEvent || "");
-  const [qtdVacancies, setQtdVacancies] = useState(
+   
+  const [name] = useState(event?.nameEvent || "");
+  const [imageEvent] = useState(event?.imageEvent || "");
+  const [location] = useState(event?.locationEvent || "");
+  const [date] = useState(event?.dateEvent || "");
+  const [hour] = useState(event?.hourEvent || "");
+  const [organizer] = useState(event?.organizerEvent || "");
+  const [qtdVacancies] = useState(
     event?.qtdVacanciesEvent || ""
   );
-  const [price, setPrice] = useState(event?.priceEvent.toString() || "");
-  const [description, setDescription] = useState(event?.descriptionEvent || "");
-  const [typeEvent, setTypeEvent] = useState(event?.typeEvent || "");
+  const [price] = useState(event?.priceEvent.toString() || "");
+  const [description] = useState(event?.descriptionEvent || "");
+  const [typeEvent] = useState(event?.typeEvent || "");
 
   const [showPicker, setShowPicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
-
   const [image, setImage] = useState<string | null>(
     `${api.defaults.baseURL}/${imageEvent}`
   );
@@ -67,6 +69,7 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
 
       const formData = new FormData();
       formData.append("name", "eventImage");
+      // @ts-ignore
       formData.append("file", {
         uri: selectedImage,
         type: "image/jpeg",
@@ -104,7 +107,7 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
       imageEvent,
       locationEvent: location,
       dateEvent: date || "",
-      hourEvent: time || "",
+      hourEvent: hour || "",
       organizerEvent: organizer || "",
       qtdVacanciesEvent: qtdVacancies || "",
       priceEvent: price || 0,
@@ -124,6 +127,7 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
         ...data,
       };
 
+      // @ts-ignore
       await api.put(`/events/update/${event?.id}`, updatedEvent);
 
       showMessage({
@@ -313,13 +317,13 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
               <Controller
                 control={control}
                 name="hourEvent"
-                defaultValue={time}
+                defaultValue={hour}
                 render={({ field: { onChange, value } }) => {
-                  const selectedTime = time
-                    ? typeof time === "string" &&
-                      /^\d{2}:\d{2}:\d{2}$/.test(time)
-                      ? new Date(`1970-01-01T${time}`)
-                      : new Date(time)
+                  const selectedTime = hour
+                    ? typeof hour === "string" &&
+                      /^\d{2}:\d{2}:\d{2}$/.test(hour)
+                      ? new Date(`1970-01-01T${hour}`)
+                      : new Date(hour)
                     : new Date();
 
                   return (
@@ -360,6 +364,7 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
                                   second: "2-digit",
                                   hour12: false,
                                 });
+                              // @ts-ignore
                               setTime(formattedTime);
                               onChange(formattedTime);
                             }

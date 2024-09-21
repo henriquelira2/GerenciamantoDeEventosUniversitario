@@ -36,7 +36,7 @@ export function CreateEvent() {
   );
 
   const [users, setUsers] = useState([]); // Armazena os usuários
-  const [loadingUsers, setLoadingUsers] = useState(true); // Controle de loading para usuários
+  const [loadingUsers, setLoadingUsers] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -70,6 +70,7 @@ export function CreateEvent() {
 
       const formData = new FormData();
       formData.append("name", "eventImage");
+      //@ts-ignore
       formData.append("file", {
         uri: selectedImage,
         type: "image/jpeg",
@@ -421,8 +422,11 @@ export function CreateEvent() {
                       />
                       {users.map((user) => (
                         <Picker.Item
+                          //@ts-ignore
                           key={user.id}
+                          //@ts-ignore
                           label={`${user.firstName} ${user.lastName}`}
+                          //@ts-ignore
                           value={user.cpf}
                         />
                       ))}

@@ -1,4 +1,5 @@
 const Event = require("../models/Events");
+const Inscription = require("../models/Inscriptions");
 const moment = require("moment");
 
 // Função para criar um novo evento
@@ -120,5 +121,30 @@ exports.deleteEvent = async (req, res) => {
   } catch (error) {
     console.error("Erro ao excluir evento:", error);
     res.status(500).json({ error: "Erro do Servidor Interno" });
+  }
+};
+
+// Função para pegar todos os eventos que o usario esta inscrito(com status="CONFIRMADA")
+exports.getConfirmedEventsByUser = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const confirmedEvents = await Inscription.findAll({
+      where: {
+        userId: userId,
+        status: "CONFIRMADA",
+      },
+      include: [
+        {
+          model: Event,
+          as: "event", // Definido no relacionamento belongsTo
+        },
+      ],
+    });
+
+    res.status(200).json(confirmedEvents);
+  } catch (error) {
+    console.error("Erro ao buscar eventos confirmados:", error);
+    res.status(500).json({ message: "Erro ao buscar eventos confirmados" });
   }
 };
