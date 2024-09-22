@@ -132,7 +132,6 @@ export function MyEvents() {
         />
       )}
 
-      {/* Modal para exibir o QRCode */}
       <S.Modal visible={isModalVisible} transparent animationType="slide">
         <S.ModalContainer>
           <S.BoxModal>

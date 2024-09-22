@@ -1,5 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { useState } from "react";
+import FlashMessage from "react-native-flash-message";
 
 import { RouteDrawer } from "./app.route.drawer";
 import { AppRouteStack } from "./app.route.stack";
@@ -20,6 +21,7 @@ export function Routes() {
         <NavigationContainer onStateChange={(state) => setTabState(state)}>
           {loggedIn ? <RouteDrawer tabState={tabState} /> : <AppRouteStack />}
         </NavigationContainer>
+        <FlashMessage position="top" />
       </IconProvider>
     </AuthContext.Provider>
   );

@@ -159,3 +159,18 @@ export const UsersModalButtonText = styled.Text`
   color: ${theme.COLORS.WHITE};
   font-weight: bold;
 `;
+
+export const CheckinsModalButton = styled.TouchableOpacity`
+  background-color: ${theme.COLORS.RED100};
+  padding: 15px;
+  border-radius: 10px;
+  align-items: center;
+  margin-top: 20px;
+  width: 90%;
+`;
+
+export const CheckinsModalButtonText = styled.Text`
+  font-size: 18px;
+  color: ${theme.COLORS.WHITE};
+  font-weight: bold;
+`;

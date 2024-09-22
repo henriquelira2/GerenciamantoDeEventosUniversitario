@@ -49,6 +49,14 @@
           "merchantIdentifier": "merchant.com.gareky1.eventmanager",
           "enableGooglePay": true
         }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Permitir que $(PRODUCT_NAME) acesse sua câmera",
+          "microphonePermission": "Permitir que $(PRODUCT_NAME) acesse seu microfone",
+          "recordAudioAndroid": true
+        }
       ]
     ],
     "scheme": "eventmanager"

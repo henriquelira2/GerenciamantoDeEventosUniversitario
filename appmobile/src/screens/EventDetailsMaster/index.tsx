@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { FlatList, ActivityIndicator } from "react-native";
 
 import * as S from "./styles";
+import { Checkin } from "../../components/Checkin";
 import { DeletEventModal } from "../../components/DeletEventModal";
 import { EditEventModal } from "../../components/EditEventModal";
 import { UsersModal } from "../../components/UsersModal";
@@ -35,10 +36,10 @@ export function EventDetailsMaster() {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [usersModalVisible, setUsersModalVisible] = useState(false);
+  const [checkinModalVisible, setCheckinModalVisible] = useState(false);
 
   useEffect(() => {
     if (route.params?.event) {
-      console.log(route.params.event);
       setEvent(route.params.event);
     }
   }, [route.params?.event]);
@@ -49,7 +50,6 @@ export function EventDetailsMaster() {
     setRefreshing(true);
     try {
       const response = await api.get(`/events/${event?.id}`);
-      console.log("event image", response.data.imageEvent);
       if (response.data) {
         setEvent(response.data);
       }
@@ -143,6 +143,14 @@ export function EventDetailsMaster() {
             ListFooterComponent={() => (
               <>
                 <S.BtnBox>
+                  <S.CheckinsModalButton
+                    onPress={() => setCheckinModalVisible(true)}
+                  >
+                    <S.CheckinsModalButtonText>
+                      Realizar Check-in
+                    </S.CheckinsModalButtonText>
+                  </S.CheckinsModalButton>
+
                   <S.UsersModalButton
                     onPress={() => setUsersModalVisible(true)}
                   >
@@ -169,12 +177,18 @@ export function EventDetailsMaster() {
         </>
       )}
 
+      <Checkin
+        visible={checkinModalVisible}
+        onClose={() => setCheckinModalVisible(false)}
+        onRefresh={handleRefresh}
+      />
+
       <UsersModal
         visible={usersModalVisible}
         eventId={event.id}
         onClose={() => setUsersModalVisible(false)}
       />
-      
+
       <EditEventModal
         visible={editModalVisible}
         //@ts-ignore

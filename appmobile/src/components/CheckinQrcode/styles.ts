@@ -46,6 +46,7 @@ export const InputCode = styled.TextInput`
   border-color: ${theme.COLORS.GRAY100};
   margin-right: 5px;
 `;
+
 export const IconeCode = styled.TouchableOpacity`
   flex: 1;
   border: 1px;
