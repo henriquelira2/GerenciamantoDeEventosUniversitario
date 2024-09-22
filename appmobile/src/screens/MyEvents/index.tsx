@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
@@ -11,13 +12,13 @@ import { api } from "../../services/api";
 
 export function MyEvents() {
   const [events, setEvents] = useState<Event[]>([]);
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]); // Adicionado para eventos filtrados
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
-  const [selectedCredentialCode, setSelectedCredentialCode] = useState<
-    string | null
-  >(null);
+  const [selectedCredentialCode, setSelectedCredentialCode] = useState<string | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(""); // Adicionado para o termo de busca
 
   const isFocused = useIsFocused();
 
@@ -38,6 +39,7 @@ export function MyEvents() {
     try {
       const response = await api.get(`/events/confirmed/${userId}`);
       setEvents(response.data);
+      setFilteredEvents(response.data);
     } catch (error) {
       console.error("Error fetching events:", error);
     } finally {
@@ -71,6 +73,18 @@ export function MyEvents() {
     }
   }, [isFocused]);
 
+  const handleSearch = (text: string) => {
+    setSearchTerm(text);
+    if (text.trim() === "") {
+      setFilteredEvents(events);
+    } else {
+      const filtered = events.filter((event) =>
+        event.event.nameEvent.toLowerCase().includes(text.toLowerCase())
+      );
+      setFilteredEvents(filtered);
+    }
+  };
+
   const handleEventPress = (event: Event) => {
     if (event.credential_code) {
       setSelectedCredentialCode(event.credential_code);
@@ -82,7 +96,6 @@ export function MyEvents() {
     const imageUri = item.event.imageEvent
       ? `${api.defaults.baseURL}/${item.event.imageEvent}`
       : null;
-    console.log("Image URI:", imageUri);
 
     return (
       <S.BoxEvent onPress={() => handleEventPress(item)}>
@@ -110,7 +123,11 @@ export function MyEvents() {
   return (
     <S.Container>
       <S.Search>
-        <S.InputSeach placeholder="Nome do Evento" />
+        <S.InputSeach
+          placeholder="Nome do Evento"
+          value={searchTerm}
+          onChangeText={handleSearch}
+        />
         <MaterialIcons
           name="search"
           size={26}
@@ -123,7 +140,7 @@ export function MyEvents() {
         <ActivityIndicator size="large" color="#fff" />
       ) : (
         <S.FlatList
-          data={events}
+          data={filteredEvents}
           renderItem={renderEvent}
           //@ts-ignore
           keyExtractor={(item) => item.id.toString()}

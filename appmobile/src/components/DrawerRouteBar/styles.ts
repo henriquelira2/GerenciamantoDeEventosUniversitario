@@ -27,6 +27,7 @@ export const DrawerBox = styled.View`
   align-items: center;
   width: 100%;
 `;
+
 export const BoxLeft = styled.View`
   flex-direction: row;
   align-items: center;
@@ -39,22 +40,11 @@ export const TextDrawer = styled.Text`
   font-size: 14px;
   font-weight: bold;
 `;
+
 export const Bottom = styled.View`
-  padding: 20px;
+  margin-top: 25%;
   border-top-width: 1px;
   border-top-color: ${theme.COLORS.GRAY200};
-  top: 5%;
-`;
-export const ButtomBottom = styled.TouchableOpacity`
-  padding: 5px 15px 15px 0px;
-`;
-export const BottomBox = styled.View`
-  flex-direction: row;
-  align-items: center;
-`;
-export const BottomText = styled.Text`
-  font-size: 15px;
-  margin-left: 10px;
 `;
 
 export const Icon = styled.Image``;

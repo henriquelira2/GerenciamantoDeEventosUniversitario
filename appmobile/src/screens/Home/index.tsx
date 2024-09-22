@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
@@ -32,7 +33,7 @@ export function Home() {
     React.useCallback(() => {
       onRefresh();
       return () => {};
-    }, []),
+    }, [])
   );
 
   const Card = () => {
