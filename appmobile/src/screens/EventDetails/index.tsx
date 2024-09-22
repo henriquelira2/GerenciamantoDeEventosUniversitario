@@ -1,12 +1,11 @@
 /* eslint-disable prettier/prettier */
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { useRoute, RouteProp, useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
-import { Alert, FlatList, ActivityIndicator } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList, ActivityIndicator } from "react-native";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 
 import * as S from "./styles";
-import { DeletEventModal } from "../../components/DeletEventModal";
-import { EditEventModal } from "../../components/EditEventModal";
 import { PaymentWebView } from "../../components/PaymentWebView";
 import { api } from "../../services/api";
 
@@ -35,11 +34,14 @@ export function EventDetails() {
   const [loading, setLoading] = useState(false);
   const [paymentLink, setPaymentLink] = useState("");
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [editModalVisible, setEditModalVisible] = useState(false);
-  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-  const handleDeleteEvent = () => {};
+  useEffect(() => {
+    if (route.params?.event) {
+      setEvent(route.params.event);
+    }
+  }, [route.params?.event]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
@@ -56,6 +58,59 @@ export function EventDetails() {
     }
   };
 
+  const handleFreeEventInscription = async () => {
+    setLoading(true);
+    try {
+      const response = await api.post(
+        "/inscriptions/createFreeEventInscription",
+        {
+          userId,
+          // @ts-ignore
+          eventId: event.id,
+        }
+      );
+  
+      if (response.status === 200) {
+        showMessage({
+          message: "Sucesso",
+          description: "Inscrição realizada com sucesso!",
+          type: "success",
+        });
+      } else if (response.status === 408) {
+        showMessage({
+          message: "Erro",
+          description: "Você já está inscrito neste evento.",
+          type: "danger",
+        });
+      } else {
+        showMessage({
+          message: "Erro",
+          description: "Erro ao realizar a inscrição.",
+          type: "danger",
+        });
+      }
+    } catch (error) {
+      console.error("Erro ao inscrever-se no evento gratuito:", error);
+      //@ts-ignore
+      if (error.response && error.response.status === 408) {
+        showMessage({
+          message: "Erro",
+          description: "Você já está inscrito neste evento.",
+          type: "danger",
+        });
+      } else {
+        showMessage({
+          message: "Erro",
+          description: "Houve um problema ao processar a inscrição.",
+          type: "danger",
+        });
+      }
+    } finally {
+      setLoading(false);
+      setShowConfirmModal(false);
+    }
+  };
+
   const handleInscription = async () => {
     setLoading(true);
     try {
@@ -67,31 +122,50 @@ export function EventDetails() {
         amount: event.priceEvent * 100,
         paymentMethod: "CREDIT_CARD",
       });
-
+  
       const { paymentLink } = response.data;
-
+  
       if (paymentLink) {
         setPaymentLink(paymentLink);
         setShowPaymentModal(true);
       } else {
-        Alert.alert("Erro", "Link de pagamento não disponível.");
+        showMessage({
+          message: "Erro",
+          description: "Link de pagamento não disponível.",
+          type: "danger",
+        });
       }
     } catch (error) {
       console.error("Erro1 : ", error);
-
+  
       if (error instanceof Error && (error as any).response) {
         const axiosError = error as any;
-
+  
         if (axiosError.response.status === 408) {
-          Alert.alert("Erro", "Você já está inscrito neste evento.");
+          showMessage({
+            message: "Erro",
+            description: "Você já está inscrito neste evento.",
+            type: "danger",
+          });
+        } else if (axiosError.response.status === 409) {
+          showMessage({
+            message: "Erro",
+            description: "Evento Esgotado.",
+            type: "danger",
+          });
         } else {
-          Alert.alert("Erro", "Houve um problema ao processar o pagamento.");
-        }
-        if (axiosError.response.status === 409) {
-          Alert.alert("Erro", "Evento Esgotado");
+          showMessage({
+            message: "Erro",
+            description: "Houve um problema ao processar o pagamento.",
+            type: "danger",
+          });
         }
       } else {
-        Alert.alert("Erro", "Houve um problema ao se conectar ao servidor.");
+        showMessage({
+          message: "Erro",
+          description: "Houve um problema ao se conectar ao servidor.",
+          type: "danger",
+        });
       }
     } finally {
       setLoading(false);
@@ -134,8 +208,13 @@ export function EventDetails() {
   const eventData = [
     { key: "location", icon: "location-on", text: event.locationEvent },
     { key: "date", icon: "calendar-month", text: formatDate(event.dateEvent) },
-    { key: "time", icon: "access-time", text: formatTime(event.hourEvent) }, 
-    { key: "price", icon: null, text: `$${event.priceEvent}` },
+    { key: "time", icon: "access-time", text: formatTime(event.hourEvent) },
+    {
+      key: "price",
+      icon: null,
+      //@ts-ignore
+      text: event.priceEvent === "0" ? "Grátis" : `$${event.priceEvent}`,
+    },
     { key: "description", icon: null, text: event.descriptionEvent },
   ];
 
@@ -156,6 +235,7 @@ export function EventDetails() {
 
   return (
     <S.Container>
+         <FlashMessage position="top" />
       {loading ? (
         <ActivityIndicator size="large" color="#fff" />
       ) : (
@@ -181,23 +261,26 @@ export function EventDetails() {
             )}
             ListFooterComponent={() => (
               <>
-                <S.BtnBox>
-                  <S.SignupEvent onPress={handleInscription}>
-                    <S.SignupEventText>Participar do Evento</S.SignupEventText>
-                  </S.SignupEvent>
-
-                  <S.EditModalButton onPress={() => setEditModalVisible(true)}>
-                    <S.EditModalButtonText>Editar evento</S.EditModalButtonText>
-                  </S.EditModalButton>
-
-                  <S.DeletModalButton
-                    onPress={() => setDeleteModalVisible(true)}
-                  >
-                    <S.DeletModalButtonText>
-                      Deletar evento
-                    </S.DeletModalButtonText>
-                  </S.DeletModalButton>
-                </S.BtnBox>
+                {
+                  //@ts-ignore
+                  event.priceEvent === "0" ? (
+                    <S.BtnBox>
+                      <S.SignupEvent onPress={() => setShowConfirmModal(true)}>
+                        <S.SignupEventText>
+                          Participar do Evento
+                        </S.SignupEventText>
+                      </S.SignupEvent>
+                    </S.BtnBox>
+                  ) : (
+                    <S.BtnBox>
+                      <S.SignupEvent onPress={handleInscription}>
+                        <S.SignupEventText>
+                          Participar do Evento
+                        </S.SignupEventText>
+                      </S.SignupEvent>
+                    </S.BtnBox>
+                  )
+                }
               </>
             )}
           />
@@ -210,21 +293,35 @@ export function EventDetails() {
         onClose={() => setShowPaymentModal(false)}
       />
 
-      <EditEventModal
-        visible={editModalVisible}
-        // @ts-ignore
-        event={event}
-        onClose={() => setEditModalVisible(false)}
-        onRefresh={handleRefresh}
-      />
-
-      <DeletEventModal
-        visible={deleteModalVisible}
-        // @ts-ignore
-        event={event}
-        onClose={() => setDeleteModalVisible(false)}
-        onDelete={handleDeleteEvent}
-      />
+      <S.Modal
+        visible={showConfirmModal}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setShowConfirmModal(false)}
+      >
+        <S.ModalContainer>
+          <S.ModalContent>
+            <S.ModalText>
+              Deseja realmente participar deste evento gratuito?
+            </S.ModalText>
+            <S.ModalButtonContainer>
+              <S.ModalButton
+                onPress={handleFreeEventInscription}
+                disabled={loading}
+              >
+                {loading ? (
+                  <ActivityIndicator size="small" color="#fff" />
+                ) : (
+                  <S.ModalButtonText>Sim</S.ModalButtonText>
+                )}
+              </S.ModalButton>
+              <S.ModalButton onPress={() => setShowConfirmModal(false)}>
+                <S.ModalButtonText>Não</S.ModalButtonText>
+              </S.ModalButton>
+            </S.ModalButtonContainer>
+          </S.ModalContent>
+        </S.ModalContainer>
+      </S.Modal>
     </S.Container>
   );
 }

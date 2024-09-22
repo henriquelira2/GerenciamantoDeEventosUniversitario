@@ -3,6 +3,7 @@ const {
   PAGSEGURO_TOKEN,
 } = require("../config/pagseguroConfig");
 
+const { Op } = require("sequelize");
 const Inscription = require("../models/Inscriptions");
 const Event = require("../models/Events");
 const User = require("../models/User");
@@ -118,7 +119,7 @@ exports.createPaymentIntent = async (req, res) => {
         },
       ],
       notification_urls: [
-        "https://pro-purely-woodcock.ngrok-free/inscriptions/webhook",
+        "https://pro-purely-woodcock.ngrok-free.app/inscriptions/webhook",
       ],
       redirect_urls: {
         success: "https://eventmaneger.com/success",
@@ -214,4 +215,118 @@ exports.createWebhook = async (req, res) => {
   }
 
   return res.status(400).json({ error: "Dados da notificação incompletos" });
+};
+
+// Rota para criar inscrição para eventos gratuitos
+exports.createFreeEventInscription = async (req, res) => {
+  const { userId, eventId } = req.body;
+
+  try {
+    const event = await Event.findByPk(eventId);
+    const user = await User.findByPk(userId);
+
+    if (!event) {
+      return res.status(404).json({ error: "Evento não encontrado" });
+    }
+
+    if (event.qtdVacanciesEvent <= 0) {
+      return res.status(409).json({ error: "Evento esgotado" });
+    }
+
+    const existingInscription = await Inscription.findOne({
+      where: { userId, eventId, status: "CONFIRMADA" },
+    });
+
+    if (existingInscription) {
+      return res
+        .status(408)
+        .json({ error: "Você já está inscrito neste evento." });
+    }
+
+    const inscription = await Inscription.create({
+      userId,
+      eventId,
+      status: "CONFIRMADA",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    const credentialCode = await generateCredentialCode();
+
+    await Inscription.update(
+      { credential_code: credentialCode },
+      { where: { id: inscription.id } }
+    );
+
+    await checkins.create({
+      userId: inscription.userId,
+      eventId: inscription.eventId,
+      status: "pendente",
+      checkin_time: new Date(),
+    });
+
+    await sendConfirmationEmail(user, event, credentialCode);
+
+    await Event.update(
+      { qtdVacanciesEvent: event.qtdVacanciesEvent - 1 },
+      { where: { id: event.id } }
+    );
+
+    return res.status(200).json({
+      message: "Inscrição para evento gratuito realizada com sucesso.",
+      credentialCode: credentialCode,
+    });
+  } catch (error) {
+    console.error("Erro ao processar a inscrição gratuita:", error.message);
+    res.status(500).json({ error: "Erro ao processar a inscrição gratuita." });
+  }
+};
+
+exports.listUsersByEvent = async (req, res) => {
+  const { eventId } = req.params;
+
+  try {
+    const event = await Event.findByPk(eventId);
+    if (!event) {
+      return res.status(404).json({ error: "Evento não encontrado" });
+    }
+
+    const inscriptions = await Inscription.findAll({
+      where: { eventId, status: "CONFIRMADA" },
+      include: {
+        model: User,
+        as: "user", 
+        attributes: ["id", "firstName", "lastName", "email"],
+      },
+    });
+
+    if (!inscriptions.length) {
+      return res
+        .status(404)
+        .json({ error: "Nenhum usuário inscrito neste evento." });
+    }
+
+    const users = inscriptions.map((inscription) => ({
+      userId: inscription.user.id, 
+      name: `${inscription.user.firstName} ${inscription.user.lastName}`,
+      email: inscription.user.email,
+      inscriptionId: inscription.id,
+      eventId: inscription.eventId,
+      status: inscription.status,
+    }));
+
+    return res.status(200).json({
+      eventId: eventId,
+      eventName: event.nameEvent,
+      users: users,
+    });
+  } catch (error) {
+    console.error(
+      "Erro ao listar usuários inscritos no evento:",
+      error.message
+    );
+    return res
+      .status(500)
+      .json({ error: "Erro ao listar usuários inscritos no evento." });
+  }
 };

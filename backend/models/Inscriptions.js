@@ -1,24 +1,14 @@
 const Sequelize = require("sequelize");
 const conn = require("../config/database");
-const User = require("./User");
-const Event = require("./Events"); // Certifique-se de que a importação está correta
 
-const inscriptions = conn.define("inscriptions", {
+const Inscription = conn.define("inscriptions", {
   userId: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    references: {
-      model: User,
-      key: "id",
-    },
   },
   eventId: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    references: {
-      model: Event,
-      key: "id",
-    },
   },
   status: {
     type: Sequelize.STRING,
@@ -41,13 +31,4 @@ const inscriptions = conn.define("inscriptions", {
   },
 });
 
-// Crie as associações depois de definir os modelos
-inscriptions.belongsTo(Event, { foreignKey: "eventId" });
-Event.hasMany(inscriptions, { foreignKey: "eventId" });
-
-// Sincroniza o modelo
-inscriptions.sync({ force: false }).then(() => {
-  console.log("Tabela de inscrições recuperada");
-});
-
-module.exports = inscriptions;
+module.exports = Inscription;

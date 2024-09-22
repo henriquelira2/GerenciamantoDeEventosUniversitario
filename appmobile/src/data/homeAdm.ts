@@ -68,4 +68,11 @@ export const homeAdmList: homeAdm[] = [
     key: "",
     empty: undefined
   },
+  {
+    name: "Meus Eventos Criados",
+    background: newevent,
+    route: "MyCreatedEvents",
+    key: "",
+    empty: undefined
+  },
 ];

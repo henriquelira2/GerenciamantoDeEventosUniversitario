@@ -5,7 +5,7 @@ import theme from "../../theme";
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${theme.COLORS.WHITE};
+  background-color: #ffffff;
 `;
 
 export const Scroll = styled.ScrollView`
@@ -15,12 +15,13 @@ export const Scroll = styled.ScrollView`
 export const LoadingContainer = styled.View`
   flex: 1;
   justify-content: center;
-  background-color:  ${theme.COLORS.WHITE};
+  background-color: #ffffff;
 `;
 
 export const EventImage = styled.Image`
   width: 100%;
   height: 300px;
+ 
 `;
 
 export const EventInfoContainer = styled.View`
@@ -144,49 +145,17 @@ export const BtnBox = styled.View`
   justify-content: center;
 `;
 
-export const Modal = styled.Modal`
-
-`;
-export const ModalContainer = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.5); 
-`;
-
-export const ModalContent = styled.View`
-  width: 80%;
-  padding: 20px;
-  background-color: white;
+export const UsersModalButton = styled.TouchableOpacity`
+  background-color: ${theme.COLORS.RED100};
+  padding: 15px;
   border-radius: 10px;
   align-items: center;
+  margin-top: 20px;
+  width: 90%;
 `;
 
-export const ModalText = styled.Text`
+export const UsersModalButtonText = styled.Text`
   font-size: 18px;
-  color: ${theme.COLORS.DARK};
-  text-align: center;
-  margin-bottom: 20px;
-`;
-
-export const ModalButtonContainer = styled.View`
-  flex-direction: row;
-  justify-content: space-around;
-  width: 100%;
-`;
-
-export const ModalButton = styled.TouchableOpacity`
-  background-color: ${theme.COLORS.GREEN};
-  padding: 10px 20px;
-  border-radius: 5px;
-  margin: 0 10px;
-  flex: 1;
-  align-items: center;
-  justify-content: center; 
-`;
-
-export const ModalButtonText = styled.Text`
-  color: white;
-  font-size: 16px;
+  color: ${theme.COLORS.WHITE};
   font-weight: bold;
 `;

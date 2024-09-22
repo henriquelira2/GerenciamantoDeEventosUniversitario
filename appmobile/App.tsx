@@ -1,10 +1,10 @@
+import { StripeProvider } from "@stripe/stripe-react-native";
 import * as NavigationBar from "expo-navigation-bar";
 import * as Updates from "expo-updates";
 import React, { useEffect } from "react";
 import { StatusBar, AppRegistry } from "react-native";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ThemeProvider } from "styled-components/native";
-import { StripeProvider } from "@stripe/stripe-react-native";
 
 import { Routes } from "./src/routes/index";
 import theme from "./src/theme";

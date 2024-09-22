@@ -1,6 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native"; // Importe o useNavigation
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Text } from "react-native";
 
@@ -64,12 +64,14 @@ export function Events() {
       ? `${api.defaults.baseURL}/${item.imageEvent}`
       : null;
 
+    console.log("Image URI:", imageUri);
+
     return (
       <S.BoxEvent onPress={() => handleEventPress(item)}>
         {imageUri ? (
           <S.ImageEvent
             source={{
-              uri: imageUri,
+              uri: imageUri, // Aqui, imageUri já contém o prefixo base64
             }}
             imageStyle={{ borderRadius: 30 }}
           >
@@ -81,7 +83,11 @@ export function Events() {
                 </S.LocationHour>
               </S.Info1>
               <S.Info2>
-                <S.Price>${item.priceEvent}</S.Price>
+                {item.priceEvent === "0" ? (
+                  <S.Price>Gratis</S.Price>
+                ) : (
+                  <S.Price>${item.priceEvent}</S.Price>
+                )}
               </S.Info2>
             </S.BoxInfo>
           </S.ImageEvent>

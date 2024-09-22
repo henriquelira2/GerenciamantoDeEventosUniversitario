@@ -8,8 +8,10 @@ import { useIcon } from "../contexts/IconContext";
 import { CreateEvent } from "../screens/CreateEvent";
 import { CreateUser } from "../screens/CreateUser";
 import { EventDetails } from "../screens/EventDetails";
+import { EventDetailsMaster } from "../screens/EventDetailsMaster";
 import { Events } from "../screens/Events";
 import { Home } from "../screens/Home";
+import { MyCreatedEvents } from "../screens/MyCreatedEvents";
 import { MyEvents } from "../screens/MyEvents";
 import { Profile } from "../screens/Profile";
 import { UpdateProfile } from "../screens/UpdateProfile";
@@ -27,6 +29,8 @@ type AppRoutes = {
   EventDetails: undefined;
   Payment: undefined;
   MyEvents: undefined;
+  MyCreatedEvents: undefined;
+  EventDetailsMaster: undefined;
 };
 
 export type AppBottomTabsRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -180,6 +184,17 @@ export function BottomTabs() {
         }}
       />
       <TabScreen
+        name="EventDetailsMaster"
+        component={EventDetailsMaster}
+        options={{
+          tabBarButton: () => null,
+          headerTransparent: true,
+          headerTitle: " ",
+          tabBarStyle: { display: "none" },
+          headerLeft: () => null,
+        }}
+      />
+      <TabScreen
         name="MyEvents"
         component={MyEvents}
         options={{
@@ -190,6 +205,20 @@ export function BottomTabs() {
           },
           headerShown: false,
           headerTitle: "Meus Eventos Cadastrados",
+          headerTintColor: theme.COLORS.WHITE,
+        }}
+      />
+      <TabScreen
+        name="MyCreatedEvents"
+        component={MyCreatedEvents}
+        options={{
+          tabBarButton: () => null,
+          headerStyle: {
+            backgroundColor: theme.COLORS.RED,
+            height: 100,
+          },
+          headerShown: false,
+          headerTitle: "Meus Eventos Criados",
           headerTintColor: theme.COLORS.WHITE,
         }}
       />

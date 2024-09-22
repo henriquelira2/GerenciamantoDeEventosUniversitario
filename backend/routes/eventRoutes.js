@@ -8,5 +8,6 @@ router.get("/:id", eventController.getEventById);
 router.get("/confirmed/:userId", eventController.getConfirmedEventsByUser);
 router.put("/update/:id", eventController.updateEvent);
 router.delete("/delete/:id", eventController.deleteEvent);
+router.get("/organizer/:cpf", eventController.getEventsByOrganizer);
 
 module.exports = router;

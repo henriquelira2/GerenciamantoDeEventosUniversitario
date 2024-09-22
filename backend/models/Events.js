@@ -44,8 +44,4 @@ const Event = conn.define("events", {
   },
 });
 
-Event.sync({ force: false }).then(() => {
-  console.log("Tabela de eventos recuperada");
-});
-
 module.exports = Event;

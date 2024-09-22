@@ -38,16 +38,12 @@ const User = conn.define("users", {
   },
   resetTokenExpires: {
     type: Sequelize.DATE,
-    allowNull: true,
+    allowNull: true, 
   },
   type: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-});
-
-User.sync({ force: false }).then(() => {
-  console.log("Tabela de usuário recuperada");
 });
 
 module.exports = User;

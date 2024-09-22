@@ -1,42 +1,28 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native";
 
 import * as S from "./styles";
-import { CheckinQrcode } from "../../components/CheckinQrcode";
 import { Event } from "../../configs/types";
+import { AuthNavigatorRoutesProps } from "../../routes/app.route.stack";
 import { api } from "../../services/api";
 
-export function MyEvents() {
+export function MyCreatedEvents() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const [userId, setUserId] = useState<string | null>(null);
-  const [selectedCredentialCode, setSelectedCredentialCode] = useState<
-    string | null
-  >(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
   const isFocused = useIsFocused();
 
-  const fetchUserId = async () => {
-    const userCPF = await AsyncStorage.getItem("userCPF");
-    if (userCPF) {
-      try {
-        const response = await api.get(`/users/${userCPF}`);
-        setUserId(response.data.id);
-      } catch (error) {
-        console.error("Erro ao buscar o ID do usuário:", error);
-      }
-    }
-  };
-
   const fetchEvents = async () => {
     setLoading(true);
+    const userCPF = await AsyncStorage.getItem("userCPF");
     try {
-      const response = await api.get(`/events/confirmed/${userId}`);
+      const response = await api.get(`/events/organizer/${userCPF}`);
       setEvents(response.data);
     } catch (error) {
       console.error("Error fetching events:", error);
@@ -46,18 +32,10 @@ export function MyEvents() {
   };
 
   useEffect(() => {
-    const initialize = async () => {
-      await fetchUserId();
-    };
-
-    initialize();
-  }, []);
-
-  useEffect(() => {
-    if (userId) {
+    if (isFocused) {
       fetchEvents();
     }
-  }, [userId]);
+  }, [isFocused]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
@@ -65,25 +43,16 @@ export function MyEvents() {
     setRefreshing(false);
   };
 
-  useEffect(() => {
-    if (isFocused) {
-      fetchEvents();
-    }
-  }, [isFocused]);
-
   const handleEventPress = (event: Event) => {
-    if (event.credential_code) {
-      setSelectedCredentialCode(event.credential_code);
-      setIsModalVisible(true);
-    }
+    // @ts-ignore
+    navigation.navigate("EventDetailsMaster", { event });
   };
 
   const renderEvent = ({ item }: { item: Event }) => {
-    const imageUri = item.event.imageEvent
-      ? `${api.defaults.baseURL}/${item.event.imageEvent}`
+    const imageUri = item.imageEvent
+      ? `${api.defaults.baseURL}/${item.imageEvent}`
       : null;
     console.log("Image URI:", imageUri);
-
     return (
       <S.BoxEvent onPress={() => handleEventPress(item)}>
         {imageUri ? (
@@ -93,9 +62,9 @@ export function MyEvents() {
           >
             <S.BoxInfo>
               <S.Info1>
-                <S.TitleEvent>{item.event.nameEvent}</S.TitleEvent>
+                <S.TitleEvent>{item.nameEvent}</S.TitleEvent>
                 <S.LocationHour>
-                  {item.event.locationEvent} - {item.event.hourEvent}
+                  {item.locationEvent} - {item.hourEvent}
                 </S.LocationHour>
               </S.Info1>
             </S.BoxInfo>
@@ -131,18 +100,6 @@ export function MyEvents() {
           onRefresh={handleRefresh}
         />
       )}
-
-      {/* Modal para exibir o QRCode */}
-      <S.Modal visible={isModalVisible} transparent animationType="slide">
-        <S.ModalContainer>
-          <S.BoxModal>
-            <CheckinQrcode credential_code={selectedCredentialCode || ""} />
-            <S.BtnCloseModal onPress={() => setIsModalVisible(false)}>
-              <S.TextBtnModal>Fechar</S.TextBtnModal>
-            </S.BtnCloseModal>
-          </S.BoxModal>
-        </S.ModalContainer>
-      </S.Modal>
     </S.Container>
   );
 }

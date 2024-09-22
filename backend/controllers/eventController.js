@@ -1,8 +1,9 @@
 const Event = require("../models/Events");
 const Inscription = require("../models/Inscriptions");
+const { Sequelize } = require("sequelize");
 const moment = require("moment");
-
 // Função para criar um novo evento
+
 exports.createEvent = async (req, res) => {
   try {
     const {
@@ -41,8 +42,17 @@ exports.createEvent = async (req, res) => {
 // Função para obter todos os eventos
 exports.getAllEvents = async (req, res) => {
   try {
-    const events = await Event.findAll({ raw: true });
-    res.send(events);
+    const events = await Event.findAll();
+
+    const eventsWithImagePath = events.map((event) => {
+      const eventData = event.toJSON();
+      if (eventData.imageEvent) {
+        eventData.imageEvent = `${eventData.imageEvent}`;
+      }
+      return eventData;
+    });
+
+    res.send(eventsWithImagePath);
   } catch (error) {
     console.error("Erro ao buscar todos os eventos:", error);
     res.status(500).json({ error: "Erro do Servidor Interno" });
@@ -61,6 +71,8 @@ exports.getEventById = async (req, res) => {
     if (!event) {
       return res.status(404).json({ error: "Evento não encontrado" });
     }
+
+    event.imageEvent = `${event.imageEvent}`;
 
     res.send(event);
   } catch (error) {
@@ -107,6 +119,7 @@ exports.updateEvent = async (req, res) => {
 exports.deleteEvent = async (req, res) => {
   try {
     const id = req.params.id;
+
     const result = await Event.destroy({
       where: {
         id: id,
@@ -117,8 +130,18 @@ exports.deleteEvent = async (req, res) => {
       return res.status(404).json({ error: "Evento não encontrado" });
     }
 
-    res.status(200).send();
+    res.status(200).json({ message: "Evento excluído com sucesso" });
   } catch (error) {
+    if (error instanceof Sequelize.ForeignKeyConstraintError) {
+      console.error(
+        "Tentativa de excluir evento com inscrições associadas:",
+        error
+      );
+      return res.status(400).json({
+        error: "Não é possível excluir o evento. Existem usuários cadastrados.",
+      });
+    }
+
     console.error("Erro ao excluir evento:", error);
     res.status(500).json({ error: "Erro do Servidor Interno" });
   }
@@ -129,6 +152,7 @@ exports.getConfirmedEventsByUser = async (req, res) => {
   try {
     const userId = req.params.userId;
 
+    // Encontrar todas as inscrições com status CONFIRMADA para o usuário
     const confirmedEvents = await Inscription.findAll({
       where: {
         userId: userId,
@@ -137,14 +161,52 @@ exports.getConfirmedEventsByUser = async (req, res) => {
       include: [
         {
           model: Event,
-          as: "event", // Definido no relacionamento belongsTo
+          as: "event",
         },
       ],
     });
 
-    res.status(200).json(confirmedEvents);
+    const eventsWithImagePath = confirmedEvents.map((inscription) => {
+      const eventData = inscription.event;
+      if (eventData && eventData.imageEvent) {
+        eventData.imageEvent = `${eventData.imageEvent}`;
+      }
+      return inscription;
+    });
+
+    res.status(200).json(eventsWithImagePath);
   } catch (error) {
     console.error("Erro ao buscar eventos confirmados:", error);
     res.status(500).json({ message: "Erro ao buscar eventos confirmados" });
+  }
+};
+
+// Função para pegar todos os eventos organizados por um usuário com base no CPF
+exports.getEventsByOrganizer = async (req, res) => {
+  try {
+    const { cpf } = req.params;
+
+    const events = await Event.findAll({
+      where: { organizerEvent: cpf },
+    });
+
+    if (events.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "Nenhum evento encontrado para este organizador." });
+    }
+
+    const eventsWithImagePath = events.map((event) => {
+      const eventData = event.toJSON();
+      if (eventData.imageEvent) {
+        eventData.imageEvent = `${eventData.imageEvent}`;
+      }
+      return eventData;
+    });
+
+    res.status(200).json(eventsWithImagePath);
+  } catch (error) {
+    console.error("Erro ao buscar eventos por organizador:", error);
+    res.status(500).json({ error: "Erro do Servidor Interno" });
   }
 };

@@ -2,6 +2,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Modal, ActivityIndicator, Alert } from "react-native";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 import { WebView } from "react-native-webview";
 
 import * as S from "./styles";
@@ -23,35 +24,48 @@ export function PaymentWebView({
 
   const handleNavigationChange = (navState: { url: any }) => {
     const { url } = navState;
-    console.log("url2" + url);
-    if (url.includes("https://pagamento.sandbox.pagbank.com.br/conclusao")) {//mudar link 
+    console.log("URL - " + url);
+    if (url.includes("https://pagamento.sandbox.pagbank.com.br/conclusao")) {
+      //mudar link
       onClose();
-      navigation.navigate("Eventos");
-    } else if (url.includes("https://eventmaneger.com/failure")) {//mudar link 
+
+      showMessage({
+        message: "Pagamento realizado com sucesso",
+        type: "success",
+      });
+      setTimeout(() => {
+        navigation.navigate("Eventos");
+      }, 1000);
+    } else if (url.includes("https://eventmaneger.com/failure")) {
+      //mudar link
       onClose();
       navigation.navigate("Home");
     }
   };
 
   return (
-    <Modal visible={visible} onRequestClose={onClose} animationType="slide">
-      <S.Container>
-        {loading && <ActivityIndicator size="large" color="#0000ff" />}
+    <>
+      <FlashMessage position="top" />
 
-        <WebView
-          source={{ uri: paymentLink }}
-          onLoadEnd={() => setLoading(false)}
-          onError={() => {
-            setLoading(false);
-            Alert.alert(
-              "Erro",
-              "Não foi possível carregar a página de pagamento."
-            );
-            onClose();
-          }}
-          onNavigationStateChange={handleNavigationChange}
-        />
-      </S.Container>
-    </Modal>
+      <Modal visible={visible} onRequestClose={onClose} animationType="slide">
+        <S.Container>
+          {loading && <ActivityIndicator size="large" color="#0000ff" />}
+
+          <WebView
+            source={{ uri: paymentLink }}
+            onLoadEnd={() => setLoading(false)}
+            onError={() => {
+              setLoading(false);
+              Alert.alert(
+                "Erro",
+                "Não foi possível carregar a página de pagamento."
+              );
+              onClose();
+            }}
+            onNavigationStateChange={handleNavigationChange}
+          />
+        </S.Container>
+      </Modal>
+    </>
   );
 }
