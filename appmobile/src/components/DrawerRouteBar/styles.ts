@@ -1,11 +1,10 @@
 import styled from "styled-components/native";
 
-import theme from "../../theme";
-
 export const Container = styled.View`
   flex: 1;
   z-index: 999;
 `;
+
 export const Top = styled.View`
   padding: 20px;
   bottom: 5%;
@@ -16,11 +15,12 @@ export const LogoTop = styled.Image`
   width: 100%;
   height: 100px;
 `;
+
 export const Middle = styled.View`
   flex: 1;
   padding: 0px;
-  background-color: ${theme.COLORS.WHITE};
 `;
+
 export const DrawerBox = styled.View`
   flex-direction: row;
   justify-content: space-between;
@@ -44,7 +44,6 @@ export const TextDrawer = styled.Text`
 export const Bottom = styled.View`
   margin-top: 25%;
   border-top-width: 1px;
-  border-top-color: ${theme.COLORS.GRAY200};
 `;
 
 export const Icon = styled.Image``;

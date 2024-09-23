@@ -10,7 +10,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import * as S from "./styles";
-import bacground from "../../assets/bg-tela2.png";
+import bacground from "../../assets/bg-tela.png";
 import { HomeIconList } from "../../components/HomeAdmItens";
 import { homeAdm, homeAdmList } from "../../data/homeAdm";
 
@@ -52,12 +52,11 @@ export default function HomeAdmin({
       <ImageBackground source={bacground} style={{ flex: 1 }}>
         <S.Top>
           <S.ImageTop
-            source={require("../../assets/extensao-marca-gomos-cor.png")}
+            source={require("../../assets/Logo.png")}
             style={{
               resizeMode: "contain",
             }}
           />
-
           <TouchableOpacity
             // @ts-ignore
             onPress={() => navigation.openDrawer()}

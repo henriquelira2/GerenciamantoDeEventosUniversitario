@@ -8,11 +8,14 @@ export const Container = styled.SafeAreaView`
   height: 100%;
   background-color: ${theme.COLORS.WHITE};
 `;
+
 export const Top = styled.View`
   width: 100%;
   align-items: center;
+  padding: 10px;
 `;
+
 export const ImageTop = styled.Image`
-  margin-top: 5%;
-  margin-bottom: 2%;
+  margin-top: 10%;
+  width: 100%;
 `;

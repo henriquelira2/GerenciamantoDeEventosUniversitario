@@ -2,13 +2,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
+import { ImageBackground } from "react-native";
 
 import * as S from "./styles";
+import bacground from "../../assets/bg-tela.png";
 import { useGetUser } from "../../configs/hooks";
 import { useIcon } from "../../contexts/IconContext";
 import { AuthContext } from "../../contexts/auth";
 import { AppBottomTabsRoutesProps } from "../../routes/app.route.bottomTabs";
-
 export function DrawerRoutes(props: any) {
   const navigation = useNavigation<AppBottomTabsRoutesProps>();
   const { selectedItem, setSelectedItem } = useIcon();
@@ -42,7 +43,7 @@ export function DrawerRoutes(props: any) {
   };
 
   const getItemStyle = (routeName: string) => ({
-    backgroundColor: selectedItem === routeName ? "#171626" : "transparent",
+    backgroundColor: selectedItem === routeName ? "#6a6a6faa" : "transparent",
   });
 
   const getIconSource = (routeName: string) => {
@@ -77,215 +78,214 @@ export function DrawerRoutes(props: any) {
   };
 
   return (
-    <S.Container style={{ flex: 1 }}>
-      <DrawerContentScrollView
-        {...props}
-        contentContainerStyle={{
-          backgroundColor: "#ffffff44",
-        }}
-      >
-        <S.Top>
-          <S.LogoTop
-            style={{ resizeMode: "stretch" }}
-            source={require("../../assets/layout_set_logo.png")}
-          />
-        </S.Top>
-
-        <S.Middle>
-          <DrawerItem
-            label="Home"
-            onPress={() => handleItemPress("Home")}
-            icon={() => (
-              <S.Icon
-                style={{ resizeMode: "stretch" }}
-                source={getIconSource("Home")}
-              />
-            )}
-            style={getItemStyle("Home")}
-            labelStyle={{
-              color: selectedItem === "Home" ? "white" : "black",
-            }}
-          />
-          <DrawerItem
-            label="Eventos"
-            onPress={() => handleItemPress("Eventos")}
-            icon={() => (
-              <S.Icon
-                style={{ resizeMode: "stretch" }}
-                source={getIconSource("Eventos")}
-              />
-            )}
-            style={getItemStyle("Eventos")}
-            labelStyle={{
-              color: selectedItem === "Eventos" ? "white" : "black",
-            }}
-          />
-          {user?.type === "Admin" && (
-            <>
-              <DrawerItem
-                label="Perfil"
-                onPress={() => handleItemPress("Perfil")}
-                icon={() => (
-                  <S.Icon
-                    style={{ resizeMode: "stretch" }}
-                    source={getIconSource("Perfil")}
-                  />
-                )}
-                style={getItemStyle("Perfil")}
-                labelStyle={{
-                  color: selectedItem === "Perfil" ? "white" : "black",
-                }}
-              />
-
-              <DrawerItem
-                label="Lista de Usuarios"
-                onPress={() => handleItemPress("UserList")}
-                icon={() => (
-                  <S.Icon
-                    style={{ resizeMode: "stretch" }}
-                    source={getIconSource("UserList")}
-                  />
-                )}
-                style={getItemStyle("UserList")}
-                labelStyle={{
-                  color: selectedItem === "UserList" ? "white" : "black",
-                }}
-              />
-
-              <DrawerItem
-                label="Editar Perfil"
-                onPress={() => handleItemPress("UpdateProfile")}
-                icon={() => (
-                  <S.Icon
-                    style={{ resizeMode: "stretch" }}
-                    source={getIconSource("UpdateProfile")}
-                  />
-                )}
-                style={getItemStyle("UpdateProfile")}
-                labelStyle={{
-                  color: selectedItem === "UpdateProfile" ? "white" : "black",
-                }}
-              />
-
-              <DrawerItem
-                label="Criar Novo Usuario"
-                onPress={() => handleItemPress("CreateUser")}
-                icon={() => (
-                  <S.Icon
-                    style={{ resizeMode: "stretch" }}
-                    source={getIconSource("CreateUser")}
-                  />
-                )}
-                style={getItemStyle("CreateUser")}
-                labelStyle={{
-                  color: selectedItem === "CreateUser" ? "white" : "black",
-                }}
-              />
-              <DrawerItem
-                label="Criar Evento"
-                onPress={() => handleItemPress("CreateEvent")}
-                icon={() => (
-                  <S.Icon
-                    style={{ resizeMode: "stretch" }}
-                    source={getIconSource("CreateEvent")}
-                  />
-                )}
-                style={getItemStyle("CreateEvent")}
-                labelStyle={{
-                  color: selectedItem === "CreateEvent" ? "white" : "black",
-                }}
-              />
-              <DrawerItem
-                label="Meus Eventos cadastrados"
-                onPress={() => handleItemPress("MyEvents")}
-                icon={() => (
-                  <S.Icon
-                    style={{ resizeMode: "stretch" }}
-                    source={getIconSource("MyEvents")}
-                  />
-                )}
-                style={getItemStyle("MyEvents")}
-                labelStyle={{
-                  color: selectedItem === "MyEvents" ? "white" : "black",
-                }}
-              />
-              <DrawerItem
-                label="Meus Eventos Criados"
-                onPress={() => handleItemPress("MyCreatedEvents")}
-                icon={() => (
-                  <S.Icon
-                    style={{ resizeMode: "stretch" }}
-                    source={getIconSource("MyCreatedEvents")}
-                  />
-                )}
-                style={getItemStyle("MyCreatedEvents")}
-                labelStyle={{
-                  color: selectedItem === "MyCreatedEvents" ? "white" : "black",
-                }}
-              />
-            </>
-          )}
-
-          {user?.type === "Manager" && (
-            <>
-              <DrawerItem
-                label="Meus Eventos Criados"
-                onPress={() => handleItemPress("MyCreatedEvents")}
-                icon={() => (
-                  <S.Icon
-                    style={{ resizeMode: "stretch" }}
-                    source={getIconSource("MyCreatedEvents")}
-                  />
-                )}
-                style={getItemStyle("MyCreatedEvents")}
-                labelStyle={{
-                  color: selectedItem === "MyCreatedEvents" ? "white" : "black",
-                }}
-              />
-            </>
-          )}
-
-          {user?.type === "User" && (
-            <>
-              <DrawerItem
-                label="Meus Eventos cadastrados"
-                onPress={() => handleItemPress("MyEvents")}
-                icon={() => (
-                  <S.Icon
-                    style={{ resizeMode: "stretch" }}
-                    source={getIconSource("MyEvents")}
-                  />
-                )}
-                style={getItemStyle("MyEvents")}
-                labelStyle={{
-                  color: selectedItem === "MyEvents" ? "white" : "black",
-                }}
-              />
-            </>
-          )}
-        </S.Middle>
-      </DrawerContentScrollView>
-
-      <S.Bottom>
-        <DrawerItem
-          label="Logout"
-          onPress={async () => {
-            await AsyncStorage.clear();
-            setUser(false);
-            console.log("AsyncStorage limpo com sucesso!");
-          }}
-          icon={() => (
-            <S.Icon
+    <ImageBackground source={bacground} style={{ flex: 1, bottom: 30 }}>
+      <S.Container style={{ flex: 1 }}>
+        <DrawerContentScrollView {...props}>
+          <S.Top>
+            <S.LogoTop
               style={{ resizeMode: "stretch" }}
-              source={getIconSource("Logout")}
+              source={require("../../assets/Logo.png")}
             />
-          )}
-          style={getItemStyle("Logout")}
-          labelStyle={{
-            color: selectedItem === "Logout" ? "white" : "black",
-          }}
-        />
-      </S.Bottom>
-    </S.Container>
+          </S.Top>
+
+          <S.Middle>
+            <DrawerItem
+              label="Home"
+              onPress={() => handleItemPress("Home")}
+              icon={() => (
+                <S.Icon
+                  style={{ resizeMode: "stretch" }}
+                  source={getIconSource("Home")}
+                />
+              )}
+              style={getItemStyle("Home")}
+              labelStyle={{
+                color: selectedItem === "Home" ? "white" : "black",
+              }}
+            />
+            <DrawerItem
+              label="Eventos"
+              onPress={() => handleItemPress("Eventos")}
+              icon={() => (
+                <S.Icon
+                  style={{ resizeMode: "stretch" }}
+                  source={getIconSource("Eventos")}
+                />
+              )}
+              style={getItemStyle("Eventos")}
+              labelStyle={{
+                color: selectedItem === "Eventos" ? "white" : "black",
+              }}
+            />
+            {user?.type === "Admin" && (
+              <>
+                <DrawerItem
+                  label="Perfil"
+                  onPress={() => handleItemPress("Perfil")}
+                  icon={() => (
+                    <S.Icon
+                      style={{ resizeMode: "stretch" }}
+                      source={getIconSource("Perfil")}
+                    />
+                  )}
+                  style={getItemStyle("Perfil")}
+                  labelStyle={{
+                    color: selectedItem === "Perfil" ? "white" : "black",
+                  }}
+                />
+
+                <DrawerItem
+                  label="Lista de Usuarios"
+                  onPress={() => handleItemPress("UserList")}
+                  icon={() => (
+                    <S.Icon
+                      style={{ resizeMode: "stretch" }}
+                      source={getIconSource("UserList")}
+                    />
+                  )}
+                  style={getItemStyle("UserList")}
+                  labelStyle={{
+                    color: selectedItem === "UserList" ? "white" : "black",
+                  }}
+                />
+
+                <DrawerItem
+                  label="Editar Perfil"
+                  onPress={() => handleItemPress("UpdateProfile")}
+                  icon={() => (
+                    <S.Icon
+                      style={{ resizeMode: "stretch" }}
+                      source={getIconSource("UpdateProfile")}
+                    />
+                  )}
+                  style={getItemStyle("UpdateProfile")}
+                  labelStyle={{
+                    color: selectedItem === "UpdateProfile" ? "white" : "black",
+                  }}
+                />
+
+                <DrawerItem
+                  label="Criar Novo Usuario"
+                  onPress={() => handleItemPress("CreateUser")}
+                  icon={() => (
+                    <S.Icon
+                      style={{ resizeMode: "stretch" }}
+                      source={getIconSource("CreateUser")}
+                    />
+                  )}
+                  style={getItemStyle("CreateUser")}
+                  labelStyle={{
+                    color: selectedItem === "CreateUser" ? "white" : "black",
+                  }}
+                />
+                <DrawerItem
+                  label="Criar Evento"
+                  onPress={() => handleItemPress("CreateEvent")}
+                  icon={() => (
+                    <S.Icon
+                      style={{ resizeMode: "stretch" }}
+                      source={getIconSource("CreateEvent")}
+                    />
+                  )}
+                  style={getItemStyle("CreateEvent")}
+                  labelStyle={{
+                    color: selectedItem === "CreateEvent" ? "white" : "black",
+                  }}
+                />
+                <DrawerItem
+                  label="Meus Eventos cadastrados"
+                  onPress={() => handleItemPress("MyEvents")}
+                  icon={() => (
+                    <S.Icon
+                      style={{ resizeMode: "stretch" }}
+                      source={getIconSource("MyEvents")}
+                    />
+                  )}
+                  style={getItemStyle("MyEvents")}
+                  labelStyle={{
+                    color: selectedItem === "MyEvents" ? "white" : "black",
+                  }}
+                />
+                <DrawerItem
+                  label="Meus Eventos Criados"
+                  onPress={() => handleItemPress("MyCreatedEvents")}
+                  icon={() => (
+                    <S.Icon
+                      style={{ resizeMode: "stretch" }}
+                      source={getIconSource("MyCreatedEvents")}
+                    />
+                  )}
+                  style={getItemStyle("MyCreatedEvents")}
+                  labelStyle={{
+                    color:
+                      selectedItem === "MyCreatedEvents" ? "white" : "black",
+                  }}
+                />
+              </>
+            )}
+
+            {user?.type === "Manager" && (
+              <>
+                <DrawerItem
+                  label="Meus Eventos Criados"
+                  onPress={() => handleItemPress("MyCreatedEvents")}
+                  icon={() => (
+                    <S.Icon
+                      style={{ resizeMode: "stretch" }}
+                      source={getIconSource("MyCreatedEvents")}
+                    />
+                  )}
+                  style={getItemStyle("MyCreatedEvents")}
+                  labelStyle={{
+                    color:
+                      selectedItem === "MyCreatedEvents" ? "white" : "black",
+                  }}
+                />
+              </>
+            )}
+
+            {user?.type === "User" && (
+              <>
+                <DrawerItem
+                  label="Meus Eventos cadastrados"
+                  onPress={() => handleItemPress("MyEvents")}
+                  icon={() => (
+                    <S.Icon
+                      style={{ resizeMode: "stretch" }}
+                      source={getIconSource("MyEvents")}
+                    />
+                  )}
+                  style={getItemStyle("MyEvents")}
+                  labelStyle={{
+                    color: selectedItem === "MyEvents" ? "white" : "black",
+                  }}
+                />
+              </>
+            )}
+          </S.Middle>
+        </DrawerContentScrollView>
+
+        <S.Bottom>
+          <DrawerItem
+            label="Logout"
+            onPress={async () => {
+              await AsyncStorage.clear();
+              setUser(false);
+              console.log("AsyncStorage limpo com sucesso!");
+            }}
+            icon={() => (
+              <S.Icon
+                style={{ resizeMode: "stretch" }}
+                source={getIconSource("Logout")}
+              />
+            )}
+            style={getItemStyle("Logout")}
+            labelStyle={{
+              color: selectedItem === "Logout" ? "white" : "black",
+            }}
+          />
+        </S.Bottom>
+      </S.Container>
+    </ImageBackground>
   );
 }
