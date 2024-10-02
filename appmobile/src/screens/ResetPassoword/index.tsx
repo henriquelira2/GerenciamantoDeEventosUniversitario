@@ -12,6 +12,7 @@ import { Controller, useForm } from "react-hook-form";
 import { ActivityIndicator, Alert } from "react-native";
 
 import * as S from "./styles";
+import bacground from "../../assets/bg-tela.png";
 import { useGetUser } from "../../configs/hooks";
 import { NewPassword } from "../../configs/types";
 import { AuthNavigatorRoutesProps } from "../../routes/app.route.stack";
@@ -86,9 +87,9 @@ export function ResetPassoword() {
   }, []);
 
   return (
-    <S.Container>
+    <S.Container source={bacground}>
       <S.Logo
-        source={require("../../assets/extensao-marca-gomos-cor.png")}
+        source={require("../../assets/Logo.png")}
         style={{
           resizeMode: "contain",
         }}

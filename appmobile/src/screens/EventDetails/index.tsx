@@ -69,7 +69,7 @@ export function EventDetails() {
           eventId: event.id,
         }
       );
-  
+
       if (response.status === 200) {
         showMessage({
           message: "Sucesso",
@@ -122,9 +122,9 @@ export function EventDetails() {
         amount: event.priceEvent * 100,
         paymentMethod: "CREDIT_CARD",
       });
-  
+
       const { paymentLink } = response.data;
-  
+
       if (paymentLink) {
         setPaymentLink(paymentLink);
         setShowPaymentModal(true);
@@ -137,35 +137,19 @@ export function EventDetails() {
       }
     } catch (error) {
       console.error("Erro1 : ", error);
-  
+
       if (error instanceof Error && (error as any).response) {
         const axiosError = error as any;
-  
+
         if (axiosError.response.status === 408) {
-          showMessage({
-            message: "Erro",
-            description: "Você já está inscrito neste evento.",
-            type: "danger",
-          });
+          alert("Você já está inscrito neste evento.");
         } else if (axiosError.response.status === 409) {
-          showMessage({
-            message: "Erro",
-            description: "Evento Esgotado.",
-            type: "danger",
-          });
+          alert("Evento Esgotado.");
         } else {
-          showMessage({
-            message: "Erro",
-            description: "Houve um problema ao processar o pagamento.",
-            type: "danger",
-          });
+          alert("Houve um problema ao processar o pagamento.");
         }
       } else {
-        showMessage({
-          message: "Erro",
-          description: "Houve um problema ao se conectar ao servidor.",
-          type: "danger",
-        });
+        alert("Houve um problema ao se conectar ao servidor.");
       }
     } finally {
       setLoading(false);
@@ -235,7 +219,7 @@ export function EventDetails() {
 
   return (
     <S.Container>
-         <FlashMessage position="top" />
+      <FlashMessage position="top" />
       {loading ? (
         <ActivityIndicator size="large" color="#fff" />
       ) : (

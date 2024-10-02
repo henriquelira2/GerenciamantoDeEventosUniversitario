@@ -9,13 +9,13 @@ import FlashMessage from "react-native-flash-message";
 import MaskInput from "react-native-mask-input";
 
 import * as S from "./styles";
+import bacground from "../../assets/bg-tela.png";
 import { useLogin } from "../../configs/hooks";
 import { User } from "../../configs/types";
 import { AuthContext } from "../../contexts/auth";
 import { AuthNavigatorRoutesProps } from "../../routes/app.route.stack";
 import { LoginSchema } from "../../schemas";
 import theme from "../../theme";
-
 export function Login() {
   const CPF_MASK = [
     /\d/,
@@ -89,9 +89,9 @@ export function Login() {
   }, []);
 
   return (
-    <S.Container>
+    <S.Container source={bacground}>
       <S.Logo
-        source={require("../../assets/extensao-marca-gomos-cor.png")}
+        source={require("../../assets/Logo.png")}
         style={{
           resizeMode: "contain",
         }}

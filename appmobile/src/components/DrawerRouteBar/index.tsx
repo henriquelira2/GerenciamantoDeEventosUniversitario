@@ -60,14 +60,26 @@ export function DrawerRoutes(props: any) {
         return selectedItem === "Perfil"
           ? require("../../assets/drawerIcons/user-icon-w.png")
           : require("../../assets/drawerIcons/user-icon.png");
+      case "UpdateProfile":
+        return selectedItem === "UpdateProfile"
+          ? require("../../assets/drawerIcons/edituser-icon-w.png")
+          : require("../../assets/drawerIcons/edituser-icon.png");
+      case "CreateUser":
+        return selectedItem === "CreateUser"
+          ? require("../../assets/drawerIcons/newuser-icon-w.png")
+          : require("../../assets/drawerIcons/newuser-icon.png");
+      case "CreateEvent":
+        return selectedItem === "CreateEvent"
+          ? require("../../assets/drawerIcons/createvent-icon-w.png")
+          : require("../../assets/drawerIcons/createvent-icon.png");
       case "MyEvents":
         return selectedItem === "MyEvents"
-          ? require("../../assets/drawerIcons/event-icon-w.png")
-          : require("../../assets/drawerIcons/event-icon.png");
+          ? require("../../assets/drawerIcons/resgisterevent-icon-w.png")
+          : require("../../assets/drawerIcons/resgisterevent-icon.png");
       case "MyCreatedEvents":
         return selectedItem === "MyCreatedEvents"
-          ? require("../../assets/drawerIcons/event-icon-w.png")
-          : require("../../assets/drawerIcons/event-icon.png");
+          ? require("../../assets/drawerIcons/createdevent-icon-w.png")
+          : require("../../assets/drawerIcons/createdevent-icon.png");
       case "Logout":
         return selectedItem === "Logout"
           ? require("../../assets/drawerIcons/sairuser-icon.png")

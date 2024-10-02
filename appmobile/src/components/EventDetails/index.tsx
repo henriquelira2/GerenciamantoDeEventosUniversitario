@@ -36,7 +36,7 @@ const formatTime = (timeString: string) => {
 };
 
 export const EventDetails: React.FC<EventDetailsProps> = ({
-  event: event,
+  event,
   onClose,
 }) => {
   const [editModalVisible, setEditModalVisible] = useState(false);
@@ -127,6 +127,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
 
       <EditEventModal
         visible={editModalVisible}
+        //@ts-ignore
         event={event}
         onClose={() => setEditModalVisible(false)}
         onSave={handleSaveEvent}
@@ -134,6 +135,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
 
       <DeletEventModal
         visible={deleteModalVisible}
+         //@ts-ignore
         event={event}
         onClose={() => setDeleteModalVisible(false)}
         onDelete={handleDeleteEvent}

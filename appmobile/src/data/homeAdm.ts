@@ -6,6 +6,8 @@ const newuser = require("../assets/dasboardAdm/criar novo usuario2.png");
 const updateuser = require("../assets/dasboardAdm/editar perfil2.png");
 const event = require("../assets/dasboardAdm/eventos2.png");
 const listuser = require("../assets/dasboardAdm/lista de usuarios2.png");
+const registeredevents = require("../assets/dasboardAdm/meus eventos cadastrados2.png");
+const myeventcreated = require("../assets/dasboardAdm/meus eventos criados.png");
 const perfil = require("../assets/dasboardAdm/perfil2.png");
 //const vazio = require("../assets/dasboardAdm/vazio.png");
 
@@ -63,14 +65,14 @@ export const homeAdmList: homeAdm[] = [
   },
   {
     name: "Meus Eventos Cadastrados",
-    background: newevent,
+    background: registeredevents,
     route: "MyEvents",
     key: "",
     empty: undefined
   },
   {
     name: "Meus Eventos Criados",
-    background: newevent,
+    background: myeventcreated,
     route: "MyCreatedEvents",
     key: "",
     empty: undefined

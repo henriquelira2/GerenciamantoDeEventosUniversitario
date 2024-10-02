@@ -2,15 +2,14 @@ import styled from "styled-components/native";
 
 import theme from "../../theme";
 
-export const Container = styled.View`
+export const Container = styled.ImageBackground`
   flex: 1;
   align-items: center;
   justify-content: center;
-  background-color: ${theme.COLORS.RED};
 `;
 export const Logo = styled.Image`
   width: 60%;
-  height: 20%;
+  height: 25%;
   margin-bottom: 10px;
 `;
 export const Box = styled.View`

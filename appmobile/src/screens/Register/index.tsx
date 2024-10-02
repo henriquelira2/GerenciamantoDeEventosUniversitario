@@ -12,6 +12,7 @@ import FlashMessage from "react-native-flash-message";
 import MaskInput from "react-native-mask-input";
 
 import * as S from "./styles";
+import bacground from "../../assets/bg-tela.png";
 import { useCreateUser } from "../../configs/hooks";
 import { RegisterUser } from "../../configs/types";
 import { AuthNavigatorRoutesProps } from "../../routes/app.route.stack";
@@ -62,9 +63,9 @@ export function Register() {
   };
 
   return (
-    <S.Container>
+    <S.Container source={bacground}>
       <S.Logo
-        source={require("../../assets/extensao-marca-gomos-cor.png")}
+        source={require("../../assets/Logo.png")}
         style={{
           resizeMode: "contain",
         }}

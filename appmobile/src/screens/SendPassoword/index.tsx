@@ -6,6 +6,7 @@ import { ActivityIndicator, Alert } from "react-native";
 import MaskInput from "react-native-mask-input";
 
 import * as S from "./styles";
+import bacground from "../../assets/bg-tela.png";
 import { AuthNavigatorRoutesProps } from "../../routes/app.route.stack";
 import { api } from "../../services/api";
 import theme from "../../theme";
@@ -58,9 +59,9 @@ export function SendPassoword() {
   };
 
   return (
-    <S.Container>
+    <S.Container source={bacground}>
       <S.Logo
-        source={require("../../assets/extensao-marca-gomos-cor.png")}
+        source={require("../../assets/Logo.png")}
         style={{
           resizeMode: "contain",
         }}
