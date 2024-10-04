@@ -8,6 +8,13 @@ export const Container = styled.View`
   background-color: ${theme.COLORS.WHITE};
 `;
 
+export const BoxContainer = styled.View`
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  background-color: ${theme.COLORS.WHITE};
+`;
+
 export const Scroll = styled.ScrollView`
   width: 100%;
 `;
@@ -15,12 +22,30 @@ export const Scroll = styled.ScrollView`
 export const LoadingContainer = styled.View`
   flex: 1;
   justify-content: center;
-  background-color:  ${theme.COLORS.WHITE};
+  background-color: ${theme.COLORS.WHITE};
 `;
 
-export const EventImage = styled.Image`
+export const Topo = styled.View`
+  flex-direction: row;
+  background-color: ${theme.COLORS.WHITE};
   width: 100%;
-  height: 300px;
+  height: 40%;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const EventImage = styled.ImageBackground`
+  width: 100%;
+  height: 100%;
+`;
+export const Bot = styled.View`
+  display: flex;
+  background-color: ${theme.COLORS.WHITE};
+  width: 100%;
+  height: 70%;
+  border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
+  bottom: 5%;
 `;
 
 export const EventInfoContainer = styled.View`
@@ -29,8 +54,8 @@ export const EventInfoContainer = styled.View`
 `;
 
 export const CloseModal = styled.TouchableOpacity`
-  left: 5%;
-  bottom: 28%;
+  right: 40%;
+  bottom: 100%;
   width: 10%;
   height: 5%;
   opacity: 0.8;
@@ -142,16 +167,15 @@ export const BtnBox = styled.View`
   width: 100%;
   align-items: center;
   justify-content: center;
+  margin-bottom: 100px;
 `;
 
-export const Modal = styled.Modal`
-
-`;
+export const Modal = styled.Modal``;
 export const ModalContainer = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 export const ModalContent = styled.View`
@@ -182,7 +206,7 @@ export const ModalButton = styled.TouchableOpacity`
   margin: 0 10px;
   flex: 1;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
 `;
 
 export const ModalButtonText = styled.Text`

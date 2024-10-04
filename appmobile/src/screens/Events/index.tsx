@@ -1,22 +1,24 @@
 /* eslint-disable prettier/prettier */
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Text } from "react-native";
 
 import * as S from "./styles";
+import bacground from "../../assets/bg-tela.png";
 import { Event } from "../../configs/types";
 import { AuthNavigatorRoutesProps } from "../../routes/app.route.stack";
 import { api } from "../../services/api";
 
 export function Events() {
   const [events, setEvents] = useState<Event[]>([]);
-  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]); 
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState(""); 
+  const [searchTerm, setSearchTerm] = useState("");
 
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
@@ -68,8 +70,9 @@ export function Events() {
     if (text.trim() === "") {
       setFilteredEvents(events);
     } else {
-      //@ts-ignore
-      const filtered = events.filter((event) => event.nameEvent.toLowerCase().includes(text.toLowerCase())
+      const filtered = events.filter((event) =>
+        //@ts-ignore
+        event.nameEvent.toLowerCase().includes(text.toLowerCase())
       );
       setFilteredEvents(filtered);
     }
@@ -79,22 +82,55 @@ export function Events() {
     const imageUri = item.imageEvent
       ? `${api.defaults.baseURL}/${item.imageEvent}`
       : null;
+    const formattedDate = format(new Date(item.dateEvent), "dd/MM/yyyy");
 
     return (
       <S.BoxEvent onPress={() => handleEventPress(item)}>
         {imageUri ? (
-          <S.ImageEvent
-            source={{
-              uri: imageUri,
-            }}
-            imageStyle={{ borderRadius: 30 }}
-          >
+          <>
+            <S.ImageEvent
+              source={{
+                uri: imageUri,
+              }}
+              style={{
+                resizeMode: "stretch",
+              }}
+            />
             <S.BoxInfo>
               <S.Info1>
-                <S.TitleEvent>{item.nameEvent}</S.TitleEvent>
-                <S.LocationHour>
-                  {item.locationEvent} - {item.hourEvent} - {item.id}
-                </S.LocationHour>
+                <S.TitleEvent numberOfLines={2} ellipsizeMode="tail">
+                  {item.nameEvent}
+                </S.TitleEvent>
+                <S.Location>
+                  <Entypo
+                    name="location-pin"
+                    size={14}
+                    color="gray"
+                    numberOfLines={2}
+                    ellipsizeMode="tail"
+                  />
+                  {item.locationEvent}
+                </S.Location>
+                <S.DateHour>
+                  <S.Hour>
+                    <Entypo
+                      name="clock"
+                      size={14}
+                      color="gray"
+                      style={{ letterSpacing: 10 }}
+                    />
+                    {item.hourEvent}
+                  </S.Hour>
+                  <S.Date>
+                    <Entypo
+                      name="calendar"
+                      size={14}
+                      color="gray"
+                      style={{ letterSpacing: 10 }}
+                    />
+                    {formattedDate}
+                  </S.Date>
+                </S.DateHour>
               </S.Info1>
               <S.Info2>
                 {item.priceEvent === "0" ? (
@@ -104,7 +140,7 @@ export function Events() {
                 )}
               </S.Info2>
             </S.BoxInfo>
-          </S.ImageEvent>
+          </>
         ) : (
           <Text>No Image Available</Text>
         )}
@@ -113,12 +149,12 @@ export function Events() {
   };
 
   return (
-    <S.Container>
+    <S.Container source={bacground}>
       <S.Search>
         <S.InputSeach
           placeholder="Nome do Evento"
           value={searchTerm}
-          onChangeText={handleSearch} 
+          onChangeText={handleSearch}
         />
         <MaterialIcons
           name="search"
@@ -132,7 +168,7 @@ export function Events() {
         <ActivityIndicator size="large" color="#fff" />
       ) : (
         <S.FlatList
-          data={filteredEvents} 
+          data={filteredEvents}
           renderItem={renderEvent}
           keyExtractor={(item: { id: { toString: () => any } }) =>
             item.id.toString()

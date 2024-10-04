@@ -28,6 +28,7 @@
     "@stripe/stripe-react-native": "0.37.2",
     "@types/styled-components-react-native": "^5.2.5",
     "axios": "^1.6.2",
+    "date-fns": "^4.1.0",
     "expo": "~51.0.26",
     "expo-barcode-scanner": "~13.0.1",
     "expo-camera": "~15.0.16",

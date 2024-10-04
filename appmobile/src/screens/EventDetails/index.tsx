@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { useRoute, RouteProp, useNavigation } from "@react-navigation/native";
+import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { FlatList, ActivityIndicator } from "react-native";
 import FlashMessage, { showMessage } from "react-native-flash-message";
@@ -169,11 +170,6 @@ export function EventDetails() {
     navigation.navigate("Eventos");
   };
 
-  const formatDate = (dateString: string) => {
-    const [year, month, day] = dateString.split("-");
-    return `${day}/${month}/${year}`;
-  };
-
   const formatTime = (timeString: string) => {
     const [hour, minute] = timeString.split(":");
     const hourNumber = parseInt(hour, 10);
@@ -191,7 +187,11 @@ export function EventDetails() {
 
   const eventData = [
     { key: "location", icon: "location-on", text: event.locationEvent },
-    { key: "date", icon: "calendar-month", text: formatDate(event.dateEvent) },
+    {
+      key: "date",
+      icon: "calendar-month",
+      text: format(new Date(event.dateEvent), "dd/MM/yyyy"),
+    },
     { key: "time", icon: "access-time", text: formatTime(event.hourEvent) },
     {
       key: "price",
@@ -219,93 +219,99 @@ export function EventDetails() {
 
   return (
     <S.Container>
-      <FlashMessage position="top" />
-      {loading ? (
-        <ActivityIndicator size="large" color="#fff" />
-      ) : (
-        <>
-          <S.EventImage
-            source={{
-              uri: `${api.defaults.baseURL}/${event.imageEvent}`,
-            }}
-          />
-
-          <S.CloseModal onPress={handleEventPress}>
-            <AntDesign name="left" size={20} color="white" />
-          </S.CloseModal>
-
-          <FlatList
-            data={eventData}
-            keyExtractor={(item) => item.key}
-            refreshing={refreshing}
-            onRefresh={handleRefresh}
-            renderItem={renderEventItem}
-            ListHeaderComponent={() => (
-              <S.EventTitle>{event.nameEvent}</S.EventTitle>
-            )}
-            ListFooterComponent={() => (
-              <>
-                {
-                  //@ts-ignore
-                  event.priceEvent === "0" ? (
-                    <S.BtnBox>
-                      <S.SignupEvent onPress={() => setShowConfirmModal(true)}>
-                        <S.SignupEventText>
-                          Participar do Evento
-                        </S.SignupEventText>
-                      </S.SignupEvent>
-                    </S.BtnBox>
-                  ) : (
-                    <S.BtnBox>
-                      <S.SignupEvent onPress={handleInscription}>
-                        <S.SignupEventText>
-                          Participar do Evento
-                        </S.SignupEventText>
-                      </S.SignupEvent>
-                    </S.BtnBox>
-                  )
-                }
-              </>
-            )}
-          />
-        </>
-      )}
-
-      <PaymentWebView
-        visible={showPaymentModal}
-        paymentLink={paymentLink}
-        onClose={() => setShowPaymentModal(false)}
-      />
-
-      <S.Modal
-        visible={showConfirmModal}
-        transparent
-        animationType="slide"
-        onRequestClose={() => setShowConfirmModal(false)}
-      >
-        <S.ModalContainer>
-          <S.ModalContent>
-            <S.ModalText>
-              Deseja realmente participar deste evento gratuito?
-            </S.ModalText>
-            <S.ModalButtonContainer>
-              <S.ModalButton
-                onPress={handleFreeEventInscription}
-                disabled={loading}
-              >
-                {loading ? (
-                  <ActivityIndicator size="small" color="#fff" />
-                ) : (
-                  <S.ModalButtonText>Sim</S.ModalButtonText>
+      <S.BoxContainer>
+        <FlashMessage position="top" />
+        {loading ? (
+          <ActivityIndicator size="large" color="#fff" />
+        ) : (
+          <>
+            <S.Topo>
+              <S.EventImage
+                source={{
+                  uri: `${api.defaults.baseURL}/${event.imageEvent}`,
+                }}
+                resizeMode="stretch"
+              />
+            </S.Topo>
+            <S.Bot>
+              <FlatList
+                data={eventData}
+                keyExtractor={(item) => item.key}
+                refreshing={refreshing}
+                onRefresh={handleRefresh}
+                renderItem={renderEventItem}
+                ListHeaderComponent={() => (
+                  <S.EventTitle>{event.nameEvent}</S.EventTitle>
                 )}
-              </S.ModalButton>
-              <S.ModalButton onPress={() => setShowConfirmModal(false)}>
-                <S.ModalButtonText>Não</S.ModalButtonText>
-              </S.ModalButton>
-            </S.ModalButtonContainer>
-          </S.ModalContent>
-        </S.ModalContainer>
-      </S.Modal>
+                ListFooterComponent={() => (
+                  <>
+                    {
+                      //@ts-ignore
+                      event.priceEvent === "0" ? (
+                        <S.BtnBox>
+                          <S.SignupEvent
+                            onPress={() => setShowConfirmModal(true)}
+                          >
+                            <S.SignupEventText>
+                              Participar do Evento
+                            </S.SignupEventText>
+                          </S.SignupEvent>
+                        </S.BtnBox>
+                      ) : (
+                        <S.BtnBox>
+                          <S.SignupEvent onPress={handleInscription}>
+                            <S.SignupEventText>
+                              Participar do Evento
+                            </S.SignupEventText>
+                          </S.SignupEvent>
+                        </S.BtnBox>
+                      )
+                    }
+                  </>
+                )}
+              />
+            </S.Bot>
+            <S.CloseModal onPress={handleEventPress}>
+              <AntDesign name="left" size={20} color="white" />
+            </S.CloseModal>
+          </>
+        )}
+        <PaymentWebView
+          visible={showPaymentModal}
+          paymentLink={paymentLink}
+          onClose={() => setShowPaymentModal(false)}
+        />
+
+        <S.Modal
+          visible={showConfirmModal}
+          transparent
+          animationType="slide"
+          onRequestClose={() => setShowConfirmModal(false)}
+        >
+          <S.ModalContainer>
+            <S.ModalContent>
+              <S.ModalText>
+                Deseja realmente participar deste evento gratuito?
+              </S.ModalText>
+              <S.ModalButtonContainer>
+                <S.ModalButton
+                  onPress={handleFreeEventInscription}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <ActivityIndicator size="small" color="#fff" />
+                  ) : (
+                    <S.ModalButtonText>Sim</S.ModalButtonText>
+                  )}
+                </S.ModalButton>
+                <S.ModalButton onPress={() => setShowConfirmModal(false)}>
+                  <S.ModalButtonText>Não</S.ModalButtonText>
+                </S.ModalButton>
+              </S.ModalButtonContainer>
+            </S.ModalContent>
+          </S.ModalContainer>
+        </S.Modal>
+      </S.BoxContainer>
     </S.Container>
   );
 }
