@@ -11,14 +11,21 @@ export const Modal = styled.View`
 
 export const Topo = styled.View`
   flex-direction: row;
-  background-color: ${theme.COLORS.GOLD};
-  width: 90%;
+  background-color: transparent;
+  width: 100%;
+  height: 30%;
   justify-content: space-between;
-  padding: 5px;
-  border-top-width: 2px;
-  border-left-width: 2px;
-  border-right-width: 2px;
+  align-items: center;
 `;
+
+export const Scroll = styled.ScrollView`
+  width: 100%;
+`;
+
+export const Bot = styled.ImageBackground`
+  width: 100%;
+`;
+
 export const Title = styled.Text`
   font-size: 20px;
   color: ${theme.COLORS.WHITE};
@@ -35,7 +42,14 @@ export const box = styled.View`
   border: 2px;
 `;
 export const ScrollView = styled.ScrollView`
+  display: flex;
+  bottom: 5%;
+  height: 90%;
   width: 100%;
+  border: 1px solid gray;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  background-color: ${theme.COLORS.WHITE};
 `;
 
 export const TextUser = styled.Text`

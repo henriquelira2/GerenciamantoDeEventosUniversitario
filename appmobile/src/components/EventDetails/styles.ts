@@ -3,13 +3,6 @@ import styled from "styled-components/native";
 
 import theme from "../../theme";
 
-export const Modal = styled.Modal`
-  flex: 1;
-  background-color: ${theme.COLORS.BLUE};
-  align-items: center;
-  justify-content: center;
-`;
-
 export const Scroll = styled.ScrollView`
   width: 100%;
 `;

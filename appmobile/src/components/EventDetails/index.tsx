@@ -123,6 +123,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
             </S.DeletModalButton>
           </S.EventInfoContainer>
         </S.Scroll>
+        
       </S.Container>
 
       <EditEventModal

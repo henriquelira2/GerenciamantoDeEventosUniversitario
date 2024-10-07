@@ -116,7 +116,15 @@ export function BottomTabs() {
       <TabScreen
         name="Perfil"
         component={Profile}
-        options={{ headerShown: false }}
+        options={{
+          headerTransparent: true,
+          headerStyle: {
+            backgroundColor: "transparent",
+            height: 120,
+          },
+          headerTitle: "PERFIL",
+          headerTintColor: theme.COLORS.WHITE,
+        }}
       />
 
       <TabScreen
@@ -124,10 +132,10 @@ export function BottomTabs() {
         component={UserList}
         options={{
           tabBarButton: () => null,
+          headerTransparent: true,
           headerStyle: {
-            backgroundColor: theme.COLORS.RED,
-            height: 150,
-            borderBottomEndRadius: 50,
+            backgroundColor: "transparent",
+            height: 120,
           },
           headerTitle: "Usuarios Cadastrados",
           headerTintColor: theme.COLORS.WHITE,
@@ -138,8 +146,9 @@ export function BottomTabs() {
         component={UpdateProfile}
         options={{
           tabBarButton: () => null,
+          headerTransparent: true,
           headerStyle: {
-            backgroundColor: theme.COLORS.RED,
+            backgroundColor: "transparent",
             height: 120,
           },
           headerTitle: "EDITAR PERFIL",

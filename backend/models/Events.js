@@ -7,7 +7,7 @@ const Event = conn.define("events", {
     allowNull: false,
   },
   descriptionEvent: {
-    type: Sequelize.STRING(550),
+    type: Sequelize.TEXT,
     allowNull: false,
   },
   dateEvent: {

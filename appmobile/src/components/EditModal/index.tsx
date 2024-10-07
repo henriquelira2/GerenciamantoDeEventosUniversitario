@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { AntDesign } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -8,6 +7,7 @@ import FlashMessage, { showMessage } from "react-native-flash-message";
 import MaskInput from "react-native-mask-input";
 
 import * as S from "./styles";
+import bacground from "../../assets/bg-tela.png";
 import { RegisterUser } from "../../configs/types";
 import { AdmimUpdateUserSchema } from "../../schemas";
 import { UserData } from "../../screens/UsersList";
@@ -109,15 +109,10 @@ const EditModal: React.FC<EditModalProps> = ({ isVisible, user, onClose }) => {
       onRequestClose={onClose}
     >
       <S.Modal>
-        <S.Topo>
-          <S.Title>EDITAR USUARIO</S.Title>
-          <S.Closer onPress={onClose}>
-            <AntDesign name="close" size={24} color="white" />
-          </S.Closer>
-        </S.Topo>
+        <S.Topo />
 
-        <S.box>
-          <FlashMessage position="top" />
+        <FlashMessage position="center" />
+        <S.Bot source={bacground}>
           <S.ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             {errors.firstName && (
               <S.TextErro>{errors.firstName.message}</S.TextErro>
@@ -264,7 +259,7 @@ const EditModal: React.FC<EditModalProps> = ({ isVisible, user, onClose }) => {
               )}
             </S.TouchableOpacity>
           </S.ScrollView>
-        </S.box>
+        </S.Bot>
       </S.Modal>
     </Modal>
   );

@@ -1,12 +1,9 @@
-import {
-  Ionicons,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import React, { useState, useEffect } from "react";
 import { FlatList, RefreshControl } from "react-native";
 
 import * as S from "./styles";
+import bacground from "../../assets/bg-tela.png";
 import DeleteModal from "../../components/DeleteModal";
 import EditModal from "../../components/EditModal";
 import { useGetAll } from "../../components/UseGetAll";
@@ -52,6 +49,7 @@ export function UserList() {
   }, [searchQuery, users]);
 
   const filterUsers = () => {
+    //@ts-ignore
     const filteredList = users.filter((user) => {
       const fullName = `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim();
 
@@ -62,18 +60,21 @@ export function UserList() {
 
   const renderUserItem = ({ item: user }: { item: UserData }) => (
     <S.Usuario key={user.cpf}>
-      <MaterialIcons
-        name="person"
-        size={30}
-        color="black"
-        style={{ top: 10, right: 10 }}
+      <S.Avatar
+        style={{
+          resizeMode: "center",
+        }}
+        elevation={5}
+        source={{
+          uri: `https://api.multiavatar.com/${user?.firstName}${user?.lastName}.png?apikey=cbQkPid1zIYhJR`,
+        }}
       />
       <S.box>
-        <S.TextName>
+        <S.TextName numberOfLines={1}>
           {user.firstName} &nbsp; {user.lastName}
         </S.TextName>
         <S.TextCpf>{user.cpf}</S.TextCpf>
-        <S.TextCpf>{user.type}</S.TextCpf>
+        <S.TextCpf />
       </S.box>
       <S.IconBtn
         onPress={() => {
@@ -84,7 +85,7 @@ export function UserList() {
         <MaterialCommunityIcons
           name="pencil"
           size={26}
-          color={theme.COLORS.GREEN}
+          color={theme.COLORS.GREEN100}
         />
       </S.IconBtn>
       <S.IconBtn
@@ -96,7 +97,7 @@ export function UserList() {
         <MaterialIcons
           name="delete-forever"
           size={26}
-          color={theme.COLORS.RED}
+          color={theme.COLORS.GRAY100}
         />
       </S.IconBtn>
     </S.Usuario>
@@ -121,22 +122,22 @@ export function UserList() {
   }
 
   return (
-    <S.Container>
-      <S.Filter>
-        <S.InputFilter
+    <S.Container source={bacground}>
+      <S.Search>
+        <S.InputSeach
           placeholder="Nome Completo"
           onChangeText={(text: React.SetStateAction<string>) =>
             setSearchQuery(text)
           }
           value={searchQuery}
         />
-        <Ionicons
+        <MaterialIcons
           name="search"
-          size={30}
-          color="black"
-          style={{ top: 5, right: 10 }}
+          size={26}
+          color="white"
+          style={{ position: "absolute", left: 10, top: 12 }}
         />
-      </S.Filter>
+      </S.Search>
 
       <FlatList
         data={filteredUsers}

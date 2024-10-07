@@ -2,55 +2,64 @@ import styled from "styled-components/native";
 
 import theme from "../../theme";
 
-export const Container = styled.View`
+export const Container = styled.ImageBackground`
   flex: 1;
-  bottom: 10%;
+  padding-top: 30%;
+  align-items: center;
+`;
+
+export const Search = styled.View`
+  flex-direction: row;
+  margin-bottom: 50px;
   align-items: center;
   justify-content: center;
-  background-color: ${theme.COLORS.WHITE};
 `;
-export const Filter = styled.View`
-  top: 15%;
-  width: 100%;
-  margin-bottom: 20%;
-  align-items: center;
-  flex-direction: row;
-  border-bottom-width: 2px;
-  justify-content: space-around;
-`;
-export const InputFilter = styled.TextInput`
-  width: 75%;
+
+export const InputSeach = styled.TextInput`
+  width: 90%;
   height: 50px;
-  border-width: 2px;
-  border-radius: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
-  margin: 40px 20px 30px 20px;
-  color: ${theme.COLORS.DARK};
-  background-color: ${theme.COLORS.WHITE};
+  padding-left: 50px;
+  padding-right: 5px;
+  background-color: ${theme.COLORS.GRAY};
+  opacity: 0.8;
 `;
 
 export const Usuario = styled.View`
-  width: 100%;
+  width: 95%;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 0px 20px 20px 20px;
-  border-bottom-width: 2px;
-  margin-bottom: 20px;
+  border-bottom-width: 1px;
+  margin-bottom: 25px;
 `;
+
+export const Avatar = styled.Image`
+  width: 25%;
+  height: 100%;
+  padding: 5px;
+  border-width: 3px;
+  border-radius: 90px;
+  margin-bottom: 30px;
+  border-color: ${theme.COLORS.WHITE};
+`;
+
 export const box = styled.View``;
 
 export const TextName = styled.Text`
+  margin-top: 10px;
   font-size: 18px;
-  color: ${theme.COLORS.DARK};
+  color: ${theme.COLORS.WHITE};
 `;
+
 export const TextCpf = styled.Text`
   font-size: 15px;
-  color: ${theme.COLORS.GRAY200};
+  color: ${theme.COLORS.GRAY100};
 `;
+
 export const IconBtn = styled.TouchableOpacity`
   top: 10px;
 `;
+
 export const TextButtom = styled.Text`
   color: ${theme.COLORS.DARK};
 `;
