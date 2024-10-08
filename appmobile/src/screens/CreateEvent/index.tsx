@@ -17,6 +17,7 @@ import CurrencyInput from "react-native-currency-input";
 import FlashMessage from "react-native-flash-message";
 
 import * as S from "./styles";
+import bacground from "../../assets/bg-tela.png";
 import { useCreateEvent } from "../../configs/hooks/useFunctionEvents";
 import { Event } from "../../configs/types";
 import { CreateEventSchema } from "../../schemas";
@@ -137,7 +138,7 @@ export function CreateEvent() {
   };
 
   return (
-    <S.Container>
+    <S.Container source={bacground}>
       <FlashMessage position="top" />
       <S.ScrollView
         contentContainerStyle={{
@@ -374,7 +375,7 @@ export function CreateEvent() {
                   borderWidth: 1,
                   borderRadius: 10,
                   paddingLeft: 50,
-                  backgroundColor: theme.COLORS.GRAY100,
+                  backgroundColor: theme.COLORS.WHITE,
                 }}
                 value={value}
                 onChangeValue={onChange}

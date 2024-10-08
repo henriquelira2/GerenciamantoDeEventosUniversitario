@@ -2,11 +2,11 @@ import styled from "styled-components/native";
 
 import theme from "../../theme";
 
-export const Container = styled.View`
+export const Container = styled.ImageBackground`
   flex: 1;
   align-items: center;
   justify-content: center;
-  background-color: ${theme.COLORS.WHITE};
+  padding-top: 20%;
 `;
 
 export const ScrollView = styled.ScrollView`
@@ -32,7 +32,7 @@ export const TextInput = styled.TextInput`
   border-width: 1px;
   border-radius: 10px;
   padding-left: 50px;
-  background-color: ${theme.COLORS.GRAY100};
+  background-color: ${theme.COLORS.WHITE};
 `;
 export const ButtomEyes = styled.TouchableOpacity``;
 export const RegisterButtom = styled.TouchableOpacity`

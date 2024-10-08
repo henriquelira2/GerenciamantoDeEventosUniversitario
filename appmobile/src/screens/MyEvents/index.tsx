@@ -1,11 +1,13 @@
 /* eslint-disable prettier/prettier */
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
+import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, Text } from "react-native";
 
 import * as S from "./styles";
+import bacground from "../../assets/bg-tela.png";
 import { CheckinQrcode } from "../../components/CheckinQrcode";
 import { Event } from "../../configs/types";
 import { api } from "../../services/api";
@@ -96,32 +98,74 @@ export function MyEvents() {
     const imageUri = item.event.imageEvent
       ? `${api.defaults.baseURL}/${item.event.imageEvent}`
       : null;
+    const formattedDate = format(new Date(item.event.dateEvent), "dd/MM/yyyy");
 
     return (
       <S.BoxEvent onPress={() => handleEventPress(item)}>
         {imageUri ? (
-          <S.ImageEvent
-            source={{ uri: imageUri }}
-            imageStyle={{ borderRadius: 30 }}
-          >
+          <>
+            <S.ImageEvent
+              source={{
+                uri: imageUri,
+              }}
+              style={{
+                resizeMode: "stretch",
+              }}
+            />
             <S.BoxInfo>
               <S.Info1>
-                <S.TitleEvent>{item.event.nameEvent}</S.TitleEvent>
-                <S.LocationHour>
-                  {item.event.locationEvent} - {item.event.hourEvent}
-                </S.LocationHour>
+                <S.TitleEvent numberOfLines={2} ellipsizeMode="tail">
+                  {item.event.nameEvent}
+                </S.TitleEvent>
+                <S.Location>
+                  <Entypo
+                    name="location-pin"
+                    size={14}
+                    color="gray"
+                    numberOfLines={2}
+                    ellipsizeMode="tail"
+                  />
+                  {item.event.locationEvent}
+                </S.Location>
+                <S.DateHour>
+                  <S.Hour>
+                    <Entypo
+                      name="clock"
+                      size={14}
+                      color="gray"
+                      style={{ letterSpacing: 10 }}
+                    />
+                    {item.event.hourEvent}
+                  </S.Hour>
+                  <S.Date>
+                    <Entypo
+                      name="calendar"
+                      size={14}
+                      color="gray"
+                      style={{ letterSpacing: 10 }}
+                    />
+                    {formattedDate}
+                  </S.Date>
+                </S.DateHour>
               </S.Info1>
+              <S.Info2>
+                {item.event.priceEvent === "0" ? (
+                  <S.Price>Gratis</S.Price>
+                ) : (
+                  <S.Price>${item.event.priceEvent}</S.Price>
+                )}
+              </S.Info2>
             </S.BoxInfo>
-          </S.ImageEvent>
+          </>
         ) : (
-          <S.TitleEvent>Nenhuma imagem disponível</S.TitleEvent>
+          <Text>No Image Available</Text>
         )}
       </S.BoxEvent>
     );
   };
 
   return (
-    <S.Container>
+    <S.Container source={bacground}>
       <S.Search>
         <S.InputSeach
           placeholder="Nome do Evento"

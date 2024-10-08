@@ -151,7 +151,7 @@ export function BottomTabs() {
             backgroundColor: "transparent",
             height: 120,
           },
-          headerTitle: "EDITAR PERFIL",
+          headerTitle: "Editar Perfil",
           headerTintColor: theme.COLORS.WHITE,
         }}
       />
@@ -160,8 +160,9 @@ export function BottomTabs() {
         component={CreateUser}
         options={{
           tabBarButton: () => null,
+          headerTransparent: true,
           headerStyle: {
-            backgroundColor: theme.COLORS.RED,
+            backgroundColor: "transparent",
             height: 120,
           },
           headerTitle: "Criar Novo Usuario",
@@ -173,11 +174,12 @@ export function BottomTabs() {
         component={CreateEvent}
         options={{
           tabBarButton: () => null,
+          headerTransparent: true,
           headerStyle: {
-            backgroundColor: theme.COLORS.RED,
-            height: 100,
+            backgroundColor: "transparent",
+            height: 120,
           },
-          headerTitle: "Criar Evento",
+          headerTitle: "Criar Novo Evento",
           headerTintColor: theme.COLORS.WHITE,
         }}
       />
@@ -208,11 +210,11 @@ export function BottomTabs() {
         component={MyEvents}
         options={{
           tabBarButton: () => null,
+          headerTransparent: true,
           headerStyle: {
-            backgroundColor: theme.COLORS.RED,
-            height: 100,
+            backgroundColor: "transparent",
+            height: 80,
           },
-          headerShown: false,
           headerTitle: "Meus Eventos Cadastrados",
           headerTintColor: theme.COLORS.WHITE,
         }}

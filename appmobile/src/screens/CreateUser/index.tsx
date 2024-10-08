@@ -12,6 +12,7 @@ import FlashMessage from "react-native-flash-message";
 import MaskInput from "react-native-mask-input";
 
 import * as S from "./styles";
+import bacground from "../../assets/bg-tela.png";
 import { useCreateUser } from "../../configs/hooks";
 import { RegisterUserAdmin } from "../../configs/types";
 import { CreateUserAdmin } from "../../schemas";
@@ -19,10 +20,40 @@ import theme from "../../theme";
 
 export function CreateUser() {
   // eslint-disable-next-line prettier/prettier
-  const CPF_MASK = [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]
+  const CPF_MASK = [
+    /\d/,
+    /\d/,
+    /\d/,
+    ".",
+    /\d/,
+    /\d/,
+    /\d/,
+    ".",
+    /\d/,
+    /\d/,
+    /\d/,
+    "-",
+    /\d/,
+    /\d/,
+  ];
   // eslint-disable-next-line prettier/prettier
-  const PHONE_MASK = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-
+  const PHONE_MASK = [
+    "(",
+    /\d/,
+    /\d/,
+    ")",
+    " ",
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+    "-",
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+  ];
 
   const [loadingButton, setLoadingButton] = useState(false);
   const [hidePass, setHidePass] = useState(true);
@@ -56,8 +87,8 @@ export function CreateUser() {
   };
 
   return (
-    <S.Container>
-      <FlashMessage position="top" />
+    <S.Container source={bacground}>
+      <FlashMessage position="center" />
       <S.ScrollView
         contentContainerStyle={{
           flexGrow: 1,
@@ -77,7 +108,7 @@ export function CreateUser() {
                   borderWidth: 1,
                   borderRadius: 10,
                   paddingLeft: 50,
-                  backgroundColor: theme.COLORS.GRAY100,
+                  backgroundColor: theme.COLORS.WHITE,
                 }}
                 mask={CPF_MASK}
                 placeholder="CPF"
@@ -153,7 +184,7 @@ export function CreateUser() {
                   borderWidth: 1,
                   borderRadius: 10,
                   paddingLeft: 50,
-                  backgroundColor: theme.COLORS.GRAY100,
+                  backgroundColor: theme.COLORS.WHITE,
                 }}
                 placeholder="Telefone"
                 keyboardType="numeric"

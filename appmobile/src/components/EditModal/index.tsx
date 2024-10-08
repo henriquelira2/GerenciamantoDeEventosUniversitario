@@ -1,5 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import { AntDesign } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Picker } from "@react-native-picker/picker";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { ActivityIndicator, Modal } from "react-native";
@@ -114,45 +116,48 @@ const EditModal: React.FC<EditModalProps> = ({ isVisible, user, onClose }) => {
         <FlashMessage position="center" />
         <S.Bot source={bacground}>
           <S.ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            <S.CloseModal onPress={onClose}>
+              <AntDesign name="close" size={30} color="black" />
+            </S.CloseModal>
+
+            <S.Title> Editar User</S.Title>
+
             {errors.firstName && (
               <S.TextErro>{errors.firstName.message}</S.TextErro>
             )}
             <Controller
               control={control}
               name="firstName"
-              render={({ field: { onChange, onBlur, value } }) => (
+              defaultValue={user?.firstName}
+              render={({ field: { onChange, value } }) => (
                 <>
                   <S.TextUser>NOME</S.TextUser>
-                  <S.Input
-                    placeholder={user?.firstName}
-                    value={value}
-                    onChangeText={onChange}
-                  />
+                  <S.Input value={value} onChangeText={onChange} />
                 </>
               )}
             />
+
             {errors.lastName && (
               <S.TextErro>{errors.lastName.message}</S.TextErro>
             )}
             <Controller
               control={control}
               name="lastName"
-              render={({ field: { onChange, onBlur, value } }) => (
+              defaultValue={user?.lastName}
+              render={({ field: { onChange, value } }) => (
                 <>
                   <S.TextUser>SOBRENOME</S.TextUser>
-                  <S.Input
-                    placeholder={user?.lastName}
-                    value={value}
-                    onChangeText={onChange}
-                  />
+                  <S.Input value={value} onChangeText={onChange} />
                 </>
               )}
             />
+
             {errors.cpf && <S.TextErro>{errors.cpf.message}</S.TextErro>}
             <Controller
               control={control}
               name="cpf"
-              render={({ field: { onChange, onBlur, value } }) => (
+              defaultValue={user?.cpf}
+              render={({ field: { onChange, value } }) => (
                 <>
                   <S.TextUser>CPF</S.TextUser>
                   <MaskInput
@@ -164,7 +169,6 @@ const EditModal: React.FC<EditModalProps> = ({ isVisible, user, onClose }) => {
                       marginLeft: "5%",
                       borderBottomWidth: 2,
                     }}
-                    placeholder={user?.cpf}
                     mask={CPF_MASK}
                     keyboardType="numeric"
                     value={value}
@@ -175,13 +179,15 @@ const EditModal: React.FC<EditModalProps> = ({ isVisible, user, onClose }) => {
                 </>
               )}
             />
+
             {errors.phoneNumber && (
               <S.TextErro>{errors.phoneNumber.message}</S.TextErro>
             )}
             <Controller
               control={control}
               name="phoneNumber"
-              render={({ field: { onChange, onBlur, value } }) => (
+              defaultValue={user?.phoneNumber}
+              render={({ field: { onChange, value } }) => (
                 <>
                   <S.TextUser>TELEFONE</S.TextUser>
                   <MaskInput
@@ -193,9 +199,8 @@ const EditModal: React.FC<EditModalProps> = ({ isVisible, user, onClose }) => {
                       marginLeft: "5%",
                       borderBottomWidth: 2,
                     }}
-                    placeholder={user?.phoneNumber}
-                    keyboardType="numeric"
                     mask={PHONE_MASK}
+                    keyboardType="numeric"
                     value={value}
                     onChangeText={(masked, unmasked) => {
                       onChange(unmasked);
@@ -204,53 +209,60 @@ const EditModal: React.FC<EditModalProps> = ({ isVisible, user, onClose }) => {
                 </>
               )}
             />
+
             {errors.email && <S.TextErro>{errors.email.message}</S.TextErro>}
             <Controller
               control={control}
               name="email"
-              render={({ field: { onChange, onBlur, value } }) => (
+              defaultValue={user?.email}
+              render={({ field: { onChange, value } }) => (
                 <>
                   <S.TextUser>EMAIL</S.TextUser>
-                  <S.Input
-                    placeholder={user?.email}
-                    value={value}
-                    onChangeText={onChange}
-                  />
+                  <S.Input value={value} onChangeText={onChange} />
                 </>
               )}
             />
+
             {errors.password && (
               <S.TextErro>{errors.password.message}</S.TextErro>
             )}
             <Controller
               control={control}
               name="password"
-              render={({ field: { onChange, onBlur, value } }) => (
+              defaultValue={user?.password}
+              render={({ field: { onChange, value } }) => (
                 <>
                   <S.TextUser>SENHA</S.TextUser>
-                  <S.Input
-                    placeholder="**********"
-                    value={value}
-                    onChangeText={onChange}
-                  />
+                  <S.Input value={value} onChangeText={onChange} />
                 </>
               )}
             />
+
             {errors.type && <S.TextErro>{errors.type.message}</S.TextErro>}
             <Controller
               control={control}
               name="type"
-              render={({ field: { onChange, onBlur, value } }) => (
+              defaultValue={user?.type}
+              render={({ field: { onChange, value } }) => (
                 <>
                   <S.TextUser>TIPO</S.TextUser>
-                  <S.Input
-                    placeholder="User/Admin/Manager"
-                    value={value}
-                    onChangeText={onChange}
-                  />
+                  <S.TextInputSelect>
+                    <Picker
+                      selectedValue={value}
+                      onValueChange={(itemValue) => onChange(itemValue)}
+                      style={{
+                        right: 10,
+                      }}
+                    >
+                      <Picker.Item label="User" value="user" />
+                      <Picker.Item label="Admin" value="admin" />
+                      <Picker.Item label="Manager" value="manager" />
+                    </Picker>
+                  </S.TextInputSelect>
                 </>
               )}
             />
+
             <S.TouchableOpacity onPress={handleSubmit(onUpdateUser)}>
               {isLoading ? (
                 <ActivityIndicator size="small" color="#ffffff" />

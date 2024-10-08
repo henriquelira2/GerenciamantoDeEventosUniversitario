@@ -58,6 +58,11 @@ export function UserList() {
     setFilteredUsers(filteredList);
   };
 
+  const handleEditModalOpen = (user: UserData) => {
+    setSelectedUser(user);
+    setEditModalVisible(true);
+  };
+
   const renderUserItem = ({ item: user }: { item: UserData }) => (
     <S.Usuario key={user.cpf}>
       <S.Avatar
@@ -77,10 +82,7 @@ export function UserList() {
         <S.TextCpf />
       </S.box>
       <S.IconBtn
-        onPress={() => {
-          setSelectedUser(user);
-          setEditModalVisible(true);
-        }}
+        onPress={() => handleEditModalOpen(user)} // Chama função de abrir modal com usuário atualizado
       >
         <MaterialCommunityIcons
           name="pencil"
@@ -155,6 +157,7 @@ export function UserList() {
         user={selectedUser}
         onClose={() => {
           setEditModalVisible(false);
+          setSelectedUser(null);
           onRefresh();
         }}
       />

@@ -3,11 +3,11 @@ import styled from "styled-components/native";
 
 import theme from "../../theme";
 
-export const Container = styled.View`
+export const Container = styled.ImageBackground`
   flex: 1;
   align-items: center;
   justify-content: center;
-  background-color: ${theme.COLORS.WHITE};
+  padding-top: 20%;
 `;
 
 export const ScrollView = styled.ScrollView`
@@ -67,7 +67,7 @@ export const TextInput = styled.TextInput`
   border-radius: 10px;
   padding-left: 50px;
   padding-right: 5px;
-  background-color: ${theme.COLORS.GRAY100};
+  background-color: ${theme.COLORS.WHITE};
 `;
 
 export const TextInputImage = styled.TextInput`
@@ -79,7 +79,7 @@ export const TextInputImage = styled.TextInput`
   padding-right: 10px;
   border-style: dashed;
   border-color: ${theme.COLORS.DARK};
-  background-color: ${theme.COLORS.GRAY100};
+  background-color: ${theme.COLORS.WHITE};
 `;
 
 export const TextInputDateTime = styled.TouchableOpacity`
@@ -88,7 +88,7 @@ export const TextInputDateTime = styled.TouchableOpacity`
   border-width: 1px;
   border-radius: 10px;
   padding-left: 50px;
-  background-color: ${theme.COLORS.GRAY100};
+  background-color: ${theme.COLORS.WHITE};
 `;
 
 export const TextInputSelect = styled.View`
@@ -98,7 +98,7 @@ export const TextInputSelect = styled.View`
   border-radius: 10px;
   padding-left: 30px;
  
-  background-color: ${theme.COLORS.GRAY100};
+  background-color: ${theme.COLORS.WHITE};
 `;
 
 export const placeholderDateTime = styled.TextInput`
