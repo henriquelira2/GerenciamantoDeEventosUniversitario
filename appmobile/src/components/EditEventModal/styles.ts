@@ -13,39 +13,46 @@ export const Modal = styled.View`
 
 export const Topo = styled.View`
   flex-direction: row;
-  background-color: ${theme.COLORS.GOLD};
-  width: 90%;
+  background-color: transparent;
+  width: 100%;
+  height: 30%;
   justify-content: space-between;
-  padding: 5px;
-  border-top-width: 2px;
-  border-left-width: 2px;
-  border-right-width: 2px;
+  align-items: center;
 `;
 
-export const Title = styled.Text`
-  font-size: 20px;
-  color: ${theme.COLORS.WHITE};
-`;
-
-export const Closer = styled.TouchableOpacity`
-  background-color: ${theme.COLORS.RED};
-`;
-
-export const box = styled.View`
-  width: 90%;
-  height: 90%;
-  padding-top: 5%;
-  background-color: ${theme.COLORS.WHITE};
-  border: 2px;
-`;
-
-export const ScrollView = styled.ScrollView`
+export const Bot = styled.ImageBackground`
   width: 100%;
 `;
 
-export const TextErro = styled.Text`
-  width: 70%;
-  color: ${theme.COLORS.YELLOW};
+export const ScrollView = styled.ScrollView`
+  display: flex;
+  bottom: 5%;
+  height: 100%;
+  width: 100%;
+  border: 1px solid gray;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  background-color: ${theme.COLORS.WHITE};
+`;
+
+export const CloseModal = styled.TouchableOpacity`
+  left: 40%;
+  width: 15%;
+  height: 5%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40px;
+  bottom: 97%;
+`;
+
+export const Title = styled.Text`
+  position: relative;
+  width: 100%;
+  font-size: 24px;
+  font-weight: 600;
+  padding-left: 10px;
+  color: ${theme.COLORS.DARK};
+  margin: 10px;
 `;
 
 export const PreviwImage = styled.View`
@@ -55,6 +62,11 @@ export const PreviwImage = styled.View`
   height: 140px;
   margin-bottom: 20px;
   border-radius: 10px;
+`;
+
+export const TextErro = styled.Text`
+  width: 70%;
+  color: ${theme.COLORS.YELLOW};
 `;
 
 export const BannerEvent = styled.Image`

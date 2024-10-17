@@ -18,6 +18,7 @@ import CurrencyInput from "react-native-currency-input";
 import { showMessage } from "react-native-flash-message";
 
 import * as S from "./styles";
+import bacground from "../../assets/bg-tela.png";
 import { EventUpdateSchema } from "../../schemas";
 import { api } from "../../services/api";
 import theme from "../../theme";
@@ -29,22 +30,33 @@ type EditEventModalProps = {
   onRefresh: () => void;
 };
 
+type Event = {
+  id: string;
+  nameEvent: string;
+  imageEvent: string;
+  locationEvent: string;
+  dateEvent: string;
+  hourEvent: string;
+  organizerEvent: string;
+  qtdVacanciesEvent: number;
+  priceEvent: number;
+  descriptionEvent: string;
+  typeEvent: string;
+};
+
 export const EditEventModal: React.FC<EditEventModalProps> = ({
   visible,
   event,
   onClose,
   onRefresh,
 }) => {
-   
   const [name] = useState(event?.nameEvent || "");
   const [imageEvent] = useState(event?.imageEvent || "");
   const [location] = useState(event?.locationEvent || "");
   const [date] = useState(event?.dateEvent || "");
   const [hour] = useState(event?.hourEvent || "");
   const [organizer] = useState(event?.organizerEvent || "");
-  const [qtdVacancies] = useState(
-    event?.qtdVacanciesEvent || ""
-  );
+  const [qtdVacancies] = useState(event?.qtdVacanciesEvent || "");
   const [price] = useState(event?.priceEvent.toString() || "");
   const [description] = useState(event?.descriptionEvent || "");
   const [typeEvent] = useState(event?.typeEvent || "");
@@ -97,7 +109,6 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
   const {
     control,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<Event | any>({
     mode: "onSubmit",
@@ -157,17 +168,14 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
       onRequestClose={onClose}
     >
       <S.Modal>
-        <S.Topo>
-          <S.Title>EDITAR EVENTO</S.Title>
-          <S.Closer onPress={onClose}>
-            <AntDesign name="close" size={24} color="white" />
-          </S.Closer>
-        </S.Topo>
+        <S.Topo />
 
-        <S.box>
+        <S.Bot source={bacground}>
           <S.ScrollView
             contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
           >
+            <S.Title> Editar Evento</S.Title>
+
             <S.PreviwImage>
               <S.BannerEvent source={{ uri: image }} />
             </S.PreviwImage>
@@ -513,8 +521,11 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
                 <S.TextButtomUpdate>Editar Evento</S.TextButtomUpdate>
               )}
             </S.UpdateButtom>
+            <S.CloseModal onPress={onClose}>
+              <AntDesign name="close" size={30} color="black" />
+            </S.CloseModal>
           </S.ScrollView>
-        </S.box>
+        </S.Bot>
       </S.Modal>
     </Modal>
   );

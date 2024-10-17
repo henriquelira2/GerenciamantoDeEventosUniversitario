@@ -1,8 +1,9 @@
 /* eslint-disable prettier/prettier */
-import { MaterialIcons, AntDesign } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useRoute, RouteProp, useNavigation } from "@react-navigation/native";
+import { format } from "date-fns";
 import React, { useState, useEffect } from "react";
-import { FlatList, ActivityIndicator } from "react-native";
+import { ActivityIndicator } from "react-native";
 
 import * as S from "./styles";
 import { Checkin } from "../../components/Checkin";
@@ -73,11 +74,6 @@ export function EventDetailsMaster() {
     navigation.navigate("MyCreatedEvents");
   };
 
-  const formatDate = (dateString: string) => {
-    const [year, month, day] = dateString.split("-");
-    return `${day}/${month}/${year}`;
-  };
-
   const formatTime = (timeString: string) => {
     const [hour, minute] = timeString.split(":");
     const hourNumber = parseInt(hour, 10);
@@ -95,9 +91,18 @@ export function EventDetailsMaster() {
 
   const eventData = [
     { key: "location", icon: "location-on", text: event.locationEvent },
-    { key: "date", icon: "calendar-month", text: formatDate(event.dateEvent) },
+    {
+      key: "date",
+      icon: "calendar-month",
+      text: format(new Date(event.dateEvent), "dd/MM/yyyy"),
+    },
     { key: "time", icon: "access-time", text: formatTime(event.hourEvent) },
-    { key: "price", icon: "price-change", text: `$${event.priceEvent}` },
+    {
+      key: "price",
+      icon: "sell",
+      //@ts-ignore
+      text: event.priceEvent === "0" ? "Grátis" : `${event.priceEvent}`,
+    },
     { key: "description", icon: null, text: event.descriptionEvent },
   ];
 
@@ -105,7 +110,7 @@ export function EventDetailsMaster() {
     "location-on": "location-on",
     "calendar-month": "calendar-today",
     "access-time": "access-time",
-    "price-change": "price-change",
+    sell: "sell",
   };
 
   const renderEventItem = ({ item }: { item: (typeof eventData)[0] }) => (
@@ -119,91 +124,87 @@ export function EventDetailsMaster() {
 
   return (
     <S.Container>
-      {loading ? (
-        <ActivityIndicator size="large" color="#fff" />
-      ) : (
-        <>
-          <S.EventImage
-            source={{ uri: `${api.defaults.baseURL}/${event.imageEvent}` }}
-          />
+      <S.BoxContainer>
+        {loading ? (
+          <ActivityIndicator size="large" color="#fff" />
+        ) : (
+          <>
+            <S.Topo>
+              <S.EventImage
+                source={{
+                  uri: `${api.defaults.baseURL}/${event.imageEvent}`,
+                }}
+                resizeMode="stretch"
+              />
+            </S.Topo>
+            <S.Bot>
+              <S.ConfigView>
+                <S.BtnAction onPress={() => setCheckinModalVisible(true)}>
+                  <MaterialIcons name="check-circle" size={24} color="green" />
+                </S.BtnAction>
+                <S.BtnAction onPress={() => setUsersModalVisible(true)}>
+                  <MaterialIcons name="groups" size={24} color="blue" />
+                </S.BtnAction>
+                <S.BtnAction onPress={() => setEditModalVisible(true)}>
+                  <MaterialIcons
+                    name="edit-calendar"
+                    size={24}
+                    color="orange"
+                  />
+                </S.BtnAction>
+                <S.BtnAction onPress={() => setDeleteModalVisible(true)}>
+                  <MaterialIcons name="delete-forever" size={24} color="red" />
+                </S.BtnAction>
+              </S.ConfigView>
 
-          <S.CloseModal onPress={handleEventPress}>
-            <AntDesign name="left" size={20} color="white" />
-          </S.CloseModal>
+              <S.FlatList
+                data={eventData}
+                //@ts-ignore
+                keyExtractor={(item) => item.key}
+                refreshing={refreshing}
+                onRefresh={handleRefresh}
+                renderItem={renderEventItem}
+                ListHeaderComponent={() => (
+                  <S.EventTitleView>
+                    <S.EventTitle>{event.nameEvent}</S.EventTitle>
+                  </S.EventTitleView>
+                )}
+              />
+            </S.Bot>
+            <S.CloseModal onPress={handleEventPress}>
+              <MaterialIcons name="chevron-left" size={20} color="white" />
+            </S.CloseModal>
+          </>
+        )}
 
-          <FlatList
-            data={eventData}
-            keyExtractor={(item) => item.key}
-            refreshing={refreshing}
-            onRefresh={handleRefresh}
-            renderItem={renderEventItem}
-            ListHeaderComponent={() => (
-              <S.EventTitle>{event.nameEvent}</S.EventTitle>
-            )}
-            ListFooterComponent={() => (
-              <>
-                <S.BtnBox>
-                  <S.CheckinsModalButton
-                    onPress={() => setCheckinModalVisible(true)}
-                  >
-                    <S.CheckinsModalButtonText>
-                      Realizar Check-in
-                    </S.CheckinsModalButtonText>
-                  </S.CheckinsModalButton>
+        <Checkin
+          visible={checkinModalVisible}
+          onClose={() => setCheckinModalVisible(false)}
+          onRefresh={handleRefresh}
+        />
 
-                  <S.UsersModalButton
-                    onPress={() => setUsersModalVisible(true)}
-                  >
-                    <S.UsersModalButtonText>
-                      Usuários cadastrados
-                    </S.UsersModalButtonText>
-                  </S.UsersModalButton>
+        <UsersModal
+          visible={usersModalVisible}
+          eventId={event.id}
+          onClose={() => setUsersModalVisible(false)}
+        />
 
-                  <S.EditModalButton onPress={() => setEditModalVisible(true)}>
-                    <S.EditModalButtonText>Editar evento</S.EditModalButtonText>
-                  </S.EditModalButton>
+        <EditEventModal
+          visible={editModalVisible}
+          //@ts-ignore
+          event={event}
+          onClose={() => setEditModalVisible(false)}
+          onRefresh={handleRefresh}
+        />
 
-                  <S.DeletModalButton
-                    onPress={() => setDeleteModalVisible(true)}
-                  >
-                    <S.DeletModalButtonText>
-                      Deletar evento
-                    </S.DeletModalButtonText>
-                  </S.DeletModalButton>
-                </S.BtnBox>
-              </>
-            )}
-          />
-        </>
-      )}
-
-      <Checkin
-        visible={checkinModalVisible}
-        onClose={() => setCheckinModalVisible(false)}
-        onRefresh={handleRefresh}
-      />
-
-      <UsersModal
-        visible={usersModalVisible}
-        eventId={event.id}
-        onClose={() => setUsersModalVisible(false)}
-      />
-
-      <EditEventModal
-        visible={editModalVisible}
-        //@ts-ignore
-        event={event}
-        onClose={() => setEditModalVisible(false)}
-        onRefresh={handleRefresh}
-      />
-
-      <DeletEventModal
-        visible={deleteModalVisible}
-        //@ts-ignore
-        event={event}
-        onClose={() => setDeleteModalVisible(false)}
-        onDelete={handleDeleteEvent}
-      />
+        <DeletEventModal
+          visible={deleteModalVisible}
+          //@ts-ignore
+          event={event}
+          onClose={() => setDeleteModalVisible(false)}
+          onDelete={handleDeleteEvent}
+        />
+      </S.BoxContainer>
     </S.Container>
   );
 }

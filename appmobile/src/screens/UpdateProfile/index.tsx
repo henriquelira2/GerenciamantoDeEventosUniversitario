@@ -112,7 +112,7 @@ export function UpdateProfile() {
     });
     setTimeout(() => setLoadingButton(false), 2000);
     onRefresh();
-    setTimeout(() => profileNavigation(), 2000);
+    setTimeout(() => profileNavigation(), 10000);
   };
 
   useFocusEffect(

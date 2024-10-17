@@ -17,6 +17,7 @@ import { useCreateUser } from "../../configs/hooks";
 import { RegisterUserAdmin } from "../../configs/types";
 import { CreateUserAdmin } from "../../schemas";
 import theme from "../../theme";
+import { Picker } from "@react-native-picker/picker";
 
 export function CreateUser() {
   // eslint-disable-next-line prettier/prettier
@@ -62,6 +63,7 @@ export function CreateUser() {
     control,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm<RegisterUserAdmin | any>({
     mode: "onSubmit",
     resolver: yupResolver(CreateUserAdmin),
@@ -83,6 +85,7 @@ export function CreateUser() {
       type: data.type,
       resetToken: "",
     });
+    reset();
     setLoadingButton(false);
   };
 
@@ -228,12 +231,28 @@ export function CreateUser() {
           <Controller
             control={control}
             name="type"
-            render={({ field: { onChange, onBlur, value } }) => (
-              <S.TextInput
-                placeholder="Tipo"
-                value={value}
-                onChangeText={onChange}
-              />
+            render={({ field: { onChange, value } }) => (
+              <>
+                <S.TextInputSelect>
+                  <Picker
+                    selectedValue={value}
+                    onValueChange={(itemValue) => onChange(itemValue)}
+                    style={{
+                      bottom: 3,
+                      right: 15,
+                    }}
+                  >
+                    <Picker.Item
+                      label="Selecione o tipo"
+                      value=""
+                      style={{ color: "gray" }}
+                    />
+                    <Picker.Item label="User" value="User" />
+                    <Picker.Item label="Admin" value="Admin" />
+                    <Picker.Item label="Manager" value="Manager" />
+                  </Picker>
+                </S.TextInputSelect>
+              </>
             )}
           />
           <Feather

@@ -111,7 +111,15 @@ export function BottomTabs() {
       <TabScreen
         name="Eventos"
         component={Events}
-        options={{ headerShown: false }}
+        options={{
+          headerTransparent: true,
+          headerStyle: {
+            backgroundColor: "transparent",
+            height: 80,
+          },
+          headerTitle: "Eventos",
+          headerTintColor: theme.COLORS.WHITE,
+        }}
       />
       <TabScreen
         name="Perfil"
@@ -224,11 +232,11 @@ export function BottomTabs() {
         component={MyCreatedEvents}
         options={{
           tabBarButton: () => null,
+          headerTransparent: true,
           headerStyle: {
-            backgroundColor: theme.COLORS.RED,
+            backgroundColor: "transparent",
             height: 100,
           },
-          headerShown: false,
           headerTitle: "Meus Eventos Criados",
           headerTintColor: theme.COLORS.WHITE,
         }}

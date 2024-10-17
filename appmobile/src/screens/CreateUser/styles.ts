@@ -21,6 +21,7 @@ export const TextErro = styled.Text`
   width: 70%;
   color: ${theme.COLORS.YELLOW};
 `;
+
 export const Input = styled.View`
   flex-direction: row;
   margin-bottom: 20px;
@@ -34,6 +35,7 @@ export const TextInput = styled.TextInput`
   padding-left: 50px;
   background-color: ${theme.COLORS.WHITE};
 `;
+
 export const ButtomEyes = styled.TouchableOpacity``;
 export const RegisterButtom = styled.TouchableOpacity`
   width: 80%;
@@ -45,7 +47,23 @@ export const RegisterButtom = styled.TouchableOpacity`
   justify-content: center;
   background-color: ${theme.COLORS.RED};
 `;
+
 export const TextButtomRegister = styled.Text`
   font-size: 18px;
   color: ${theme.COLORS.WHITE};
+`;
+
+export const TextUser = styled.Text`
+  font-size: 12px;
+  margin-left: 5%;
+  color: ${theme.COLORS.GOLD};
+`;
+
+export const TextInputSelect = styled.View`
+  width: 80%;
+  height: 50px;
+  border-width: 1px;
+  border-radius: 10px;
+  padding-left: 50px;
+  background-color: ${theme.COLORS.WHITE};
 `;

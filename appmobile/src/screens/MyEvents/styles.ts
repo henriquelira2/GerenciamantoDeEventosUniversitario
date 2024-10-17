@@ -21,6 +21,7 @@ export const InputSeach = styled.TextInput`
   padding-right: 5px;
   background-color: ${theme.COLORS.GRAY};
   opacity: 0.8;
+  border-radius: 5px;
 `;
 
 export const FlatList = styled.FlatList`
@@ -40,6 +41,8 @@ export const BoxEvent = styled.TouchableOpacity`
 export const ImageEvent = styled.Image`
   width: 100%;
   height: 60%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 `;
 
 export const BoxInfo = styled.View`
@@ -47,6 +50,8 @@ export const BoxInfo = styled.View`
   height: 40%;
   flex-direction: row;
   background-color: ${theme.COLORS.WHITE};
+  border-radius: 10px;
+  bottom: 5px;
 `;
 
 export const Info1 = styled.View`

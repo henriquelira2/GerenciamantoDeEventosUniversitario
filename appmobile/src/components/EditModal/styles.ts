@@ -18,10 +18,6 @@ export const Topo = styled.View`
   align-items: center;
 `;
 
-export const Scroll = styled.ScrollView`
-  width: 100%;
-`;
-
 export const Bot = styled.ImageBackground`
   width: 100%;
 `;

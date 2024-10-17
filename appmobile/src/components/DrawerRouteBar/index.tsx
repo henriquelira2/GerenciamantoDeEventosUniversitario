@@ -239,6 +239,21 @@ export function DrawerRoutes(props: any) {
             {user?.type === "Manager" && (
               <>
                 <DrawerItem
+                  label="Criar Evento"
+                  onPress={() => handleItemPress("CreateEvent")}
+                  icon={() => (
+                    <S.Icon
+                      style={{ resizeMode: "stretch" }}
+                      source={getIconSource("CreateEvent")}
+                    />
+                  )}
+                  style={getItemStyle("CreateEvent")}
+                  labelStyle={{
+                    color: selectedItem === "CreateEvent" ? "white" : "black",
+                  }}
+                />
+
+                <DrawerItem
                   label="Meus Eventos Criados"
                   onPress={() => handleItemPress("MyCreatedEvents")}
                   icon={() => (
@@ -251,6 +266,48 @@ export function DrawerRoutes(props: any) {
                   labelStyle={{
                     color:
                       selectedItem === "MyCreatedEvents" ? "white" : "black",
+                  }}
+                />
+                <DrawerItem
+                  label="Meus Eventos cadastrados"
+                  onPress={() => handleItemPress("MyEvents")}
+                  icon={() => (
+                    <S.Icon
+                      style={{ resizeMode: "stretch" }}
+                      source={getIconSource("MyEvents")}
+                    />
+                  )}
+                  style={getItemStyle("MyEvents")}
+                  labelStyle={{
+                    color: selectedItem === "MyEvents" ? "white" : "black",
+                  }}
+                />
+                <DrawerItem
+                  label="Perfil"
+                  onPress={() => handleItemPress("Perfil")}
+                  icon={() => (
+                    <S.Icon
+                      style={{ resizeMode: "stretch" }}
+                      source={getIconSource("Perfil")}
+                    />
+                  )}
+                  style={getItemStyle("Perfil")}
+                  labelStyle={{
+                    color: selectedItem === "Perfil" ? "white" : "black",
+                  }}
+                />
+                <DrawerItem
+                  label="Editar Perfil"
+                  onPress={() => handleItemPress("UpdateProfile")}
+                  icon={() => (
+                    <S.Icon
+                      style={{ resizeMode: "stretch" }}
+                      source={getIconSource("UpdateProfile")}
+                    />
+                  )}
+                  style={getItemStyle("UpdateProfile")}
+                  labelStyle={{
+                    color: selectedItem === "UpdateProfile" ? "white" : "black",
                   }}
                 />
               </>
@@ -270,6 +327,34 @@ export function DrawerRoutes(props: any) {
                   style={getItemStyle("MyEvents")}
                   labelStyle={{
                     color: selectedItem === "MyEvents" ? "white" : "black",
+                  }}
+                />
+                <DrawerItem
+                  label="Perfil"
+                  onPress={() => handleItemPress("Perfil")}
+                  icon={() => (
+                    <S.Icon
+                      style={{ resizeMode: "stretch" }}
+                      source={getIconSource("Perfil")}
+                    />
+                  )}
+                  style={getItemStyle("Perfil")}
+                  labelStyle={{
+                    color: selectedItem === "Perfil" ? "white" : "black",
+                  }}
+                />
+                <DrawerItem
+                  label="Editar Perfil"
+                  onPress={() => handleItemPress("UpdateProfile")}
+                  icon={() => (
+                    <S.Icon
+                      style={{ resizeMode: "stretch" }}
+                      source={getIconSource("UpdateProfile")}
+                    />
+                  )}
+                  style={getItemStyle("UpdateProfile")}
+                  labelStyle={{
+                    color: selectedItem === "UpdateProfile" ? "white" : "black",
                   }}
                 />
               </>

@@ -1,20 +1,18 @@
-import {
-  Ionicons,
-  MaterialIcons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { useContext } from "react";
+import React from "react";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  ImageBackground,
+  View,
+  TouchableOpacity,
+} from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 import * as S from "./styles";
-import { AuthContext } from "../../contexts/auth";
-import { AppBottomTabsRoutesProps } from "../../routes/app.route.bottomTabs";
-import theme from "../../theme";
-
-type RouteParams = {
-  name: string;
-};
+import bacground from "../../assets/bg-tela.png";
+import { HomeUserItens } from "../../components/HomeUserItens";
+import { homeUser, homeUserList } from "../../data/homeUser";
 
 export default function HomeUser({
   lastName,
@@ -23,98 +21,59 @@ export default function HomeUser({
   lastName?: string;
   firstName?: string;
 }) {
-  const { setUser } = useContext(AuthContext);
-  const navigation = useNavigation<AppBottomTabsRoutesProps>();
+  const navigation = useNavigation();
+  const numColumns = 2;
 
-  function handleNavigation(route: RouteParams) {
-    // @ts-ignore
-    navigation.navigate(route.name);
-  }
-  const Logout = async () => {
-    await AsyncStorage.clear();
-    setUser(false);
+  const formatData = (data: any, numColumns: any) => {
+    const numberOfFullRows = Math.floor(data.length / numColumns);
+    let numberOfElementsLastRow = data.length - numberOfFullRows * numColumns;
+
+    while (
+      numberOfElementsLastRow !== numColumns &&
+      numberOfElementsLastRow !== 0
+    ) {
+      data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true });
+      numberOfElementsLastRow++;
+    }
+    return data;
   };
+
+  function renderItem({ item }: ListRenderItemInfo<homeUser>) {
+    if (item.empty) {
+      return (
+        <View style={{ flex: 1, margin: 5, backgroundColor: "transparent" }} />
+      );
+    }
+    return <HomeUserItens {...item} />;
+  }
 
   return (
     <S.Container>
-      <S.Top>
-        <S.ImageTop
-          source={require("../../assets/extensao-marca-gomos-cor.png")}
-          style={{
-            resizeMode: "contain",
-          }}
+      <ImageBackground source={bacground} style={{ flex: 1 }}>
+        <S.Top>
+          <S.ImageTop
+            source={require("../../assets/Logo.png")}
+            style={{
+              resizeMode: "contain",
+            }}
+          />
+          <TouchableOpacity
+            // @ts-ignore
+            onPress={() => navigation.openDrawer()}
+            style={{ position: "absolute", left: 20, top: 20 }}
+          >
+            <Icon name="menu" size={30} color="#fff" />
+          </TouchableOpacity>
+        </S.Top>
+
+        <FlatList
+          data={formatData(homeUserList, numColumns)}
+          keyExtractor={(item) => item.name || item.key}
+          renderItem={renderItem}
+          numColumns={numColumns}
+          contentContainerStyle={{ paddingBottom: 100 }}
         />
-      </S.Top>
-      <S.Bot>
-        <S.ScrollView
-          contentContainerStyle={{
-            justifyContent: "center",
-            alignItems: "center",
-            paddingBottom: 100,
-          }}
-        >
-          <S.User>
-            <Ionicons name="person" size={20} />
-            <S.TextUser>
-              {firstName} {lastName}
-            </S.TextUser>
-          </S.User>
-          <S.Box_1>
-            <S.Touch_1>
-              <S.Icon
-                style={{ backgroundColor: theme.COLORS.BLUE }}
-                onPress={() => handleNavigation({ name: "Events" })}
-              >
-                <MaterialIcons
-                  name="event-note"
-                  size={60}
-                  color={theme.COLORS.WHITE}
-                />
-              </S.Icon>
-              <S.Text>EVENTOS</S.Text>
-            </S.Touch_1>
-
-            <S.Touch_1>
-              <S.Icon style={{ backgroundColor: theme.COLORS.RED }}>
-                <Ionicons
-                  name="person"
-                  size={50}
-                  color={theme.COLORS.WHITE}
-                  onPress={() => handleNavigation({ name: "Profile" })}
-                />
-              </S.Icon>
-              <S.Text>PERFIL</S.Text>
-            </S.Touch_1>
-          </S.Box_1>
-
-          <S.Box_1>
-            <S.Touch_1>
-              <S.Icon
-                style={{ backgroundColor: theme.COLORS.GREEN }}
-                onPress={() => {
-                  Logout();
-                }}
-              >
-                <Ionicons name="power" size={60} color={theme.COLORS.WHITE} />
-              </S.Icon>
-              <S.Text>LOGOUT</S.Text>
-            </S.Touch_1>
-            <S.Touch_1>
-              <S.Icon
-                style={{ backgroundColor: theme.COLORS.PURPLE }}
-                onPress={() => handleNavigation({ name: "UpdateProfile" })}
-              >
-                <MaterialCommunityIcons
-                  name="account-edit"
-                  size={50}
-                  color={theme.COLORS.WHITE}
-                />
-              </S.Icon>
-              <S.Text>EDITAR PERFIL</S.Text>
-            </S.Touch_1>
-          </S.Box_1>
-        </S.ScrollView>
-      </S.Bot>
+      </ImageBackground>
     </S.Container>
   );
 }

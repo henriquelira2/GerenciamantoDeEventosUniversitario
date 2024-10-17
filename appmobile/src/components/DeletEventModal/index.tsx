@@ -5,6 +5,7 @@ import { Modal, ActivityIndicator } from "react-native";
 import FlashMessage, { showMessage } from "react-native-flash-message";
 
 import * as S from "./styles";
+import bacground from "../../assets/bg-tela.png";
 import { api } from "../../services/api";
 import theme from "../../theme";
 
@@ -41,7 +42,7 @@ export const DeletEventModal: React.FC<DeleteConfirmationModalProps> = ({
       }, 1000);
     } catch (error) {
       //@ts-ignore
-      const errorMessage = error?.response?.data?.error || "Erro ao deletar evento";
+      const errorMessage =  error?.response?.data?.error || "Erro ao deletar evento";
 
       showMessage({
         message: errorMessage,
@@ -63,33 +64,42 @@ export const DeletEventModal: React.FC<DeleteConfirmationModalProps> = ({
         onRequestClose={onClose}
       >
         <S.Modal>
-          <S.Topo>
-            <S.Title>DELETAR EVENTO</S.Title>
-            <S.Closer onPress={onClose}>
-              <AntDesign name="close" size={24} color="white" />
-            </S.Closer>
-          </S.Topo>
-          <S.box>
-            <S.Buttom>
-              <S.TouchableOpacity
-                onPress={onDeleteEvent}
-                style={{ backgroundColor: theme.COLORS.GREEN }}
-              >
-                {isLoading ? (
-                  <ActivityIndicator size="small" color="#ffffff" />
-                ) : (
-                  <S.TextButtom>SIM</S.TextButtom>
-                )}
-              </S.TouchableOpacity>
+          <S.Topo />
 
-              <S.TouchableOpacity
-                onPress={onClose}
-                style={{ backgroundColor: theme.COLORS.GREEN }}
-              >
-                <S.TextButtom>NAO</S.TextButtom>
-              </S.TouchableOpacity>
-            </S.Buttom>
-          </S.box>
+          <S.Bot source={bacground}>
+            <S.ScrollView
+              contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
+            >
+            
+
+              <S.Title> Deletar Evento</S.Title>
+
+              <S.Buttom>
+                <S.TouchableOpacity
+                  onPress={onDeleteEvent}
+                  style={{ backgroundColor: theme.COLORS.GREEN }}
+                >
+                  {isLoading ? (
+                    <ActivityIndicator size="small" color="#ffffff" />
+                  ) : (
+                    <S.TextButtom>SIM</S.TextButtom>
+                  )}
+                </S.TouchableOpacity>
+
+                <S.TouchableOpacity
+                  onPress={onClose}
+                  style={{ backgroundColor: theme.COLORS.GREEN }}
+                >
+                  <S.TextButtom>NAO</S.TextButtom>
+                </S.TouchableOpacity>
+              </S.Buttom>
+
+              <S.CloseModal onPress={onClose}>
+                <AntDesign name="close" size={30} color="black" />
+              </S.CloseModal>
+
+            </S.ScrollView>
+          </S.Bot>
         </S.Modal>
       </Modal>
     </>

@@ -111,16 +111,16 @@ const EditModal: React.FC<EditModalProps> = ({ isVisible, user, onClose }) => {
       onRequestClose={onClose}
     >
       <S.Modal>
+        <FlashMessage position="top" />
         <S.Topo />
 
-        <FlashMessage position="center" />
         <S.Bot source={bacground}>
           <S.ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <S.CloseModal onPress={onClose}>
               <AntDesign name="close" size={30} color="black" />
             </S.CloseModal>
 
-            <S.Title> Editar User</S.Title>
+            <S.Title> Editar usuario</S.Title>
 
             {errors.firstName && (
               <S.TextErro>{errors.firstName.message}</S.TextErro>

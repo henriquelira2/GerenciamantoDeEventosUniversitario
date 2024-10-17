@@ -4,8 +4,9 @@ const conn = require("../config/database");
 const User = conn.define("users", {
   id: {
     type: Sequelize.INTEGER,
-    allowNull: false,
-    primaryKey: true,
+    autoIncrement: true,  
+    primaryKey: true,     
+    allowNull: false 
   },
   cpf: {
     type: Sequelize.STRING,
