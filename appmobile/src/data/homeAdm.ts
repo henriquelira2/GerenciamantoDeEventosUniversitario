@@ -11,7 +11,6 @@ const myeventcreated = require("../assets/dasboardAdm/meus eventos criados.png")
 const perfil = require("../assets/dasboardAdm/perfil2.png");
 //const vazio = require("../assets/dasboardAdm/vazio.png");
 
-
 export interface homeAdm {
   key: string;
   empty: any;
