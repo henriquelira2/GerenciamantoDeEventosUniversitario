@@ -22,7 +22,7 @@ export default function HomeUser({
   firstName?: string;
 }) {
   const navigation = useNavigation();
-  const numColumns = 2;
+  const numColumns = 3;
 
   const formatData = (data: any, numColumns: any) => {
     const numberOfFullRows = Math.floor(data.length / numColumns);
@@ -38,15 +38,24 @@ export default function HomeUser({
     return data;
   };
 
-  function renderItem({ item }: ListRenderItemInfo<homeUser>) {
+  function renderItem({ item, index }: ListRenderItemInfo<homeUser>) {
+
     if (item.empty) {
       return (
-        <View style={{ flex: 1, margin: 5, backgroundColor: "transparent" }} />
+        <View style={{ flex: 1, margin: 2, backgroundColor: "transparent" }} />
       );
     }
-    return <HomeUserItens {...item} />;
-  }
 
+    const itemStyle =
+      item.name === "Eventos" ? { width: "100%" } : { flex: 1, margin: 2 };
+
+    return (
+      //@ts-ignore
+      <View style={itemStyle}>
+        <HomeUserItens {...item} />
+      </View>
+    );
+  }
   return (
     <S.Container>
       <ImageBackground source={bacground} style={{ flex: 1 }}>

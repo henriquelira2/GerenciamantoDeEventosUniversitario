@@ -26,20 +26,18 @@ export function PaymentWebView({
     const { url } = navState;
     console.log("URL - " + url);
     if (url.includes("https://pagamento.sandbox.pagbank.com.br/conclusao")) {
-      //mudar link
       onClose();
-
       showMessage({
         message: "Pagamento realizado com sucesso",
         type: "success",
       });
+
       setTimeout(() => {
-        navigation.navigate("Eventos");
+        navigation.navigate("PaymentSucess");
       }, 1000);
     } else if (url.includes("https://eventmaneger.com/failure")) {
-      //mudar link
       onClose();
-      navigation.navigate("Home");
+      navigation.navigate("PaymentErr");
     }
   };
 

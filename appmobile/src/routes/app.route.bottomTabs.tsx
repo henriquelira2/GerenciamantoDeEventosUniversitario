@@ -16,6 +16,8 @@ import { MyEvents } from "../screens/MyEvents";
 import { Profile } from "../screens/Profile";
 import { UpdateProfile } from "../screens/UpdateProfile";
 import { UserList } from "../screens/UsersList";
+import { PaymentSucess } from "../screens/PaymentSucess";
+import { PaymentErr } from "../screens/PaymentErr";
 import theme from "../theme";
 
 type AppRoutes = {
@@ -31,6 +33,8 @@ type AppRoutes = {
   MyEvents: undefined;
   MyCreatedEvents: undefined;
   EventDetailsMaster: undefined;
+  PaymentSucess: undefined;
+  PaymentErr: undefined;
 };
 
 export type AppBottomTabsRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -239,6 +243,34 @@ export function BottomTabs() {
           },
           headerTitle: "Meus Eventos Criados",
           headerTintColor: theme.COLORS.WHITE,
+        }}
+      />
+      <TabScreen
+        name="PaymentSucess"
+        component={PaymentSucess}
+        options={{
+          tabBarButton: () => null,
+          headerTransparent: true,
+          headerTitle: " ",
+          tabBarStyle: { display: "none" },
+          headerLeft: () => null,
+          headerStyle: {
+            backgroundColor: "transparent",
+          },
+        }}
+      />
+      <TabScreen
+        name="PaymentErr"
+        component={PaymentErr}
+        options={{
+          tabBarButton: () => null,
+          headerTransparent: true,
+          headerTitle: " ",
+          tabBarStyle: { display: "none" },
+          headerLeft: () => null,
+          headerStyle: {
+            backgroundColor: "transparent",
+          },
         }}
       />
     </TabNavigator>

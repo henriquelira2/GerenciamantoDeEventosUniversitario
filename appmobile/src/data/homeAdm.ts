@@ -25,55 +25,55 @@ export const homeAdmList: homeAdm[] = [
     background: event,
     route: "Eventos",
     key: "",
-    empty: undefined
+    empty: undefined,
   },
   {
     name: "Perfil",
     background: perfil,
     route: "Perfil",
     key: "",
-    empty: undefined
+    empty: undefined,
   },
   {
     name: "Lista de Usuarios",
     background: listuser,
     route: "UserList",
     key: "",
-    empty: undefined
+    empty: undefined,
   },
   {
     name: "Editar Perfil",
     background: updateuser,
     route: "UpdateProfile",
     key: "",
-    empty: undefined
+    empty: undefined,
   },
   {
     name: "Criar Novo Usuario",
     background: newuser,
     route: "CreateUser",
     key: "",
-    empty: undefined
+    empty: undefined,
   },
   {
     name: "Criar Novo Evento",
     background: newevent,
     route: "CreateEvent",
     key: "",
-    empty: undefined
+    empty: undefined,
   },
   {
     name: "Meus Eventos Cadastrados",
     background: registeredevents,
     route: "MyEvents",
     key: "",
-    empty: undefined
+    empty: undefined,
   },
   {
     name: "Meus Eventos Criados",
     background: myeventcreated,
     route: "MyCreatedEvents",
     key: "",
-    empty: undefined
+    empty: undefined,
   },
 ];

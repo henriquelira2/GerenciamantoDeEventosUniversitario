@@ -43,8 +43,5 @@ const checkins = conn.define("checkins", {
   },
 });
 
-checkins.sync({ force: false }).then(() => {
-  console.log("Tabela de checkins recuperada");
-});
 
 module.exports = checkins;
