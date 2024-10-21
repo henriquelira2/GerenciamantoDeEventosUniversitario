@@ -8,6 +8,8 @@ import * as S from "./styles";
 import bacground from "../../assets/bg-tela.png";
 import { api } from "../../services/api";
 import theme from "../../theme";
+import { AppBottomTabsRoutesProps } from "../../routes/app.route.bottomTabs";
+import { useNavigation } from "@react-navigation/native";
 
 type DeleteConfirmationModalProps = {
   visible: boolean;
@@ -23,6 +25,7 @@ export const DeletEventModal: React.FC<DeleteConfirmationModalProps> = ({
   event: currentEvent,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const navigation = useNavigation<AppBottomTabsRoutesProps>();
 
   const onDeleteEvent = async () => {
     try {
@@ -30,33 +33,28 @@ export const DeletEventModal: React.FC<DeleteConfirmationModalProps> = ({
       //@ts-ignore
       await api.delete(`/events/delete/${currentEvent?.id}`);
 
-      showMessage({
-        message: "Evento deletado com sucesso",
-        type: "success",
-      });
-
-      onClose();
-      setTimeout(() => {
-        //@ts-ignore
-        setIsLoading(false);
-      }, 1000);
+      // @ts-ignore
+      onDelete("Evento deletado com sucesso", "success"); 
+      
+      onClose(); 
+      navigation.navigate("MyCreatedEvents");
     } catch (error) {
+
       //@ts-ignore
       const errorMessage =  error?.response?.data?.error || "Erro ao deletar evento";
 
-      showMessage({
-        message: errorMessage,
-        type: "danger",
-      });
+      // @ts-ignore
+      onDelete(errorMessage, "danger");
       onClose();
-      console.error("Erro:", errorMessage);
+
+      navigation.navigate("MyCreatedEvents");
+    } finally {
       setIsLoading(false);
     }
   };
 
   return (
     <>
-      <FlashMessage position="top" />
       <Modal
         animationType="slide"
         transparent
@@ -70,8 +68,6 @@ export const DeletEventModal: React.FC<DeleteConfirmationModalProps> = ({
             <S.ScrollView
               contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
             >
-            
-
               <S.Title> Deletar Evento</S.Title>
 
               <S.Buttom>
@@ -97,7 +93,6 @@ export const DeletEventModal: React.FC<DeleteConfirmationModalProps> = ({
               <S.CloseModal onPress={onClose}>
                 <AntDesign name="close" size={30} color="black" />
               </S.CloseModal>
-
             </S.ScrollView>
           </S.Bot>
         </S.Modal>

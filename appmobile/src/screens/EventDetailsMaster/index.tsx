@@ -11,6 +11,7 @@ import { DeletEventModal } from "../../components/DeletEventModal";
 import { EditEventModal } from "../../components/EditEventModal";
 import { UsersModal } from "../../components/UsersModal";
 import { api } from "../../services/api";
+import FlashMessage from "react-native-flash-message";
 
 type Event = {
   id: string;
@@ -45,8 +46,6 @@ export function EventDetailsMaster() {
     }
   }, [route.params?.event]);
 
-  const handleDeleteEvent = () => {};
-
   const handleRefresh = async () => {
     setRefreshing(true);
     try {
@@ -72,6 +71,11 @@ export function EventDetailsMaster() {
   const handleEventPress = () => {
     //@ts-ignore
     navigation.navigate("MyCreatedEvents");
+  };
+
+  const handleDeleteEvent = (message: string, type: "success" | "danger") => {
+    // @ts-ignore
+    navigation.navigate("MyCreatedEvents", { message, type });
   };
 
   const formatTime = (timeString: string) => {
@@ -124,6 +128,7 @@ export function EventDetailsMaster() {
 
   return (
     <S.Container>
+      <FlashMessage position="center" />
       <S.BoxContainer>
         {loading ? (
           <ActivityIndicator size="large" color="#fff" />
@@ -199,10 +204,11 @@ export function EventDetailsMaster() {
 
         <DeletEventModal
           visible={deleteModalVisible}
-          //@ts-ignore
+          // @ts-ignore
           event={event}
-          onClose={() => setDeleteModalVisible(false)}
+          // @ts-ignore
           onDelete={handleDeleteEvent}
+          onClose={() => setDeleteModalVisible(false)}
         />
       </S.BoxContainer>
     </S.Container>

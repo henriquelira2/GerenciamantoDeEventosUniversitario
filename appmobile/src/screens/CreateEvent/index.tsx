@@ -100,6 +100,7 @@ export function CreateEvent() {
     control,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm<Event | any>({
     mode: "onSubmit",
     resolver: yupResolver(CreateEventSchema),
@@ -134,12 +135,13 @@ export function CreateEvent() {
       typeEvent: data.typeEvent,
       id: undefined,
     });
+    reset();
     setLoadingButton(false);
   };
 
   return (
     <S.Container source={bacground}>
-      <FlashMessage position="top" />
+      <FlashMessage position="center" />
       <S.ScrollView
         contentContainerStyle={{
           flexGrow: 1,

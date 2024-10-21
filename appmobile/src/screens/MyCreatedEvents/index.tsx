@@ -1,10 +1,15 @@
 /* eslint-disable prettier/prettier */
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import {
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Text } from "react-native";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 
 import * as S from "./styles";
 import bacground from "../../assets/bg-tela.png";
@@ -21,6 +26,7 @@ export function MyCreatedEvents() {
 
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
   const isFocused = useIsFocused();
+  const route = useRoute();
 
   const fetchEvents = async () => {
     setLoading(true);
@@ -39,6 +45,11 @@ export function MyCreatedEvents() {
   useEffect(() => {
     if (isFocused) {
       fetchEvents();
+      //@ts-ignore
+      const { message, type } = route.params || {};
+      if (message && type) {
+        handleDeleteEventMessage(message, type);
+      }
     }
   }, [isFocused]);
 
@@ -63,6 +74,17 @@ export function MyCreatedEvents() {
       );
       setFilteredEvents(filtered);
     }
+  };
+
+  const handleDeleteEventMessage = (
+    message: string,
+    type: "success" | "danger"
+  ) => {
+    showMessage({
+      message,
+      type,
+    });
+    fetchEvents();
   };
 
   const renderEvent = ({ item }: { item: Event }) => {
@@ -137,6 +159,7 @@ export function MyCreatedEvents() {
 
   return (
     <S.Container source={bacground}>
+      <FlashMessage position="center" />
       <S.Search>
         <S.InputSeach
           placeholder="Nome do Evento"
