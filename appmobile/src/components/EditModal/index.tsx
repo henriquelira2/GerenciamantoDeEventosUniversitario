@@ -254,9 +254,9 @@ const EditModal: React.FC<EditModalProps> = ({ isVisible, user, onClose }) => {
                         right: 10,
                       }}
                     >
-                      <Picker.Item label="User" value="user" />
-                      <Picker.Item label="Admin" value="admin" />
-                      <Picker.Item label="Manager" value="manager" />
+                      <Picker.Item label="User" value="User" />
+                      <Picker.Item label="Admin" value="Admin" />
+                      <Picker.Item label="Manager" value="Manager" />
                     </Picker>
                   </S.TextInputSelect>
                 </>
