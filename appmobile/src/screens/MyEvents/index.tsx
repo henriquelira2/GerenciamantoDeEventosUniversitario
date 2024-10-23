@@ -18,7 +18,9 @@ export function MyEvents() {
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
-  const [selectedCredentialCode, setSelectedCredentialCode] = useState<string | null>(null);
+  const [selectedCredentialCode, setSelectedCredentialCode] = useState<
+    string | null
+  >(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState(""); // Adicionado para o termo de busca
 
@@ -182,6 +184,10 @@ export function MyEvents() {
 
       {loading ? (
         <ActivityIndicator size="large" color="#fff" />
+      ) : filteredEvents.length === 0 ? (
+        <Text style={{ color: "white", fontSize: 16, marginTop: 20 }}>
+          Nenhum evento inscrito no momento.
+        </Text>
       ) : (
         <S.FlatList
           data={filteredEvents}

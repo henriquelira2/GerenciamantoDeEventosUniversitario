@@ -5,7 +5,6 @@ import { useNavigation } from "@react-navigation/native";
 import { useContext, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { ActivityIndicator } from "react-native";
-import FlashMessage from "react-native-flash-message";
 import MaskInput from "react-native-mask-input";
 
 import * as S from "./styles";
@@ -104,7 +103,6 @@ export function Login() {
             paddingTop: "25%",
           }}
         >
-          <FlashMessage position="top" />
           <S.Title>Login</S.Title>
           {errors.cpf && <S.TextErro>{errors.cpf.message}</S.TextErro>}
           <S.Input>

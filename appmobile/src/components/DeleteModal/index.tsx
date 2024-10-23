@@ -11,12 +11,14 @@ interface DeleteModalProps {
   isVisible: boolean;
   user: UserData | null;
   onClose: () => void;
+  onReset: () => void;
 }
 
 const DeleteModal: React.FC<DeleteModalProps> = ({
   isVisible,
   user,
   onClose,
+  onReset,
 }) => {
   if (!user) {
     return null;
@@ -38,6 +40,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
       setTimeout(() => {
         onClose();
         setIsLoading(false);
+        onReset();
       }, 1000);
     } catch (error) {
       showMessage({
@@ -64,7 +67,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
           </S.Closer>
         </S.Topo>
         <S.box>
-          <FlashMessage position="top" />
+          <FlashMessage position="center" />
           <S.Alert>Deseja Excluir o Usuario</S.Alert>
           <S.Alert>{user.cpf}</S.Alert>
           <S.Buttom>

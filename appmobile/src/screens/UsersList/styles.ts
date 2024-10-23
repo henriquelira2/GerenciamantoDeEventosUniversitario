@@ -6,11 +6,12 @@ export const Container = styled.ImageBackground`
   flex: 1;
   padding-top: 30%;
   align-items: center;
+  margin-bottom: 15%;
 `;
 
 export const Search = styled.View`
   flex-direction: row;
-  margin-bottom: 50px;
+  margin-bottom: 25px;
   align-items: center;
   justify-content: center;
 `;
@@ -43,7 +44,10 @@ export const Avatar = styled.Image`
   border-color: ${theme.COLORS.WHITE};
 `;
 
-export const box = styled.View``;
+export const box = styled.View`
+  width: 60%;
+  margin-left: 5px;
+`;
 
 export const TextName = styled.Text`
   margin-top: 10px;
@@ -53,7 +57,7 @@ export const TextName = styled.Text`
 
 export const TextCpf = styled.Text`
   font-size: 15px;
-  color: ${theme.COLORS.GRAY100};
+  color: ${theme.COLORS.DARK};
 `;
 
 export const IconBtn = styled.TouchableOpacity`

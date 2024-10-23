@@ -8,7 +8,6 @@ import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { ActivityIndicator } from "react-native";
-import FlashMessage from "react-native-flash-message";
 import MaskInput from "react-native-mask-input";
 
 import * as S from "./styles";
@@ -21,9 +20,40 @@ import theme from "../../theme";
 
 export function Register() {
   // eslint-disable-next-line prettier/prettier
-  const CPF_MASK = [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]
+  const CPF_MASK = [
+    /\d/,
+    /\d/,
+    /\d/,
+    ".",
+    /\d/,
+    /\d/,
+    /\d/,
+    ".",
+    /\d/,
+    /\d/,
+    /\d/,
+    "-",
+    /\d/,
+    /\d/,
+  ];
   // eslint-disable-next-line prettier/prettier
-  const PHONE_MASK = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+  const PHONE_MASK = [
+    "(",
+    /\d/,
+    /\d/,
+    ")",
+    " ",
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+    "-",
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+  ];
 
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
@@ -46,20 +76,23 @@ export function Register() {
   const { createUserMutation, createUserLoading } = useCreateUser();
 
   const submitRegisterForm = async (data: RegisterUser) => {
-    setLoadingButton(true);
-    await new Promise((resolve) => setTimeout(resolve, 4000));
-    setLoadingButton(false);
-    await createUserMutation({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      cpf: data.cpf,
-      email: data.email,
-      phoneNumber: data.phoneNumber,
-      password: data.password,
-      resetToken: "",
-    });
-    setTimeout(() => setLoadingButton(false), 2000);
-    navigation.navigate("Login");
+    try {
+      setLoadingButton(true);
+      await createUserMutation({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        cpf: data.cpf,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        password: data.password,
+        resetToken: "",
+      });
+      navigation.navigate("Login");
+    } catch (error) {
+      console.error("Erro ao registrar o usuário:", error);
+    } finally {
+      setLoadingButton(false);
+    }
   };
 
   return (
@@ -71,7 +104,6 @@ export function Register() {
         }}
       />
       <S.Box>
-        <FlashMessage position="top" />
         <S.ScrollView
           contentContainerStyle={{
             justifyContent: "center",
@@ -219,7 +251,6 @@ export function Register() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <S.TextInput
                   placeholder="Senha"
-                  keyboardType="numeric"
                   value={value}
                   onChangeText={onChange}
                   secureTextEntry={hidePass}

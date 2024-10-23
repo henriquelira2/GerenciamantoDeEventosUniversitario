@@ -78,7 +78,7 @@ export function UserList() {
         <S.TextName numberOfLines={1}>
           {user.firstName} &nbsp; {user.lastName}
         </S.TextName>
-        <S.TextCpf>{user.cpf}</S.TextCpf>
+        <S.TextCpf> {user.cpf}</S.TextCpf>
         <S.TextCpf />
       </S.box>
       <S.IconBtn
@@ -165,6 +165,9 @@ export function UserList() {
         isVisible={isDeleteModalVisible}
         user={selectedUser}
         onClose={() => setDeleteModalVisible(false)}
+        onReset={function (): void {
+          onRefresh();
+        }}
       />
     </S.Container>
   );
