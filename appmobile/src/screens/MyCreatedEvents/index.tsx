@@ -46,7 +46,7 @@ export function MyCreatedEvents() {
     if (isFocused) {
       fetchEvents();
       //@ts-ignore
-      const { message, type } = route.params || {};
+      const { message, type } = route.params ?? { message: null, type: null };
       if (message && type) {
         handleDeleteEventMessage(message, type);
       }
@@ -76,6 +76,12 @@ export function MyCreatedEvents() {
     }
   };
 
+  const formatPrice = (price: number | string) => {
+    const parsedPrice = parseFloat(price as string);
+    return parsedPrice === 0 ? "Grátis" : `R$ ${parsedPrice.toFixed(2).replace('.', ',')}`;
+  };
+
+  
   const handleDeleteEventMessage = (
     message: string,
     type: "success" | "danger"
@@ -91,7 +97,7 @@ export function MyCreatedEvents() {
     const imageUri = item.imageEvent
       ? `${api.defaults.baseURL}/${item.imageEvent}`
       : null;
-    const formattedDate = format(new Date(item.dateEvent), "dd/MM/yyyy");
+    const formattedDate = format(new Date(item.dateEventStart), "dd/MM/yyyy");
 
     return (
       <S.BoxEvent onPress={() => handleEventPress(item)}>
@@ -128,7 +134,7 @@ export function MyCreatedEvents() {
                       color="gray"
                       style={{ letterSpacing: 10 }}
                     />
-                    {item.hourEvent}
+                    {item.hourEventStart}
                   </S.Hour>
                   <S.Date>
                     <Entypo
@@ -145,13 +151,13 @@ export function MyCreatedEvents() {
                 {item.priceEvent === "0" ? (
                   <S.Price>Gratis</S.Price>
                 ) : (
-                  <S.Price>${item.priceEvent}</S.Price>
+                  <S.Price>{formatPrice(item.priceEvent)}</S.Price>
                 )}
               </S.Info2>
             </S.BoxInfo>
           </>
         ) : (
-          <Text>No Image Available</Text>
+         <S.EventText> Sem descrição disponível</S.EventText>
         )}
       </S.BoxEvent>
     );

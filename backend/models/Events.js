@@ -10,11 +10,19 @@ const Event = conn.define("events", {
     type: Sequelize.TEXT,
     allowNull: false,
   },
-  dateEvent: {
+  dateEventStart: {
     type: Sequelize.DATE,
     allowNull: false,
   },
-  hourEvent: {
+  dateEventEnd: {
+    type: Sequelize.DATE,
+    allowNull: false,
+  },
+  hourEventStart: {
+    type: Sequelize.TIME,
+    allowNull: false,
+  },
+  hourEventEnd: {
     type: Sequelize.TIME,
     allowNull: false,
   },
@@ -39,6 +47,10 @@ const Event = conn.define("events", {
     allowNull: false,
   },
   typeEvent: {
+    type: Sequelize.STRING(255),
+    allowNull: false,
+  },
+  durationEvent: {
     type: Sequelize.STRING(255),
     allowNull: false,
   },

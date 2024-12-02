@@ -44,7 +44,10 @@ export default function HomeManager({
         <View style={{ flex: 1, margin: 5, backgroundColor: "transparent" }} />
       );
     }
-    return <HomeIconList {...item} />;
+
+    const { key, ...props } = item;
+
+    return <HomeIconList key={""} {...props} />;
   }
 
   return (

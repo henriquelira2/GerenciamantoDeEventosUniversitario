@@ -66,13 +66,13 @@ export const TextEmail = styled.Text`
 `;
 
 export const Avatar = styled.Image`
-  width: 25%;
+  width: 23%;
   height: 100%;
   padding: 5px;
   border-width: 3px;
   border-radius: 90px;
   margin-bottom: 30px;
-  border-color: ${theme.COLORS.WHITE};
+  border-color: ${theme.COLORS.RED};
 `;
 
 export const UserName = styled.Text`
@@ -110,4 +110,69 @@ export const NoUsersText = styled.Text`
   font-size: 16px;
   color: red;
   margin-top: 20px;
+`;
+
+export const TouchableOpacity = styled.TouchableOpacity`
+  border-radius: 50px;
+  width: 50%;
+  height: 40px;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  opacity: 0.8;
+  background-color: ${theme.COLORS.RED};
+`;
+
+export const TextButtom = styled.Text`
+  font-size: 12px;
+  color: ${theme.COLORS.WHITE};
+`;
+
+
+
+export const ModalC = styled.Modal``;
+export const ModalContainerC = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
+export const ModalContent = styled.View`
+  width: 80%;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  align-items: center;
+`;
+
+export const ModalText = styled.Text`
+  font-size: 18px;
+  color: ${theme.COLORS.DARK};
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
+export const ModalButtonContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+`;
+
+export const ModalButton = styled.TouchableOpacity`
+  background-color: ${theme.COLORS.GREEN};
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin: 0 10px;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ModalButtonText = styled.Text`
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
 `;

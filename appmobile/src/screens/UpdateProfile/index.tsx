@@ -100,6 +100,7 @@ export function UpdateProfile() {
 
   const { updateUserMutation, updateUserLoading } = useUpdateUser();
   const submitUpdateUser = async (data: RegisterUser) => {
+    console.log("teste")
     setLoadingButton(true);
     await updateUserMutation({
       cpf: data.cpf,

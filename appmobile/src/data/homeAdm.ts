@@ -4,7 +4,7 @@ import { ImageProps } from "react-native";
 const newevent = require("../assets/dasboardAdm/criar novo evento2.png");
 const newuser = require("../assets/dasboardAdm/criar novo usuario2.png");
 const updateuser = require("../assets/dasboardAdm/editar perfil2.png");
-const event = require("../assets/dasboardAdm/eventos2.png");
+const event = require("../assets/dasboardAdm/eventos3.png");
 const listuser = require("../assets/dasboardAdm/lista de usuarios2.png");
 const registeredevents = require("../assets/dasboardAdm/meus eventos cadastrados2.png");
 const myeventcreated = require("../assets/dasboardAdm/meus eventos criados.png");
@@ -21,13 +21,6 @@ export interface homeAdm {
 
 export const homeAdmList: homeAdm[] = [
   {
-    name: "Eventos",
-    background: event,
-    route: "Eventos",
-    key: "",
-    empty: undefined,
-  },
-  {
     name: "Perfil",
     background: perfil,
     route: "Perfil",
@@ -41,13 +34,7 @@ export const homeAdmList: homeAdm[] = [
     key: "",
     empty: undefined,
   },
-  {
-    name: "Editar Perfil",
-    background: updateuser,
-    route: "UpdateProfile",
-    key: "",
-    empty: undefined,
-  },
+
   {
     name: "Criar Novo Usuario",
     background: newuser,
@@ -63,7 +50,7 @@ export const homeAdmList: homeAdm[] = [
     empty: undefined,
   },
   {
-    name: "Meus Eventos Cadastrados",
+    name: " Eventos Inscritos",
     background: registeredevents,
     route: "MyEvents",
     key: "",
@@ -73,6 +60,13 @@ export const homeAdmList: homeAdm[] = [
     name: "Meus Eventos Criados",
     background: myeventcreated,
     route: "MyCreatedEvents",
+    key: "",
+    empty: undefined,
+  },
+  {
+    name: "Eventos",
+    background: event,
+    route: "Eventos",
     key: "",
     empty: undefined,
   },

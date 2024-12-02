@@ -94,12 +94,12 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
 
             <S.EventDate>
               <MaterialIcons name="calendar-month" size={24} color="black" />
-              <S.EventText>{formatDate(event.dateEvent)}</S.EventText>
+              <S.EventText>{formatDate(event.dateEventStart)}</S.EventText>
             </S.EventDate>
 
             <S.EvenHour>
               <MaterialIcons name="access-time" size={24} color="black" />
-              <S.EventText>{formatTime(event.hourEvent)}</S.EventText>
+              <S.EventText>{formatTime(event.hourEventStart)}</S.EventText>
             </S.EvenHour>
 
             <S.TicketPrice>${event.priceEvent}</S.TicketPrice>

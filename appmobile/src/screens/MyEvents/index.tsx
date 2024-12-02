@@ -14,7 +14,7 @@ import { api } from "../../services/api";
 
 export function MyEvents() {
   const [events, setEvents] = useState<Event[]>([]);
-  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]); // Adicionado para eventos filtrados
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]); 
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
@@ -22,7 +22,7 @@ export function MyEvents() {
     string | null
   >(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [searchTerm, setSearchTerm] = useState(""); // Adicionado para o termo de busca
+  const [searchTerm, setSearchTerm] = useState(""); 
 
   const isFocused = useIsFocused();
 
@@ -100,7 +100,7 @@ export function MyEvents() {
     const imageUri = item.event.imageEvent
       ? `${api.defaults.baseURL}/${item.event.imageEvent}`
       : null;
-    const formattedDate = format(new Date(item.event.dateEvent), "dd/MM/yyyy");
+    const formattedDate = format(new Date(item.event.dateEventStart), "dd/MM/yyyy");
 
     return (
       <S.BoxEvent onPress={() => handleEventPress(item)}>
@@ -137,7 +137,7 @@ export function MyEvents() {
                       color="gray"
                       style={{ letterSpacing: 10 }}
                     />
-                    {item.event.hourEvent}
+                    {item.event.hourEventStart}
                   </S.Hour>
                   <S.Date>
                     <Entypo

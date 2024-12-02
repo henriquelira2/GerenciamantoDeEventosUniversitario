@@ -17,8 +17,11 @@ type Event = {
   id: string;
   nameEvent: string;
   locationEvent: string;
-  dateEvent: string;
-  hourEvent: string;
+  hourEventStart: string;
+  hourEventEnd: string;
+  dateEventStart: string;
+  dateEventEnd: string;
+  durationEvent: string;
   priceEvent: number;
   descriptionEvent: string;
   imageEvent: string;
@@ -60,6 +63,13 @@ export function EventDetailsMaster() {
     }
   };
 
+  const formatPrice = (price: number | string) => {
+    const parsedPrice = parseFloat(price as string);
+    return parsedPrice === 0
+      ? "Grátis"
+      : `R$ ${parsedPrice.toFixed(2).replace(".", ",")}`;
+  };
+
   if (!event) {
     return (
       <S.Container>
@@ -78,19 +88,10 @@ export function EventDetailsMaster() {
     navigation.navigate("MyCreatedEvents", { message, type });
   };
 
-  const formatTime = (timeString: string) => {
-    const [hour, minute] = timeString.split(":");
-    const hourNumber = parseInt(hour, 10);
-
-    let period = "manhã";
-
-    if (hourNumber >= 12 && hourNumber < 18) {
-      period = "tarde";
-    } else if (hourNumber >= 18 || hourNumber < 6) {
-      period = "noite";
-    }
-
-    return `${hour}:${minute} - ${period}`;
+  const formatDateRange = (startDate: string, endDate: string) => {
+    const formattedStart = format(new Date(startDate), "dd/MM/yyyy    ");
+    const formattedEnd = format(new Date(endDate), "   dd/MM/yyyy");
+    return `${formattedStart} até ${formattedEnd}`;
   };
 
   const eventData = [
@@ -98,14 +99,27 @@ export function EventDetailsMaster() {
     {
       key: "date",
       icon: "calendar-month",
-      text: format(new Date(event.dateEvent), "dd/MM/yyyy"),
+      text: formatDateRange(event.dateEventStart, event.dateEventEnd),
     },
-    { key: "time", icon: "access-time", text: formatTime(event.hourEvent) },
+    {
+      key: "time",
+      icon: "access-time",
+      text:
+        "De " +
+        event.hourEventStart.split(":").slice(0, 2).join(":") +
+        " até " +
+        event.hourEventEnd.split(":").slice(0, 2).join(":") +
+        " - " +
+        event.durationEvent +"h",
+    },
     {
       key: "price",
       icon: "sell",
       //@ts-ignore
-      text: event.priceEvent === "0" ? "Grátis" : `${event.priceEvent}`,
+      text:
+        formatPrice(event.priceEvent) === "0"
+          ? "Grátis"
+          : `${formatPrice(event.priceEvent)}`,
     },
     { key: "description", icon: null, text: event.descriptionEvent },
   ];
@@ -191,6 +205,7 @@ export function EventDetailsMaster() {
         <UsersModal
           visible={usersModalVisible}
           eventId={event.id}
+          name={event.nameEvent}
           onClose={() => setUsersModalVisible(false)}
         />
 

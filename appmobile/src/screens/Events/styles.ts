@@ -92,7 +92,7 @@ export const Hour = styled.Text`
 
 export const Date = styled.Text`
   font-size: 12px;
-  right: 100%;
+ 
 `;
 
 export const Price = styled.Text`

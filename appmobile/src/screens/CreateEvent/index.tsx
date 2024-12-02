@@ -5,6 +5,7 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
   Feather,
+  Entypo,
 } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -28,8 +29,11 @@ export function CreateEvent() {
   const [loadingButton, setLoadingButton] = useState(false);
 
   // Date Time Picker
-  const [showPicker, setShowPicker] = useState(false);
-  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [showPickerStart, setShowPickerStart] = useState(false);
+  const [showPickerEnd, setShowPickerEnd] = useState(false);
+
+  const [showTimePickerStart, setShowTimePickerStart] = useState(false);
+  const [showTimePickerEnd, setShowTimePickerEnd] = useState(false);
 
   // ImagePicker
   const [image, setImage] = useState<string | null>(
@@ -59,7 +63,7 @@ export function CreateEvent() {
     (arg0: string): void;
   }) => {
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ["images", "videos"],
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
@@ -109,7 +113,12 @@ export function CreateEvent() {
   const { CreateEventMutation, CreateEventLoading } = useCreateEvent();
 
   const submitCreatEventForm = async (data: Event) => {
-    const hourEvent = new Date(data.hourEvent)
+    const hourEventEnd = new Date(data.hourEventEnd)
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+
+    const hourEventStart = new Date(data.hourEventStart)
       .toISOString()
       .slice(0, 19)
       .replace("T", " ");
@@ -126,12 +135,16 @@ export function CreateEvent() {
       nameEvent: data.nameEvent,
       descriptionEvent: data.descriptionEvent,
       dateEvent: data.dateEvent,
-      hourEvent,
+      dateEventStart: data.dateEventStart,
+      dateEventEnd: data.dateEventEnd,
+      hourEventStart,
+      hourEventEnd,
       priceEvent: data.priceEvent,
       organizerEvent: data.organizerEvent,
       qtdVacanciesEvent: data.qtdVacanciesEvent,
       imageEvent: data.imageEvent,
       locationEvent: data.locationEvent,
+      durationEvent: data.durationEvent,
       typeEvent: data.typeEvent,
       id: undefined,
     });
@@ -249,20 +262,20 @@ export function CreateEvent() {
           />
         </S.Input>
 
-        {errors.dateEvent && (
-          <S.TextErro>{errors.dateEvent.message}</S.TextErro>
+        {errors.dateEventStart && (
+          <S.TextErro>{errors.dateEventStart.message}</S.TextErro>
         )}
 
         <S.Input>
           <Controller
             control={control}
-            name="dateEvent"
+            name="dateEventStart"
             defaultValue={null}
             render={({ field: { onChange, value } }) => (
-              <S.TextInputDateTime onPress={() => setShowPicker(true)}>
+              <S.TextInputDateTime onPress={() => setShowPickerStart(true)}>
                 <S.placeholderDateTime
                   editable={false}
-                  placeholder="Data do Evento"
+                  placeholder="Data do Inicial do Evento"
                   value={value ? value.toLocaleDateString("pt-BR") : ""}
                 />
                 <Feather
@@ -271,17 +284,17 @@ export function CreateEvent() {
                   color="black"
                   style={{ position: "absolute", left: 10, top: 12 }}
                 />
-                {showPicker && (
+                {showPickerStart && (
                   <DateTimePicker
                     value={value || new Date()}
                     mode="date"
                     display="default"
                     is24Hour
-                    onChange={(event, selectedDate) => {
-                      setShowPicker(false);
-                      if (selectedDate) {
-                        console.log(selectedDate);
-                        onChange(selectedDate);
+                    onChange={(event, selectedDateStart) => {
+                      setShowPickerStart(false);
+                      if (selectedDateStart) {
+                        console.log("Data Inicial: " + selectedDateStart);
+                        onChange(selectedDateStart);
                       }
                     }}
                   />
@@ -290,20 +303,60 @@ export function CreateEvent() {
             )}
           />
         </S.Input>
+        {errors.dateEventEnd && (
+          <S.TextErro>{errors.dateEventEnd.message}</S.TextErro>
+        )}
 
-        {errors.hourEvent && (
-          <S.TextErro>{errors.hourEvent.message}</S.TextErro>
+        <S.Input>
+          <Controller
+            control={control}
+            name="dateEventEnd"
+            defaultValue={null}
+            render={({ field: { onChange, value } }) => (
+              <S.TextInputDateTime onPress={() => setShowPickerEnd(true)}>
+                <S.placeholderDateTime
+                  editable={false}
+                  placeholder="Data do Final do Enveto"
+                  value={value ? value.toLocaleDateString("pt-BR") : ""}
+                />
+                <Entypo
+                  name="calendar"
+                  size={26}
+                  color="black"
+                  style={{ position: "absolute", left: 10, top: 12 }}
+                />
+                {showPickerEnd && (
+                  <DateTimePicker
+                    value={value || new Date()}
+                    mode="date"
+                    display="default"
+                    is24Hour
+                    onChange={(event, selectedDateEnd) => {
+                      setShowPickerEnd(false);
+                      if (selectedDateEnd) {
+                        console.log("data Final: " + selectedDateEnd);
+                        onChange(selectedDateEnd);
+                      }
+                    }}
+                  />
+                )}
+              </S.TextInputDateTime>
+            )}
+          />
+        </S.Input>
+        {errors.hourEventStart && (
+          <S.TextErro>{errors.hourEventStart.message}</S.TextErro>
         )}
         <S.Input>
           <Controller
             control={control}
-            name="hourEvent"
+            name="hourEventStart"
             defaultValue={null}
             render={({ field: { onChange, value } }) => (
-              <S.TextInputDateTime onPress={() => setShowTimePicker(true)}>
+              <S.TextInputDateTime onPress={() => setShowTimePickerStart(true)}>
                 <S.placeholderDateTime
                   editable={false}
-                  placeholder="Hora do Evento"
+                  placeholder="Hora Inicial do Evento"
                   value={
                     value
                       ? value.toLocaleTimeString("pt-BR", {
@@ -319,16 +372,62 @@ export function CreateEvent() {
                   color="black"
                   style={{ position: "absolute", left: 10, top: 12 }}
                 />
-                {showTimePicker && (
+                {showTimePickerStart && (
                   <DateTimePicker
                     value={value || new Date()}
                     mode="time"
                     display="default"
                     is24Hour
-                    onChange={(event, selectedTime) => {
-                      setShowTimePicker(false);
-                      if (selectedTime) {
-                        onChange(selectedTime);
+                    onChange={(event, selectedTimeStart) => {
+                      setShowTimePickerStart(false);
+                      if (selectedTimeStart) {
+                        onChange(selectedTimeStart);
+                      }
+                    }}
+                  />
+                )}
+              </S.TextInputDateTime>
+            )}
+          />
+        </S.Input>
+        {errors.hourEventEnd && (
+          <S.TextErro>{errors.hourEventEnd.message}</S.TextErro>
+        )}
+        <S.Input>
+          <Controller
+            control={control}
+            name="hourEventEnd"
+            defaultValue={null}
+            render={({ field: { onChange, value } }) => (
+              <S.TextInputDateTime onPress={() => setShowTimePickerEnd(true)}>
+                <S.placeholderDateTime
+                  editable={false}
+                  placeholder="Hora Inicial do Evento"
+                  value={
+                    value
+                      ? value.toLocaleTimeString("pt-BR", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })
+                      : ""
+                  }
+                />
+                <Entypo
+                  name="time-slot"
+                  size={26}
+                  color="black"
+                  style={{ position: "absolute", left: 10, top: 12 }}
+                />
+                {showTimePickerEnd && (
+                  <DateTimePicker
+                    value={value || new Date()}
+                    mode="time"
+                    display="default"
+                    is24Hour
+                    onChange={(event, selectedTimeEnd) => {
+                      setShowTimePickerEnd(false);
+                      if (selectedTimeEnd) {
+                        onChange(selectedTimeEnd);
                       }
                     }}
                   />
@@ -356,6 +455,29 @@ export function CreateEvent() {
           />
           <MaterialCommunityIcons
             name="account-group-outline"
+            size={26}
+            color="black"
+            style={{ position: "absolute", left: 10, top: 12 }}
+          />
+        </S.Input>
+        {errors.durationEvent && (
+          <S.TextErro>{errors.durationEvent.message}</S.TextErro>
+        )}
+        <S.Input>
+          <Controller
+            control={control}
+            name="durationEvent"
+            render={({ field: { onChange, value } }) => (
+              <S.TextInput
+                placeholder="Duração do Evento"
+                value={value}
+                onChangeText={onChange}
+                keyboardType="numeric"
+              />
+            )}
+          />
+          <MaterialCommunityIcons
+            name="av-timer"
             size={26}
             color="black"
             style={{ position: "absolute", left: 10, top: 12 }}
@@ -466,29 +588,22 @@ export function CreateEvent() {
                     value=""
                     style={{ color: "gray" }}
                   />
+                  <Picker.Item label="Minicurso" value="Minicurso" />
+                  <Picker.Item label="Palestra" value="Palestra" />
+                  <Picker.Item label="Workshops" value="Workshops" />
+                  <Picker.Item label="Conferências" value="Conferências" />
                   <Picker.Item
-                    label="Eventos acadêmicos e educacionais"
-                    value="Eventos acadêmicos e educacionais"
+                    label="Feiras Acadêmicas"
+                    value="Feiras Acadêmicas"
+                  />
+                  <Picker.Item label="Seminário" value="Seminário" />
+                  <Picker.Item
+                    label="Semana de Humanismo e Cidadania"
+                    value="Semana de Humanismo e Cidadania"
                   />
                   <Picker.Item
-                    label="Eventos sociais"
-                    value="Eventos sociais"
-                  />
-                  <Picker.Item
-                    label="Eventos corporativos"
-                    value="Eventos corporativos"
-                  />
-                  <Picker.Item
-                    label="Eventos religiosos"
-                    value="Eventos religiosos"
-                  />
-                  <Picker.Item
-                    label="Eventos culturais e de entretenimento"
-                    value="Eventos culturais e de entretenimento"
-                  />
-                  <Picker.Item
-                    label="Eventos esportivos"
-                    value="Eventos esportivos"
+                    label="Semana da Computação"
+                    value="Semana da Computação"
                   />
                 </Picker>
               </S.TextInputSelect>

@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Text } from "react-native";
@@ -19,6 +19,7 @@ export function Events() {
   const [refreshing, setRefreshing] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const isFocused = useIsFocused();
 
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
@@ -48,9 +49,11 @@ export function Events() {
   };
 
   useEffect(() => {
-    fetchUserId();
-    fetchEvents();
-  }, []);
+    if (isFocused) {
+      fetchUserId();
+      fetchEvents();
+    }
+  }, [isFocused]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
@@ -82,7 +85,7 @@ export function Events() {
     const imageUri = item.imageEvent
       ? `${api.defaults.baseURL}/${item.imageEvent}`
       : null;
-    const formattedDate = format(new Date(item.dateEvent), "dd/MM/yyyy");
+    const formattedDate = format(new Date(item.dateEventStart), "dd/MM/yyyy");
 
     return (
       <S.BoxEvent onPress={() => handleEventPress(item)}>
@@ -119,7 +122,7 @@ export function Events() {
                       color="gray"
                       style={{ letterSpacing: 10 }}
                     />
-                    {item.hourEvent}
+                    {item.hourEventStart}
                   </S.Hour>
                   <S.Date>
                     <Entypo
@@ -166,6 +169,10 @@ export function Events() {
 
       {loading ? (
         <ActivityIndicator size="large" color="#fff" />
+      ) : filteredEvents.length === 0 ? (
+        <Text style={{ color: "white", fontSize: 16, marginTop: 20 }}>
+          Nenhum evento encontrado
+        </Text>
       ) : (
         <S.FlatList
           data={filteredEvents}

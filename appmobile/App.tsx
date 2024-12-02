@@ -24,7 +24,7 @@ export default function App() {
   }
 
   useEffect(() => {
-    onFetchUpdateAsync();
+    //  onFetchUpdateAsync();
     NavigationBar.setVisibilityAsync("hidden");
   }, []);
 

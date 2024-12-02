@@ -38,13 +38,23 @@ export default function HomeAdmin({
     return data;
   };
 
-  function renderItem({ item }: ListRenderItemInfo<homeAdm>) {
+  function renderItem({ item, index }: ListRenderItemInfo<homeAdm>) {
     if (item.empty) {
       return (
-        <View style={{ flex: 1, margin: 5, backgroundColor: "transparent" }} />
+        <View style={{ flex: 1, margin: 2, backgroundColor: "transparent" }} />
       );
     }
-    return <HomeIconList {...item} />;
+
+    const itemStyle =
+      item.name === "Eventos" ? { width: "100%" } : { flex: 1, margin: 2 };
+
+    const { key, ...props } = item;
+    return (
+      //@ts-ignore
+      <View style={itemStyle}>
+        <HomeIconList key={""} {...props} />
+      </View>
+    );
   }
 
   return (
@@ -68,7 +78,9 @@ export default function HomeAdmin({
 
         <FlatList
           data={formatData(homeAdmList, numColumns)}
-          keyExtractor={(item) => item.name || item.key}
+          keyExtractor={(item) =>
+            item.key || item.name || Math.random().toString()
+          }
           renderItem={renderItem}
           numColumns={numColumns}
           contentContainerStyle={{ paddingBottom: 100 }}

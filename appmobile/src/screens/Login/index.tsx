@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { ActivityIndicator } from "react-native";
 import MaskInput from "react-native-mask-input";
+import { api } from "../../services/api";
 
 import * as S from "./styles";
 import bacground from "../../assets/bg-tela.png";
@@ -83,6 +84,7 @@ export function Login() {
     console.log("CPF: " + value);
   };
 
+  
   useEffect(() => {
     isAuth();
   }, []);

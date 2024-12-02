@@ -60,10 +60,7 @@ export function DrawerRoutes(props: any) {
         return selectedItem === "Perfil"
           ? require("../../assets/drawerIcons/user-icon-w.png")
           : require("../../assets/drawerIcons/user-icon.png");
-      case "UpdateProfile":
-        return selectedItem === "UpdateProfile"
-          ? require("../../assets/drawerIcons/edituser-icon-w.png")
-          : require("../../assets/drawerIcons/edituser-icon.png");
+
       case "CreateUser":
         return selectedItem === "CreateUser"
           ? require("../../assets/drawerIcons/newuser-icon-w.png")
@@ -162,21 +159,6 @@ export function DrawerRoutes(props: any) {
                 />
 
                 <DrawerItem
-                  label="Editar Perfil"
-                  onPress={() => handleItemPress("UpdateProfile")}
-                  icon={() => (
-                    <S.Icon
-                      style={{ resizeMode: "stretch" }}
-                      source={getIconSource("UpdateProfile")}
-                    />
-                  )}
-                  style={getItemStyle("UpdateProfile")}
-                  labelStyle={{
-                    color: selectedItem === "UpdateProfile" ? "white" : "black",
-                  }}
-                />
-
-                <DrawerItem
                   label="Criar Novo Usuario"
                   onPress={() => handleItemPress("CreateUser")}
                   icon={() => (
@@ -205,7 +187,7 @@ export function DrawerRoutes(props: any) {
                   }}
                 />
                 <DrawerItem
-                  label="Meus Eventos cadastrados"
+                  label="Eventos Inscritos"
                   onPress={() => handleItemPress("MyEvents")}
                   icon={() => (
                     <S.Icon

@@ -3,7 +3,7 @@ import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { useRoute, RouteProp, useNavigation } from "@react-navigation/native";
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
-import { FlatList, ActivityIndicator } from "react-native";
+import { FlatList, ActivityIndicator, Alert } from "react-native";
 import FlashMessage, { showMessage } from "react-native-flash-message";
 
 import * as S from "./styles";
@@ -14,10 +14,13 @@ type Event = {
   id: string;
   nameEvent: string;
   locationEvent: string;
-  dateEvent: string;
-  hourEvent: string;
+  dateEventStart: string;
+  dateEventEnd: string;
+  hourEventStart: string;
+  hourEventEnd: string;
   priceEvent: number;
   descriptionEvent: string;
+  durationEvent: string;
   imageEvent: string;
 };
 
@@ -37,6 +40,9 @@ export function EventDetails() {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [feedbackModalVisible, setFeedbackModalVisible] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+
 
   useEffect(() => {
     if (route.params?.event) {
@@ -72,43 +78,24 @@ export function EventDetails() {
       );
 
       if (response.status === 200) {
-        showMessage({
-          message: "Sucesso",
-          description: "Inscrição realizada com sucesso!",
-          type: "success",
-        });
+        setFeedbackMessage("Inscrição realizada com sucesso!");
       } else if (response.status === 408) {
-        showMessage({
-          message: "Erro",
-          description: "Você já está inscrito neste evento.",
-          type: "danger",
-        });
+        setFeedbackMessage("Você já está inscrito neste evento.");
       } else {
-        showMessage({
-          message: "Erro",
-          description: "Erro ao realizar a inscrição.",
-          type: "danger",
-        });
+        setFeedbackMessage("Erro ao realizar a inscrição.");
       }
     } catch (error) {
       console.error("Erro ao inscrever-se no evento gratuito:", error);
       //@ts-ignore
       if (error.response && error.response.status === 408) {
-        showMessage({
-          message: "Erro",
-          description: "Você já está inscrito neste evento.",
-          type: "danger",
-        });
+        setFeedbackMessage("Você já está inscrito neste evento.");
       } else {
-        showMessage({
-          message: "Erro",
-          description: "Houve um problema ao processar a inscrição.",
-          type: "danger",
-        });
+        setFeedbackMessage("Houve um problema ao processar a inscrição.");
       }
     } finally {
       setLoading(false);
       setShowConfirmModal(false);
+      setFeedbackModalVisible(true);
     }
   };
 
@@ -170,19 +157,12 @@ export function EventDetails() {
     navigation.navigate("Eventos");
   };
 
-  const formatTime = (timeString: string) => {
-    const [hour, minute] = timeString.split(":");
-    const hourNumber = parseInt(hour, 10);
 
-    let period = "manhã";
 
-    if (hourNumber >= 12 && hourNumber < 18) {
-      period = "tarde";
-    } else if (hourNumber >= 18 || hourNumber < 6) {
-      period = "noite";
-    }
-
-    return `${hour}:${minute} - ${period}`;
+  const formatDateRange = (startDate: string, endDate: string) => {
+    const formattedStart = format(new Date(startDate), "dd/MM/yyyy    ");
+    const formattedEnd = format(new Date(endDate), "   dd/MM/yyyy");
+    return `${formattedStart} até ${formattedEnd}`;
   };
 
   const eventData = [
@@ -190,14 +170,18 @@ export function EventDetails() {
     {
       key: "date",
       icon: "calendar-month",
-      text: format(new Date(event.dateEvent), "dd/MM/yyyy"),
+      text: formatDateRange(event.dateEventStart, event.dateEventEnd),
     },
-    { key: "time", icon: "access-time", text: formatTime(event.hourEvent) },
+    {
+      key: "time",
+      icon: "access-time",
+      text: "De "+event.hourEventStart.split(":").slice(0, 2).join(":") + " até "+  event.hourEventEnd.split(":").slice(0, 2).join(":") + " - " + event.durationEvent + "h",
+    },
     {
       key: "price",
-      icon: null,
+      icon: "sell",
       //@ts-ignore
-      text: event.priceEvent === "0" ? "Grátis" : `$${event.priceEvent}`,
+      text: event.priceEvent === "0" ? "Grátis" : `${event.priceEvent}`,
     },
     { key: "description", icon: null, text: event.descriptionEvent },
   ];
@@ -282,6 +266,7 @@ export function EventDetails() {
           onClose={() => setShowPaymentModal(false)}
         />
 
+        {/*Modal de Confirmação de Compra/Inscrição */}
         <S.Modal
           visible={showConfirmModal}
           transparent
@@ -311,6 +296,26 @@ export function EventDetails() {
             </S.ModalContent>
           </S.ModalContainer>
         </S.Modal>
+
+        {/*Modal de Feedback */}
+        <S.Modal
+          visible={feedbackModalVisible}
+          transparent
+          animationType="slide"
+          onRequestClose={() => setFeedbackModalVisible(false)}
+        >
+          <S.ModalContainer>
+            <S.ModalContent>
+              <S.ModalText>{feedbackMessage}</S.ModalText>
+              <S.ModalButtonContainer>
+                <S.ModalButton onPress={() => setFeedbackModalVisible(false)}>
+                  <S.ModalButtonText>Ok</S.ModalButtonText>
+                </S.ModalButton>
+              </S.ModalButtonContainer>
+            </S.ModalContent>
+          </S.ModalContainer>
+        </S.Modal>
+        
       </S.BoxContainer>
     </S.Container>
   );

@@ -49,10 +49,11 @@ export default function HomeUser({
     const itemStyle =
       item.name === "Eventos" ? { width: "100%" } : { flex: 1, margin: 2 };
 
+      const { key, ...props } = item;
     return (
       //@ts-ignore
       <View style={itemStyle}>
-        <HomeUserItens {...item} />
+        <HomeUserItens  key={""} {...props} />
       </View>
     );
   }

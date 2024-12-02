@@ -74,6 +74,9 @@ export const TitleEvent = styled.Text`
   font-weight: bold;
   margin-bottom: 10px;
 `;
+export const EventText = styled.Text`
+
+`;
 
 export const Location = styled.Text`
   font-size: 12px;
@@ -84,6 +87,7 @@ export const DateHour = styled.View`
   display: flex;
   justify-content: space-between;
   flex-direction: row;
+
 `;
 
 export const Hour = styled.Text`
@@ -92,15 +96,15 @@ export const Hour = styled.Text`
 
 export const Date = styled.Text`
   font-size: 12px;
-  right: 100%;
+
 `;
 
 export const Price = styled.Text`
   background-color: ${theme.COLORS.GRAY100};
   color: ${theme.COLORS.DARK};
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
-  margin: 10px;
+  margin: 0px;
   border-radius: 5px;
   padding: 8px;
 `;

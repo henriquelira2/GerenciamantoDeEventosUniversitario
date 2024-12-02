@@ -34,11 +34,14 @@ export type Event = {
   id: any;
   nameEvent?: string;
   descriptionEvent: string;
-  dateEvent: string;
-  hourEvent: string;
+  dateEventStart: string;
+  dateEventEnd: string;
+  hourEventStart: string;
+  hourEventEnd: string;
   priceEvent: string;
   organizerEvent: string;
   qtdVacanciesEvent: string;
+  durationEvent: string;
   imageEvent: string;
   typeEvent: string;
   locationEvent: string;

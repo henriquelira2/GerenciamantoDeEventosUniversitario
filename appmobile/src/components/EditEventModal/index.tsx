@@ -6,12 +6,13 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
   Feather,
+  Entypo,
 } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Modal, ActivityIndicator } from "react-native";
 import CurrencyInput from "react-native-currency-input";
@@ -35,9 +36,12 @@ type Event = {
   nameEvent: string;
   imageEvent: string;
   locationEvent: string;
-  dateEvent: string;
-  hourEvent: string;
+  dateEventStart: string;
+  dateEventEnd: string;
+  hourEventStart: string;
+  hourEventEnd: string;
   organizerEvent: string;
+  durationEvent: string;
   qtdVacanciesEvent: number;
   priceEvent: number;
   descriptionEvent: string;
@@ -53,23 +57,28 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
   const [name] = useState(event?.nameEvent || "");
   const [imageEvent] = useState(event?.imageEvent || "");
   const [location] = useState(event?.locationEvent || "");
-  const [date] = useState(event?.dateEvent || "");
-  const [hour] = useState(event?.hourEvent || "");
+  const [date] = useState(event?.dateEventStart || "");
+  const [dateEnd] = useState(event?.dateEventEnd || "");
+  const [hour] = useState(event?.hourEventStart || "");
+  const [hourEnd] = useState(event?.hourEventEnd || "");
   const [organizer] = useState(event?.organizerEvent || "");
   const [qtdVacancies] = useState(event?.qtdVacanciesEvent || "");
   const [price] = useState(event?.priceEvent.toString() || "");
   const [description] = useState(event?.descriptionEvent || "");
   const [typeEvent] = useState(event?.typeEvent || "");
+  const [durationEvent] = useState(event?.durationEvent || "");
 
-  const [showPicker, setShowPicker] = useState(false);
-  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [showDatePickerStart, setShowDatePickerStart] = useState(false);
+  const [showDatePickerEnd, setShowDatePickerEnd] = useState(false);
+  const [showTimePickerStart, setShowTimePickerStart] = useState(false);
+  const [showTimePickerEnd, setShowTimePickerEnd] = useState(false);
   const [image, setImage] = useState<string | null>(
     `${api.defaults.baseURL}/${imageEvent}`
   );
 
   const pickImage = async (onChange: (uri: string) => void) => {
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ["images", "videos"],
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
@@ -109,23 +118,33 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<Event | any>({
     mode: "onSubmit",
     resolver: yupResolver(EventUpdateSchema),
-    defaultValues: {
-      nameEvent: name,
-      imageEvent,
-      locationEvent: location,
-      dateEvent: date || "",
-      hourEvent: hour || "",
-      organizerEvent: organizer || "",
-      qtdVacanciesEvent: qtdVacancies || "",
-      priceEvent: price || 0,
-      descriptionEvent: description || "",
-      typeEvent: typeEvent || "",
-    },
   });
+
+  useEffect(() => {
+    if (event) {
+      reset({
+        nameEvent: event.nameEvent,
+        imageEvent: event.imageEvent,
+        locationEvent: event.locationEvent,
+        dateEventStart: event.dateEventStart,
+        dateEventEnd: event.dateEventEnd,
+        hourEventStart: event.hourEventStart,
+        hourEventEnd: event.hourEventEnd,
+        organizerEvent: event.organizerEvent,
+        qtdVacanciesEvent: event.qtdVacanciesEvent,
+        priceEvent: event.priceEvent,
+        descriptionEvent: event.descriptionEvent,
+        typeEvent: event.typeEvent,
+        durationEvent: event.durationEvent,
+      });
+      setImage(`${api.defaults.baseURL}/${event.imageEvent}`);
+    }
+  }, [event, reset]);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -283,17 +302,19 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
             <S.Input>
               <Controller
                 control={control}
-                name="dateEvent"
+                name="dateEventStart"
                 render={({ field: { onChange, value } }) => {
-                  const selectedDate =
+                  const selectedDateStart =
                     value instanceof Date ? value : new Date(value);
 
                   return (
-                    <S.TextInputDateTime onPress={() => setShowPicker(true)}>
+                    <S.TextInputDateTime
+                      onPress={() => setShowDatePickerStart(true)}
+                    >
                       <S.placeholderDateTime
                         editable={false}
-                        placeholder="Data do Evento"
-                        value={selectedDate.toLocaleDateString("pt-BR")}
+                        placeholder="Data Inicial do Evento"
+                        value={selectedDateStart.toLocaleDateString("pt-BR")}
                       />
                       <Feather
                         name="calendar"
@@ -301,16 +322,16 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
                         color="black"
                         style={{ position: "absolute", left: 10, top: 12 }}
                       />
-                      {showPicker && (
+                      {showDatePickerStart && (
                         <DateTimePicker
-                          value={selectedDate}
+                          value={selectedDateStart}
                           mode="date"
                           display="default"
                           is24Hour
-                          onChange={(event, selectedDate) => {
-                            setShowPicker(false);
-                            if (selectedDate) {
-                              onChange(selectedDate.toISOString());
+                          onChange={(event, selectedDateStart) => {
+                            setShowDatePickerStart(false);
+                            if (selectedDateStart) {
+                              onChange(selectedDateStart.toISOString());
                             }
                           }}
                         />
@@ -324,28 +345,73 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
             <S.Input>
               <Controller
                 control={control}
-                name="hourEvent"
-                defaultValue={hour}
+                name="dateEventEnd"
                 render={({ field: { onChange, value } }) => {
-                  const selectedTime = hour
-                    ? typeof hour === "string" &&
-                      /^\d{2}:\d{2}:\d{2}$/.test(hour)
-                      ? new Date(`1970-01-01T${hour}`)
-                      : new Date(hour)
-                    : new Date();
+                  const selectedDateEnd =
+                    value instanceof Date ? value : new Date(value);
 
                   return (
                     <S.TextInputDateTime
-                      onPress={() => setShowTimePicker(true)}
+                      onPress={() => setShowDatePickerEnd(true)}
+                    >
+                      <S.placeholderDateTime
+                        editable={false}
+                        placeholder="Data Final do Evento"
+                        value={selectedDateEnd.toLocaleDateString("pt-BR")}
+                      />
+                      <Entypo
+                        name="calendar"
+                        size={26}
+                        color="black"
+                        style={{ position: "absolute", left: 10, top: 12 }}
+                      />
+                      {showDatePickerEnd && (
+                        <DateTimePicker
+                          value={selectedDateEnd}
+                          mode="date"
+                          display="default"
+                          is24Hour
+                          onChange={(event, selectedDateEnd) => {
+                            setShowDatePickerEnd(false);
+                            if (selectedDateEnd) {
+                              onChange(selectedDateEnd.toISOString());
+                            }
+                          }}
+                        />
+                      )}
+                    </S.TextInputDateTime>
+                  );
+                }}
+              />
+            </S.Input>
+
+            <S.Input>
+              <Controller
+                control={control}
+                name="hourEventStart"
+                render={({ field: { onChange, value } }) => {
+                  const selectedTimeStart =
+                    typeof value === "string" &&
+                    /^\d{2}:\d{2}:\d{2}$/.test(value)
+                      ? new Date(`1970-01-01T${value}`)
+                      : value instanceof Date
+                        ? value
+                        : new Date();
+
+                  return (
+                    <S.TextInputDateTime
+                      onPress={() => setShowTimePickerStart(true)}
                     >
                       <S.placeholderDateTime
                         editable={false}
                         placeholder="Hora do Evento"
                         value={
-                          selectedTime
-                            ? selectedTime.toLocaleTimeString("pt-BR", {
+                          selectedTimeStart
+                            ? selectedTimeStart.toLocaleTimeString("pt-BR", {
                                 hour: "2-digit",
                                 minute: "2-digit",
+                                second: "2-digit",
+                                hour12: false,
                               })
                             : ""
                         }
@@ -356,25 +422,87 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
                         color="black"
                         style={{ position: "absolute", left: 10, top: 12 }}
                       />
-                      {showTimePicker && (
+                      {showTimePickerStart && (
                         <DateTimePicker
-                          value={selectedTime}
+                          value={selectedTimeStart}
                           mode="time"
                           display="default"
                           is24Hour
-                          onChange={(event, selectedTime) => {
-                            setShowTimePicker(false);
-                            if (selectedTime) {
-                              const formattedTime =
-                                selectedTime.toLocaleTimeString("pt-BR", {
+                          onChange={(event, selectedTimeStart) => {
+                            setShowTimePickerStart(false);
+                            if (selectedTimeStart) {
+                              const formattedTimeStart =
+                                selectedTimeStart.toLocaleTimeString("pt-BR", {
                                   hour: "2-digit",
                                   minute: "2-digit",
                                   second: "2-digit",
                                   hour12: false,
                                 });
-                              // @ts-ignore
-                              setTime(formattedTime);
-                              onChange(formattedTime);
+                              onChange(formattedTimeStart);
+                            }
+                          }}
+                        />
+                      )}
+                    </S.TextInputDateTime>
+                  );
+                }}
+              />
+            </S.Input>
+
+            <S.Input>
+              <Controller
+                control={control}
+                name="hourEventEnd"
+                render={({ field: { onChange, value } }) => {
+                  const selectedTimeEnd =
+                    typeof value === "string" &&
+                    /^\d{2}:\d{2}:\d{2}$/.test(value)
+                      ? new Date(`1970-01-01T${value}`)
+                      : value instanceof Date
+                        ? value
+                        : new Date();
+
+                  return (
+                    <S.TextInputDateTime
+                      onPress={() => setShowTimePickerEnd(true)}
+                    >
+                      <S.placeholderDateTime
+                        editable={false}
+                        placeholder="Hora de Término do Evento"
+                        value={
+                          selectedTimeEnd
+                            ? selectedTimeEnd.toLocaleTimeString("pt-BR", {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                second: "2-digit",
+                                hour12: false,
+                              })
+                            : ""
+                        }
+                      />
+                      <Entypo
+                        name="time-slot"
+                        size={26}
+                        color="black"
+                        style={{ position: "absolute", left: 10, top: 12 }}
+                      />
+                      {showTimePickerEnd && (
+                        <DateTimePicker
+                          value={selectedTimeEnd}
+                          mode="time"
+                          display="default"
+                          is24Hour
+                          onChange={(event, selectedTimeEnd) => {
+                            setShowTimePickerEnd(false);
+                            if (selectedTimeEnd) {
+                              const formattedTimeEnd =
+                                selectedTimeEnd.toLocaleTimeString("pt-BR", {
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                  second: "2-digit",
+                                  hour12: false,
+                                });
+                              onChange(formattedTimeEnd);
                             }
                           }}
                         />
@@ -432,6 +560,30 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
               />
             </S.Input>
 
+            {errors.durationEvent && (
+              <S.TextErro>{errors.durationEvent.message}</S.TextErro>
+            )}
+            <S.Input>
+              <Controller
+                control={control}
+                name="durationEvent"
+                render={({ field: { onChange, value } }) => (
+                  <S.TextInput
+                    placeholder="Duração do Evento"
+                    value={value}
+                    onChangeText={onChange}
+                    keyboardType="numeric"
+                  />
+                )}
+              />
+              <MaterialCommunityIcons
+                name="av-timer"
+                size={26}
+                color="black"
+                style={{ position: "absolute", left: 10, top: 12 }}
+              />
+            </S.Input>
+
             {errors.priceEvent && (
               <S.TextErro>{errors.priceEvent.message}</S.TextErro>
             )}
@@ -478,29 +630,23 @@ export const EditEventModal: React.FC<EditEventModalProps> = ({
                         value={typeEvent}
                         style={{ color: "black" }}
                       />
+
+                      <Picker.Item label="Minicurso" value="Minicurso" />
+                      <Picker.Item label="Palestra" value="Palestra" />
+                      <Picker.Item label="Workshops" value="Workshops" />
+                      <Picker.Item label="Conferências" value="Conferências" />
                       <Picker.Item
-                        label="Eventos acadêmicos e educacionais"
-                        value="Eventos acadêmicos e educacionais"
+                        label="Feiras Acadêmicas"
+                        value="Feiras Acadêmicas"
+                      />
+                      <Picker.Item label="Seminário" value="Seminário" />
+                      <Picker.Item
+                        label="Semana de Humanismo e Cidadania"
+                        value="Semana de Humanismo e Cidadania"
                       />
                       <Picker.Item
-                        label="Eventos sociais"
-                        value="Eventos sociais"
-                      />
-                      <Picker.Item
-                        label="Eventos corporativos"
-                        value="Eventos corporativos"
-                      />
-                      <Picker.Item
-                        label="Eventos religiosos"
-                        value="Eventos religiosos"
-                      />
-                      <Picker.Item
-                        label="Eventos culturais e de entretenimento"
-                        value="Eventos culturais e de entretenimento"
-                      />
-                      <Picker.Item
-                        label="Eventos esportivos"
-                        value="Eventos esportivos"
+                        label="Semana da Computação"
+                        value="Semana da Computação"
                       />
                     </Picker>
                   </S.TextInputSelect>

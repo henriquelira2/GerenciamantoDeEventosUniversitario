@@ -23,15 +23,59 @@ const transporter = nodemailer.createTransport({
 // Função para enviar o e-mail de confirmação
 const sendConfirmationEmail = async (user, event, cod) => {
   const mailOptions = {
-    from: process.env.EMAIL_USER,
+    from: `EventManager`,
     to: user.email,
     subject: `Confirmação de Inscrição - ${event.nameEvent}`,
-    text: `Olá, ${user.firstName}! Sua inscrição para o evento ${event.nameEvent} foi confirmada. Aqui estão os detalhes do evento: \n\nData: ${event.date}\nLocal: ${event.location}\nAguardamos sua participação!
-    ${cod}`,
+    text: `Olá, ${user.firstName} ${user.lastName},
+
+Parabéns! Sua inscrição para o evento **${event.nameEvent}** foi confirmada com sucesso.
+
+**Detalhes do Evento:**
+- **Data:** ${event.dateEventStart.toLocaleDateString()} 
+- **Horário:** ${event.hourEventStart} - ${event.hourEventEnd}
+- **Local:** ${event.locationEvent}
+- **Tipo:** ${event.typeEvent}
+
+**Código de Credencial:**
+Guarde este código com você para realizar o check-in no evento:
+${cod}
+
+**Dica Importante:** Recomendamos utilizar o QR Code gerado diretamente no aplicativo, no ícone "Eventos Inscritos". Com ele, você poderá fazer o check-in de forma rápida e prática.
+
+Estamos muito animados para receber você! Caso tenha dúvidas ou precise de mais informações, não hesite em entrar em contato conosco.
+
+Aguardamos você no evento!
+
+Atenciosamente,
+Equipe do <strong>EVENTMANAGER</strong></p>
+`,
+    html: `<p>Olá, <strong>${user.firstName} ${user.lastName}</strong>,</p>
+<p>Parabéns! Sua inscrição para o evento <strong>${event.nameEvent}</strong> foi confirmada com sucesso.</p>
+
+<h3>Detalhes do Evento:</h3>
+<ul>
+  <li><strong>Data:</strong> ${event.dateEventStart.toLocaleDateString()}</li>
+  <li><strong>Horário:</strong> ${event.hourEventStart} - ${event.hourEventEnd}</li>
+  <li><strong>Local:</strong> ${event.locationEvent}</li>
+  <li><strong>Tipo:</strong> ${event.typeEvent}</li>
+</ul>
+
+<h3>Código de Credencial:</h3>
+<p>Guarde este código com você para realizar o check-in no evento:</p>
+<p style="font-size: 20px; font-weight: bold; color: #2a7ae4;">${cod}</p>
+
+<p><strong>Dica Importante:</strong> Recomendamos utilizar o QR Code gerado diretamente no aplicativo, no ícone <strong>"Eventos Inscritos"</strong>. Com ele, você poderá fazer o check-in de forma rápida e prática.</p>
+
+<p>Estamos muito animados para receber você! Caso tenha dúvidas ou precise de mais informações, não hesite em entrar em contato conosco.</p>
+
+<p>Atenciosamente,<br>
+Equipe do <strong>EVENTMANAGER</strong></p>
+`,
   };
 
   await transporter.sendMail(mailOptions);
 };
+
 
 // Função para gerar codigo de verificação para realizar o Chekin
 const generateCredentialCode = async () => {
@@ -118,9 +162,7 @@ exports.createPaymentIntent = async (req, res) => {
           type: paymentMethod,
         },
       ],
-      notification_urls: [
-        "https://pro-purely-woodcock.ngrok-free.app/inscriptions/webhook",
-      ],
+      notification_urls: [`${process.env.PAYMENT_URL}/inscriptions/webhook`],
       redirect_urls: {
         success: "https://eventmaneger.com/success",
         failure: "https://eventmaneger.com/failure",
@@ -295,7 +337,7 @@ exports.listUsersByEvent = async (req, res) => {
       where: { eventId, status: "CONFIRMADA" },
       include: {
         model: User,
-        as: "user", 
+        as: "user",
         attributes: ["id", "firstName", "lastName", "email"],
       },
     });
@@ -307,7 +349,7 @@ exports.listUsersByEvent = async (req, res) => {
     }
 
     const users = inscriptions.map((inscription) => ({
-      userId: inscription.user.id, 
+      userId: inscription.user.id,
       name: `${inscription.user.firstName} ${inscription.user.lastName}`,
       email: inscription.user.email,
       inscriptionId: inscription.id,

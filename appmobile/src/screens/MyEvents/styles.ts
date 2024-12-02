@@ -69,7 +69,7 @@ export const Info2 = styled.View`
 `;
 
 export const TitleEvent = styled.Text`
-  font-size: 14px;
+  font-size: 15px;
   font-weight: bold;
   margin-bottom: 10px;
 `;
@@ -91,7 +91,7 @@ export const Hour = styled.Text`
 
 export const Date = styled.Text`
   font-size: 12px;
-  right: 100%;
+ 
 `;
 
 export const Price = styled.Text`

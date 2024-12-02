@@ -1,0 +1,4 @@
+buildCommand: |
+  npm cache clean --force
+  export NPM_CONFIG_BUILD_FROM_SOURCE=true
+  npm install && npm rebuild bcrypt --build-from-source

@@ -47,8 +47,6 @@ export function PaymentWebView({
 
       <Modal visible={visible} onRequestClose={onClose} animationType="slide">
         <S.Container>
-          {loading && <ActivityIndicator size="large" color="#0000ff" />}
-
           <WebView
             source={{ uri: paymentLink }}
             onLoadEnd={() => setLoading(false)}
@@ -62,6 +60,7 @@ export function PaymentWebView({
             }}
             onNavigationStateChange={handleNavigationChange}
           />
+          {loading && <ActivityIndicator size="large" color="#0000ff" />}
         </S.Container>
       </Modal>
     </>

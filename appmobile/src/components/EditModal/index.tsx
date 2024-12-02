@@ -22,9 +22,7 @@ interface EditModalProps {
 }
 
 const EditModal: React.FC<EditModalProps> = ({ isVisible, user, onClose }) => {
-  if (!user) {
-    return null;
-  }
+
 
   // eslint-disable-next-line prettier/prettier
   const CPF_MASK = [
@@ -83,6 +81,7 @@ const EditModal: React.FC<EditModalProps> = ({ isVisible, user, onClose }) => {
 
       await api.put(`/users/update2/${user?.cpf}`, updatedUserData);
 
+      alert('Usuário atualizado com sucesso')
       showMessage({
         message: "Usuário atualizado com sucesso",
         type: "success",
@@ -94,6 +93,7 @@ const EditModal: React.FC<EditModalProps> = ({ isVisible, user, onClose }) => {
         setIsLoading(false);
       }, 1000);
     } catch (error) {
+      alert('Erro ao atualizar usuário')
       showMessage({
         message: "Erro ao atualizar usuário",
         type: "danger",
@@ -102,7 +102,8 @@ const EditModal: React.FC<EditModalProps> = ({ isVisible, user, onClose }) => {
       setIsLoading(false);
     }
   };
-
+  if (!isVisible) return null; 
+  
   return (
     <Modal
       animationType="slide"

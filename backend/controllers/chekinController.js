@@ -21,7 +21,7 @@ exports.checkInEvent = async (req, res) => {
     }
 
     const dataAtual = new Date();
-    const dataEvento = new Date(event.dateEvent); 
+    const dataEvento = new Date(event.dateEventStart); 
 
     const dataAtualString = dataAtual.toISOString().split("T")[0]; 
     const dataEventoString = dataEvento.toISOString().split("T")[0]; 

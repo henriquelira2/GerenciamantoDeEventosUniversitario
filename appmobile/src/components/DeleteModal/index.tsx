@@ -30,7 +30,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
       setIsLoading(true);
 
       await api.delete(`/users/delete/${user?.cpf}`);
-
+      alert("Usuário Deletado com sucesso");
       showMessage({
         message: "Usuário Deletado com sucesso",
         type: "success",
@@ -43,6 +43,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
         onReset();
       }, 1000);
     } catch (error) {
+      alert("Erro ao Deletar usuário");
       showMessage({
         message: "Erro ao Deletar usuário",
         type: "danger",

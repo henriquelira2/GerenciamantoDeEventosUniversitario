@@ -9,11 +9,14 @@ exports.createEvent = async (req, res) => {
     const {
       nameEvent,
       descriptionEvent,
-      dateEvent,
-      hourEvent,
+      dateEventStart,
+      dateEventEnd,
+      hourEventStart,
+      hourEventEnd,
       priceEvent,
       organizerEvent,
       qtdVacanciesEvent,
+      durationEvent,
       imageEvent,
       locationEvent,
       typeEvent,
@@ -22,11 +25,14 @@ exports.createEvent = async (req, res) => {
     await Event.create({
       nameEvent,
       descriptionEvent,
-      dateEvent,
-      hourEvent,
+      dateEventStart,
+      dateEventEnd,
+      hourEventStart,
+      hourEventEnd,
       priceEvent,
       organizerEvent,
       qtdVacanciesEvent,
+      durationEvent,
       imageEvent,
       locationEvent,
       typeEvent,
@@ -43,7 +49,9 @@ exports.createEvent = async (req, res) => {
 exports.getAllEvents = async (req, res) => {
   try {
     const events = await Event.findAll();
+    const currentDate = new Date();
 
+    // Mapear os eventos e ajustar o caminho da imagem
     const eventsWithImagePath = events.map((event) => {
       const eventData = event.toJSON();
       if (eventData.imageEvent) {
@@ -52,7 +60,26 @@ exports.getAllEvents = async (req, res) => {
       return eventData;
     });
 
-    res.send(eventsWithImagePath);
+    // Ordenar os eventos com base na data
+    const sortedEvents = eventsWithImagePath.sort((a, b) => {
+      const dateA = new Date(a.dateEventStart);
+      const dateB = new Date(b.dateEventStart);
+
+      //  (ordem crescente)
+      if (dateA >= currentDate && dateB >= currentDate) {
+        return dateA - dateB;
+      }
+
+      //  (ordem decrescente)
+      if (dateA < currentDate && dateB < currentDate) {
+        return dateB - dateA;
+      }
+
+      // Eventos futuros/atuais vêm antes dos passados
+      return dateA >= currentDate ? -1 : 1;
+    });
+
+    res.send(sortedEvents);
   } catch (error) {
     console.error("Erro ao buscar todos os eventos:", error);
     res.status(500).json({ error: "Erro do Servidor Interno" });
