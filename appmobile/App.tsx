@@ -37,11 +37,6 @@ export default function App() {
     >
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
-          <StatusBar
-            barStyle="light-content"
-            backgroundColor="transparent"
-            translucent
-          />
           <Routes />
         </ThemeProvider>
       </QueryClientProvider>

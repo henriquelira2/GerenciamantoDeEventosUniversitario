@@ -54,10 +54,13 @@ export const ForgotView = styled.View`
   align-items: flex-end;
   bottom: 15px;
 `;
-export const ForgotTouch = styled.TouchableOpacity``;
+export const ForgotTouch = styled.TouchableOpacity`
+  padding: 10px;
+`;
 export const ForgotText = styled.Text`
   border-bottom-width: 2px;
   border-color: ${theme.COLORS.BLUE};
+  text-align: end;
 `;
 export const ButtomEyes = styled.TouchableOpacity`
   position: absolute;
@@ -91,5 +94,5 @@ export const RegisterButtom = styled.TouchableOpacity`
 `;
 export const TextButtomRegister = styled.Text`
   font-size: 18px;
-  color: ${theme.COLORS.GRAY};
+  color: ${theme.COLORS.DARK};
 `;

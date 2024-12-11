@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
-import { ImageBackground } from "react-native";
+import { Dimensions, ImageBackground } from "react-native";
 
 import * as S from "./styles";
 import bacground from "../../assets/bg-tela.png";
@@ -86,13 +86,18 @@ export function DrawerRoutes(props: any) {
     }
   };
 
+  const { width } = Dimensions.get("window");
+  const iconSize = width > 400 ? 30 : 20;
+
   return (
-    <ImageBackground source={bacground} style={{ flex: 1, bottom: 30 }}>
-      <S.Container style={{ flex: 1 }}>
+    <ImageBackground source={bacground} style={{ flex: 1, bottom: 10 }}>
+      <S.Container
+        style={{ flex: 1, paddingHorizontal: width > 400 ? 20 : 10 }}
+      >
         <DrawerContentScrollView {...props}>
           <S.Top>
             <S.LogoTop
-              style={{ resizeMode: "stretch" }}
+              style={{ resizeMode: "stretch", top: 30 }}
               source={require("../../assets/Logo.png")}
             />
           </S.Top>
@@ -103,7 +108,11 @@ export function DrawerRoutes(props: any) {
               onPress={() => handleItemPress("Home")}
               icon={() => (
                 <S.Icon
-                  style={{ resizeMode: "stretch" }}
+                  style={{
+                    resizeMode: "stretch",
+                    width: iconSize,
+                    height: iconSize,
+                  }}
                   source={getIconSource("Home")}
                 />
               )}
@@ -117,7 +126,11 @@ export function DrawerRoutes(props: any) {
               onPress={() => handleItemPress("Eventos")}
               icon={() => (
                 <S.Icon
-                  style={{ resizeMode: "stretch" }}
+                  style={{
+                    resizeMode: "stretch",
+                    width: iconSize,
+                    height: iconSize,
+                  }}
                   source={getIconSource("Eventos")}
                 />
               )}
@@ -133,7 +146,11 @@ export function DrawerRoutes(props: any) {
                   onPress={() => handleItemPress("Perfil")}
                   icon={() => (
                     <S.Icon
-                      style={{ resizeMode: "stretch" }}
+                      style={{
+                        resizeMode: "stretch",
+                        width: iconSize,
+                        height: iconSize,
+                      }}
                       source={getIconSource("Perfil")}
                     />
                   )}
@@ -148,7 +165,11 @@ export function DrawerRoutes(props: any) {
                   onPress={() => handleItemPress("UserList")}
                   icon={() => (
                     <S.Icon
-                      style={{ resizeMode: "stretch" }}
+                      style={{
+                        resizeMode: "stretch",
+                        width: iconSize,
+                        height: iconSize,
+                      }}
                       source={getIconSource("UserList")}
                     />
                   )}
@@ -163,7 +184,11 @@ export function DrawerRoutes(props: any) {
                   onPress={() => handleItemPress("CreateUser")}
                   icon={() => (
                     <S.Icon
-                      style={{ resizeMode: "stretch" }}
+                      style={{
+                        resizeMode: "stretch",
+                        width: iconSize,
+                        height: iconSize,
+                      }}
                       source={getIconSource("CreateUser")}
                     />
                   )}
@@ -177,7 +202,11 @@ export function DrawerRoutes(props: any) {
                   onPress={() => handleItemPress("CreateEvent")}
                   icon={() => (
                     <S.Icon
-                      style={{ resizeMode: "stretch" }}
+                      style={{
+                        resizeMode: "stretch",
+                        width: iconSize,
+                        height: iconSize,
+                      }}
                       source={getIconSource("CreateEvent")}
                     />
                   )}
@@ -191,7 +220,11 @@ export function DrawerRoutes(props: any) {
                   onPress={() => handleItemPress("MyEvents")}
                   icon={() => (
                     <S.Icon
-                      style={{ resizeMode: "stretch" }}
+                      style={{
+                        resizeMode: "stretch",
+                        width: iconSize,
+                        height: iconSize,
+                      }}
                       source={getIconSource("MyEvents")}
                     />
                   )}
@@ -205,7 +238,11 @@ export function DrawerRoutes(props: any) {
                   onPress={() => handleItemPress("MyCreatedEvents")}
                   icon={() => (
                     <S.Icon
-                      style={{ resizeMode: "stretch" }}
+                      style={{
+                        resizeMode: "stretch",
+                        width: iconSize,
+                        height: iconSize,
+                      }}
                       source={getIconSource("MyCreatedEvents")}
                     />
                   )}
@@ -225,7 +262,11 @@ export function DrawerRoutes(props: any) {
                   onPress={() => handleItemPress("CreateEvent")}
                   icon={() => (
                     <S.Icon
-                      style={{ resizeMode: "stretch" }}
+                      style={{
+                        resizeMode: "stretch",
+                        width: iconSize,
+                        height: iconSize,
+                      }}
                       source={getIconSource("CreateEvent")}
                     />
                   )}
@@ -240,7 +281,11 @@ export function DrawerRoutes(props: any) {
                   onPress={() => handleItemPress("MyCreatedEvents")}
                   icon={() => (
                     <S.Icon
-                      style={{ resizeMode: "stretch" }}
+                      style={{
+                        resizeMode: "stretch",
+                        width: iconSize,
+                        height: iconSize,
+                      }}
                       source={getIconSource("MyCreatedEvents")}
                     />
                   )}
@@ -255,7 +300,11 @@ export function DrawerRoutes(props: any) {
                   onPress={() => handleItemPress("MyEvents")}
                   icon={() => (
                     <S.Icon
-                      style={{ resizeMode: "stretch" }}
+                      style={{
+                        resizeMode: "stretch",
+                        width: iconSize,
+                        height: iconSize,
+                      }}
                       source={getIconSource("MyEvents")}
                     />
                   )}
@@ -269,7 +318,11 @@ export function DrawerRoutes(props: any) {
                   onPress={() => handleItemPress("Perfil")}
                   icon={() => (
                     <S.Icon
-                      style={{ resizeMode: "stretch" }}
+                      style={{
+                        resizeMode: "stretch",
+                        width: iconSize,
+                        height: iconSize,
+                      }}
                       source={getIconSource("Perfil")}
                     />
                   )}
@@ -283,7 +336,11 @@ export function DrawerRoutes(props: any) {
                   onPress={() => handleItemPress("UpdateProfile")}
                   icon={() => (
                     <S.Icon
-                      style={{ resizeMode: "stretch" }}
+                      style={{
+                        resizeMode: "stretch",
+                        width: iconSize,
+                        height: iconSize,
+                      }}
                       source={getIconSource("UpdateProfile")}
                     />
                   )}
@@ -302,7 +359,11 @@ export function DrawerRoutes(props: any) {
                   onPress={() => handleItemPress("MyEvents")}
                   icon={() => (
                     <S.Icon
-                      style={{ resizeMode: "stretch" }}
+                      style={{
+                        resizeMode: "stretch",
+                        width: iconSize,
+                        height: iconSize,
+                      }}
                       source={getIconSource("MyEvents")}
                     />
                   )}
@@ -316,7 +377,11 @@ export function DrawerRoutes(props: any) {
                   onPress={() => handleItemPress("Perfil")}
                   icon={() => (
                     <S.Icon
-                      style={{ resizeMode: "stretch" }}
+                      style={{
+                        resizeMode: "stretch",
+                        width: iconSize,
+                        height: iconSize,
+                      }}
                       source={getIconSource("Perfil")}
                     />
                   )}
@@ -330,7 +395,11 @@ export function DrawerRoutes(props: any) {
                   onPress={() => handleItemPress("UpdateProfile")}
                   icon={() => (
                     <S.Icon
-                      style={{ resizeMode: "stretch" }}
+                      style={{
+                        resizeMode: "stretch",
+                        width: iconSize,
+                        height: iconSize,
+                      }}
                       source={getIconSource("UpdateProfile")}
                     />
                   )}
@@ -354,7 +423,11 @@ export function DrawerRoutes(props: any) {
             }}
             icon={() => (
               <S.Icon
-                style={{ resizeMode: "stretch" }}
+                style={{
+                  resizeMode: "stretch",
+                  width: iconSize,
+                  height: iconSize,
+                }}
                 source={getIconSource("Logout")}
               />
             )}

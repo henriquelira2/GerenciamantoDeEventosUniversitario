@@ -75,5 +75,5 @@ export const LoginButtom = styled.TouchableOpacity`
 `;
 export const TextButtomLogin = styled.Text`
   font-size: 18px;
-  color: ${theme.COLORS.GRAY};
+  color: ${theme.COLORS.DARK};
 `;

@@ -2,7 +2,7 @@ import {
   BottomTabNavigationProp,
   createBottomTabNavigator,
 } from "@react-navigation/bottom-tabs";
-import { Image } from "react-native";
+import { Dimensions, Image } from "react-native";
 
 import { useIcon } from "../contexts/IconContext";
 import { CreateEvent } from "../screens/CreateEvent";
@@ -66,7 +66,7 @@ export function BottomTabs() {
         return require("../assets/drawerIcons/listuser-icon.png");
     }
   };
-
+  const { width, height } = Dimensions.get("window");
   return (
     <TabNavigator
       initialRouteName="Home"
@@ -85,12 +85,12 @@ export function BottomTabs() {
           backgroundColor: "#171626",
           borderTopWidth: 0,
           paddingBottom: 5,
-          bottom: 14,
-          left: 14,
-          right: 14,
+          bottom: height * 0.02, 
+          left: width * 0.04,
+          right: width * 0.04, 
           elevation: 0,
           borderRadius: 5,
-          height: 60,
+          height: height * 0.08,
           zIndex: 1,
         },
       })}
